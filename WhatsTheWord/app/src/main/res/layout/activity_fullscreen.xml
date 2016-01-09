@@ -1,0 +1,74 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+     android:background="@drawable/background"
+    tools:context="com.example.miss.temp.FullscreenActivity">
+
+    <!-- The primary full-screen view. This can be replaced with whatever view
+         is needed to present your content, e.g. VideoView, SurfaceView,
+         TextureView, etc. -->
+    <TextView android:id="@+id/fullscreen_content"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:keepScreenOn="true"
+        android:textColor="#33b5e5"
+        android:textStyle="bold"
+        android:textSize="50sp"
+        android:gravity="center"
+        android:text="" />
+
+    <!-- This FrameLayout insets its children based on system windows using
+         android:fitsSystemWindows. -->
+    <FrameLayout android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fitsSystemWindows="true">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <Button
+                android:id="@+id/start_game"
+                style="@style/MyButtonStyle"
+                android:layout_alignLeft="@+id/see_history"
+                android:layout_alignStart="@+id/see_history"
+                android:layout_marginTop="140dp"
+                android:text="Start new game" />
+
+            <Button
+
+                android:id="@+id/see_history"
+                style="@style/MyButtonStyle"
+                android:layout_alignLeft="@+id/add_word"
+                android:layout_alignStart="@+id/add_word"
+                android:layout_below="@+id/start_game"
+                android:text="History" />
+
+            <Button
+                android:id="@+id/add_word"
+                style="@style/MyButtonStyle"
+                android:layout_below="@+id/see_history"
+                android:text="Add new word" />
+        </RelativeLayout>
+
+
+        <LinearLayout android:id="@+id/fullscreen_content_controls"
+            style="?metaButtonBarStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|center_horizontal"
+            android:background="@color/black_overlay"
+            android:orientation="horizontal"
+            tools:ignore="UselessParent">
+
+            <Button android:id="@+id/dummy_button"
+                style="?metaButtonBarButtonStyle"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Buton" />
+
+        </LinearLayout>
+    </FrameLayout>
+
+</FrameLayout>
