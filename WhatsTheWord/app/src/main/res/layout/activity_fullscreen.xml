@@ -27,12 +27,13 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
+
             <Button
                 android:id="@+id/start_game"
                 style="@style/MyButtonStyle"
                 android:layout_alignLeft="@+id/see_history"
                 android:layout_alignStart="@+id/see_history"
-                android:layout_marginTop="140dp"
+                android:layout_marginTop="180dp"
                 android:text="Start new game" />
 
             <Button
@@ -66,7 +67,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Buton" />
+                android:text="Close app" />
 
         </LinearLayout>
     </FrameLayout>
