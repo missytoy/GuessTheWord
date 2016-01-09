@@ -1,22 +1,33 @@
 package com.example.miss.temp;
 
 import android.annotation.SuppressLint;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.Button;
+import android.widget.Toast;
+
+import layout.AddNewWord;
+import layout.HistoryFragment;
+import layout.MenuPageFragmetn;
+import layout.StartNewGameFragment;
 
 /**
  * An example full-screen activity that shows and hides the system UI (i.e.
  * status bar and navigation/system bar) with user interaction.
  */
-public class FullscreenActivity extends AppCompatActivity {
+public class FullscreenActivity extends AppCompatActivity implements View.OnClickListener ,MenuPageFragmetn.OnButtonsClick {
     /**
      * Whether or not the system UI should be auto-hidden after
      * {@link #AUTO_HIDE_DELAY_MILLIS} milliseconds.
      */
+
+    Button closeAppBtn;
+
     private static final boolean AUTO_HIDE = true;
 
     /**
@@ -45,6 +56,25 @@ public class FullscreenActivity extends AppCompatActivity {
         mControlsView = findViewById(R.id.fullscreen_content_controls);
         mContentView = findViewById(R.id.fullscreen_content);
 
+        closeAppBtn = (Button) findViewById(R.id.dummy_button);
+        closeAppBtn.setOnClickListener(this);
+
+        if (findViewById(R.id.fragment_placeholder) != null) {
+            // However, if we're being restored from a previous state,
+            // then we don't need to do anything and should return or else
+            // we could end up with overlapping fragments.
+            if (savedInstanceState != null) {
+                return;
+            }
+            // Create a new Fragment to be placed in the activity layout
+            MenuPageFragmetn firstFragment = new MenuPageFragmetn();
+            // In case this activity was started with special instructions from an
+            // Intent, pass the Intent's extras to the fragment as arguments
+            //firstFragment.setArguments(getIntent().getExtras());
+            // Add the fragment to the 'fragment_container' FrameLayout
+            getSupportFragmentManager().beginTransaction()
+                    .add(R.id.fragment_placeholder, firstFragment).commit();
+        }
 
         // Set up the user interaction to manually show or hide the system UI.
         mContentView.setOnClickListener(new View.OnClickListener() {
@@ -165,4 +195,53 @@ public class FullscreenActivity extends AppCompatActivity {
         mHideHandler.removeCallbacks(mHideRunnable);
         mHideHandler.postDelayed(mHideRunnable, delayMillis);
     }
+
+    @Override
+    public void onClick(View v) {
+         if (v.getId() == closeAppBtn.getId()) {
+          //  Toast.makeText(getApplicationContext(), "Closed", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    @Override
+    public void onStartButtonClicked() {
+        StartNewGameFragment newFragment = new StartNewGameFragment();
+
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        // Replace whatever is in the fragment_container view with this fragment,
+        // and add the transaction to the back stack so the user can navigate back
+        transaction.replace(R.id.fragment_placeholder, newFragment);
+        //transaction.addToBackStack(null);
+        // Commit the transaction
+        transaction.commit();
+    }
+
+    @Override
+    public void onHistoryButtonClicked() {
+
+        HistoryFragment newFragment = new HistoryFragment();
+
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        // Replace whatever is in the fragment_container view with this fragment,
+        // and add the transaction to the back stack so the user can navigate back
+        transaction.replace(R.id.fragment_placeholder, newFragment);
+        //transaction.addToBackStack(null);
+        // Commit the transaction
+        transaction.commit();
+    }
+
+    @Override
+    public void onAddWordButtonClicked() {
+
+        AddNewWord newFragment = new AddNewWord();
+
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        // Replace whatever is in the fragment_container view with this fragment,
+        // and add the transaction to the back stack so the user can navigate back
+        transaction.replace(R.id.fragment_placeholder, newFragment);
+        //transaction.addToBackStack(null);
+        // Commit the transaction
+        transaction.commit();
+    }
+
 }

@@ -1,0 +1,32 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="layout.MenuPageFragmetn"
+    android:background="@drawable/background">
+
+
+        <Button
+            android:id="@+id/start_game"
+            style="@style/MyButtonStyle"
+            android:layout_alignLeft="@+id/see_history"
+            android:layout_alignStart="@+id/see_history"
+            android:layout_marginTop="180dp"
+            android:text="Start new game" />
+
+        <Button
+
+            android:id="@+id/see_history"
+            style="@style/MyButtonStyle"
+            android:layout_alignLeft="@+id/add_word"
+            android:layout_alignStart="@+id/add_word"
+            android:layout_below="@+id/start_game"
+            android:text="History" />
+
+        <Button
+            android:id="@+id/add_word"
+            style="@style/MyButtonStyle"
+            android:layout_below="@+id/see_history"
+            android:text="Add new word" />
+
+</RelativeLayout>

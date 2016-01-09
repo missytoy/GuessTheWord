@@ -2,8 +2,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-     android:background="@drawable/background"
-    tools:context="com.example.miss.temp.FullscreenActivity">
+    tools:context="com.example.miss.temp.FullscreenActivity"
+    >
 
     <!-- The primary full-screen view. This can be replaced with whatever view
          is needed to present your content, e.g. VideoView, SurfaceView,
@@ -22,35 +22,9 @@
          android:fitsSystemWindows. -->
     <FrameLayout android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:fitsSystemWindows="true">
+        android:fitsSystemWindows="true"
+        android:id="@+id/fragment_placeholder">
 
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-            <Button
-                android:id="@+id/start_game"
-                style="@style/MyButtonStyle"
-                android:layout_alignLeft="@+id/see_history"
-                android:layout_alignStart="@+id/see_history"
-                android:layout_marginTop="180dp"
-                android:text="Start new game" />
-
-            <Button
-
-                android:id="@+id/see_history"
-                style="@style/MyButtonStyle"
-                android:layout_alignLeft="@+id/add_word"
-                android:layout_alignStart="@+id/add_word"
-                android:layout_below="@+id/start_game"
-                android:text="History" />
-
-            <Button
-                android:id="@+id/add_word"
-                style="@style/MyButtonStyle"
-                android:layout_below="@+id/see_history"
-                android:text="Add new word" />
-        </RelativeLayout>
 
 
         <LinearLayout android:id="@+id/fullscreen_content_controls"
