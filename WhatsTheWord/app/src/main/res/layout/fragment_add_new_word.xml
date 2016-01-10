@@ -27,18 +27,18 @@
             android:layout_height="match_parent"
             android:orientation="vertical">
 
-            <Button
-                style="@style/MyCategoryButtonsStyle"
-                android:background="@drawable/object_category"
-                android:text="Objects"
-                android:textColor="#fff" />
+            <!--<Button-->
+                <!--style="@style/MyCategoryButtonsStyle"-->
+                <!--android:background="@drawable/object_category"-->
+                <!--android:text="Objects"-->
+                <!--android:textColor="#fff" />-->
 
-            <Button
-                style="@style/MyCategoryButtonsStyle"
+            <!--<Button-->
+                <!--style="@style/MyCategoryButtonsStyle"-->
 
-                android:background="@drawable/music_category"
-                android:text="Songs"
-                android:textColor="#fff" />
+                <!--android:background="@drawable/music_category"-->
+                <!--android:text="Songs"-->
+                <!--android:textColor="#fff" />-->
 
             <Button
                 style="@style/MyCategoryButtonsStyle"
