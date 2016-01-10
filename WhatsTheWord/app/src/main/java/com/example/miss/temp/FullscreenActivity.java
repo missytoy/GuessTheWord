@@ -1,15 +1,13 @@
 package com.example.miss.temp;
 
 import android.annotation.SuppressLint;
-import android.support.v4.app.FragmentTransaction;
-import android.support.v7.app.ActionBar;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.os.Handler;
-import android.view.MotionEvent;
+import android.support.v4.app.FragmentTransaction;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
-import android.widget.Toast;
+
+import java.io.Serializable;
 
 import layout.AddNewWord;
 import layout.HistoryFragment;
@@ -20,7 +18,10 @@ import layout.StartNewGameFragment;
  * An example full-screen activity that shows and hides the system UI (i.e.
  * status bar and navigation/system bar) with user interaction.
  */
-public class FullscreenActivity extends AppCompatActivity implements View.OnClickListener ,MenuPageFragmetn.OnButtonsClick {
+public class FullscreenActivity extends AppCompatActivity
+                                implements View.OnClickListener,
+                                           MenuPageFragmetn.OnButtonsClick,
+                                           StartNewGameFragment.OnChooseCategoryBtnClicked{
     /**
      * Whether or not the system UI should be auto-hidden after
      * {@link #AUTO_HIDE_DELAY_MILLIS} milliseconds.
@@ -248,4 +249,10 @@ public class FullscreenActivity extends AppCompatActivity implements View.OnClic
         transaction.commit();
     }
 
+    @Override
+    public void onChooseCategoryButtonClicked(Serializable players) {
+        Bundle args = new Bundle();
+        args.putSerializable("players_array", players);
+
+    }
 }
