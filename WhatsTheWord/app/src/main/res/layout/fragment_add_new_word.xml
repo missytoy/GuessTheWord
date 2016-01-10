@@ -1,16 +1,95 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/background"
+    android:background="@drawable/blankbackground"
     tools:context="layout.AddNewWord">
 
-    <!-- TODO: Update blank fragment layout -->
+
     <TextView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:textSize="40dp"
+        android:gravity="top|center"
+        android:paddingTop="15dp"
+        android:text="Choose category"
+        android:textAlignment="center"
         android:textColor="@android:color/white"
-        android:text="Add new word" />
+        android:textSize="30dp" />
 
-</FrameLayout>
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="45dp"
+        android:layout_marginTop="80dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <Button
+                style="@style/MyCategoryButtonsStyle"
+                android:background="@drawable/object_category"
+                android:text="Objects"
+                android:textColor="#fff" />
+
+            <Button
+                style="@style/MyCategoryButtonsStyle"
+
+                android:background="@drawable/music_category"
+                android:text="Songs"
+                android:textColor="#fff" />
+
+            <Button
+                style="@style/MyCategoryButtonsStyle"
+
+                android:background="@drawable/animal_category"
+                android:text="Animals"
+                android:textColor="#fff" />
+
+            <Button
+                style="@style/MyCategoryButtonsStyle"
+
+                android:background="@drawable/bgstars_category"
+                android:text="Bg stars"
+                android:textColor="#fff" />
+
+            <Button
+                style="@style/MyCategoryButtonsStyle"
+
+                android:background="@drawable/cars_category"
+                android:text="Cars"
+                android:textColor="#fff" />
+
+
+            <Button
+                style="@style/MyCategoryButtonsStyle"
+                android:background="@drawable/food_category"
+                android:text="Food"
+                android:textColor="#fff" />
+
+            <Button
+                style="@style/MyCategoryButtonsStyle"
+                android:background="@drawable/movie_category"
+                android:text="Movies"
+                android:textColor="#fff" />
+
+            <Button
+                style="@style/MyCategoryButtonsStyle"
+                android:background="@drawable/musicbg_category"
+                android:text="Bg Songs"
+                android:textColor="#fff" />
+
+
+            <Button
+                style="@style/MyCategoryButtonsStyle"
+                android:background="@drawable/stars_category"
+                android:text="Stars"
+                android:textColor="#fff" />
+
+
+        </LinearLayout>
+    </ScrollView>
+
+
+</RelativeLayout>

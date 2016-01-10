@@ -16,7 +16,7 @@
             android:layout_alignParentTop="true"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="33dp"
-            android:background="@drawable/whitetextboxhh"
+            android:background="@drawable/backtextbox"
             android:gravity="center"
             android:hint="Add player's name "
             android:textColor="@color/colorAccent" />
@@ -37,7 +37,7 @@
             android:layout_height="150dp"
             android:paddingBottom="20dp"
             android:paddingTop="10dp"
-            android:background="@drawable/whitetextboxhh">
+            android:background="@drawable/backtextbox">
 
             <TextView
                 android:id="@+id/view_players"
