@@ -2,15 +2,64 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/background"
+    android:background="@drawable/blankbackground"
     tools:context="layout.StartNewGameFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:textSize="40dp"
-        android:textColor="@android:color/white"
-        android:text="@string/hello_blank_fragment" />
+        android:layout_height="match_parent">
+
+        <EditText
+            android:id="@+id/editTextPlayerName"
+            style="@style/MyButtonStyle"
+            android:layout_width="250dp"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="33dp"
+            android:background="@drawable/whitetextboxhh"
+            android:gravity="center"
+            android:hint="Add player's name "
+            android:textColor="@color/colorAccent" />
+
+        <Button
+            android:id="@+id/add_player"
+            style="@style/MyButtonStyle"
+            android:layout_below="@+id/editTextPlayerName"
+            android:layout_centerHorizontal="true"
+            android:text="Add player" />
+
+        <ScrollView
+            android:layout_alignLeft="@+id/editTextPlayerName"
+            android:layout_alignStart="@+id/editTextPlayerName"
+            android:layout_below="@+id/add_player"
+            android:id="@+id/scrollViewer"
+            android:layout_width="250dp"
+            android:layout_height="150dp"
+            android:paddingBottom="20dp"
+            android:paddingTop="10dp"
+            android:background="@drawable/whitetextboxhh">
+
+            <TextView
+                android:id="@+id/view_players"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingBottom="10dp"
+                android:gravity="center_horizontal"
+                android:textAlignment="center"
+                android:textColor="#000"
+                android:text="Players :\n"
+                android:textSize="20sp" />
+        </ScrollView>
+
+        <!--android:text="ffrfr\nrffr r\n r\nrr\nfrfr\nrfrr\n  fr fr frr\n fr r\nrr r fr r"-->
+            <Button
+                android:id="@+id/chose_category"
+                style="@style/MyButtonStyle"
+                android:layout_below="@+id/scrollViewer"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="25dp"
+                android:text="Chose category" />
+
+    </RelativeLayout>
 
 </FrameLayout>

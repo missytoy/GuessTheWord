@@ -39,7 +39,7 @@ public class MenuPageFragmetn extends Fragment implements View.OnClickListener {
 
         startGameBtn.setOnClickListener(this);
         history.setOnClickListener(this);
-        addNewWord.setOnClickListener(this);;
+        addNewWord.setOnClickListener(this);
         // Inflate the layout for this fragment
         return view;
     }
