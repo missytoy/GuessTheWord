@@ -15,6 +15,7 @@ import java.util.List;
 import data.DataAccess;
 import layout.AddNewWord;
 import layout.CategoriesFragment;
+import layout.GamePage;
 import layout.HistoryFragment;
 import layout.MenuPageFragmetn;
 import layout.StartNewGameFragment;
@@ -262,7 +263,8 @@ public class FullscreenActivity extends AppCompatActivity
     @Override
     public void onHistoryButtonClicked() {
 
-        HistoryFragment newFragment = new HistoryFragment();
+        // HistoryFragment newFragment = new HistoryFragment();
+        GamePage newFragment = new GamePage();
 
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         // Replace whatever is in the fragment_container view with this fragment,
