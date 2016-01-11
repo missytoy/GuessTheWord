@@ -12,9 +12,6 @@
         android:layout_width="250dp"
         android:background="@drawable/backtextbox"
         android:hint="Choose category"
-        android:textColor="#000"
-        android:paddingLeft="20dp"
-        android:paddingRight="20dp"
         android:layout_above="@+id/word_to_add"
         android:layout_marginBottom="45dp" />
 

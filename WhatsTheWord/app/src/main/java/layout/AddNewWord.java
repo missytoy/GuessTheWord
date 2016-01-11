@@ -69,7 +69,7 @@ public class AddNewWord extends Fragment implements View.OnClickListener {
             categoriesNames[i + 1] = categories.get(i).getName();
         }
 
-        spinnerAdapter = new ArrayAdapter<String>(getContext(), android.R.layout.simple_list_item_1, categoriesNames);
+        spinnerAdapter = new ArrayAdapter<String>(getContext(), R.layout.spinner_item, categoriesNames);
         //categoryName.setOnItemSelectedListener(new CustomOnItemSelectedListener());
         categoryName.setAdapter(spinnerAdapter);
 
@@ -83,7 +83,7 @@ public class AddNewWord extends Fragment implements View.OnClickListener {
 
     @Override
     public void onClick(View v) {
-        String wordToAdd = addNewWordEditText.getText().toString();
+        String wordToAdd = addNewWordEditText.getText().toString().trim();
         String chosenCategoryName = String.valueOf(categoryName.getSelectedItem());
         if (wordToAdd.length() == 0){
             Toast.makeText(getContext(), "Word to add cannot be empty.", Toast.LENGTH_SHORT)
