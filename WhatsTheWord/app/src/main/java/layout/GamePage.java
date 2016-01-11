@@ -7,6 +7,8 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -18,10 +20,13 @@ import java.util.TimerTask;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class GamePage extends Fragment {
+public class GamePage extends Fragment implements View.OnClickListener {
 
     TextView timerTextView;
     TextView randomWord;
+    RelativeLayout randomWordAndTimer;
+    RelativeLayout currentUserInfo;
+    Button nextPlayerButton;
     public Long timerStep;
 
     public GamePage() {
@@ -37,8 +42,30 @@ public class GamePage extends Fragment {
         View view = inflater.inflate(R.layout.fragment_game_page, container, false);
         timerTextView = (TextView) view.findViewById(R.id.timer_textview_id);
         randomWord = (TextView) view.findViewById(R.id.random_word_textview_id);
+        randomWordAndTimer = (RelativeLayout) view.findViewById(R.id.random_word_and_timer_Layout);
+        currentUserInfo = (RelativeLayout) view.findViewById(R.id.current_user_info);
+        nextPlayerButton = (Button) view.findViewById(R.id.next_player_button);
+        nextPlayerButton.setOnClickListener(this);
 
+
+        playerTimer();
+        return view;
+    }
+
+    @Override
+    public void onClick(View v) {
+        if (v.getId() == nextPlayerButton.getId()) {
+
+            randomWordAndTimer.setVisibility(View.VISIBLE);
+            currentUserInfo.setVisibility(View.INVISIBLE);
+            playerTimer();
+
+        }
+    }
+
+    public void playerTimer() {
         CountDownTimer waitTimer;
+        //TODO: set timer to 60000
         waitTimer = new CountDownTimer(10000, 1000) {
 
             public void onTick(long millisUntilFinished) {
@@ -48,11 +75,10 @@ public class GamePage extends Fragment {
 
             public void onFinish() {
                 timerTextView.setText("0");
-                Toast.makeText(getContext(), "йей", Toast.LENGTH_SHORT).show();
-                randomWord.setVisibility(View.INVISIBLE);
+
+                randomWordAndTimer.setVisibility(View.INVISIBLE);
+                currentUserInfo.setVisibility(View.VISIBLE);
             }
         }.start();
-
-        return view;
     }
 }
