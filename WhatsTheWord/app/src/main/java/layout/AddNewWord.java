@@ -52,7 +52,7 @@ public class AddNewWord extends Fragment {
 
         categoriesNames = new String[11];
 
-        categoriesNames[0] = "Select category";
+        categoriesNames[0] = "Choose category";
         categoriesNames[1] = "Objects";
         categoriesNames[2] = "Music";
         categoriesNames[3] = "Songs";
