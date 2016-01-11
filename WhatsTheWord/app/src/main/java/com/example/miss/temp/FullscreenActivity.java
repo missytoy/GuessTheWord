@@ -22,9 +22,9 @@ import models.Player;
  * status bar and navigation/system bar) with user interaction.
  */
 public class FullscreenActivity extends AppCompatActivity
-                                implements View.OnClickListener,
-                                           MenuPageFragmetn.OnButtonsClick,
-                                           StartNewGameFragment.OnChooseCategoryBtnClicked{
+        implements View.OnClickListener,
+        MenuPageFragmetn.OnButtonsClick,
+        StartNewGameFragment.OnChooseCategoryBtnClicked {
     /**
      * Whether or not the system UI should be auto-hidden after
      * {@link #AUTO_HIDE_DELAY_MILLIS} milliseconds.
@@ -94,7 +94,7 @@ public class FullscreenActivity extends AppCompatActivity
         // Upon interacting with UI controls, delay any scheduled hide()
         // operations to prevent the jarring behavior of controls going away
         // while interacting with the UI.
-       // findViewById(R.id.dummy_button).setOnTouchListener(mDelayHideTouchListener);
+        // findViewById(R.id.dummy_button).setOnTouchListener(mDelayHideTouchListener);
     }
 
     @Override
@@ -105,6 +105,18 @@ public class FullscreenActivity extends AppCompatActivity
         // created, to briefly hint to the user that UI controls
         // are available.
         //delayedHide(100);
+    }
+
+    @Override
+    public void onBackPressed() {
+
+        int count = getFragmentManager().getBackStackEntryCount();
+
+        if (count > 0) {
+            getFragmentManager().popBackStack();
+        } else {
+            super.onBackPressed();
+        }
     }
 
     /**
@@ -161,7 +173,6 @@ public class FullscreenActivity extends AppCompatActivity
 //                    | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION);
 //        }
 //    };
-
     @SuppressLint("InlinedApi")
 //    private void show() {
 //        // Show the system bar
@@ -210,7 +221,7 @@ public class FullscreenActivity extends AppCompatActivity
 //             MenuPageFragmetn firstFragment = new MenuPageFragmetn();
 //             getSupportFragmentManager().beginTransaction()
 //                     .add(R.id.fragment_placeholder, firstFragment).commit();
-      //  }
+        //  }
     }
 
     @Override
@@ -221,7 +232,7 @@ public class FullscreenActivity extends AppCompatActivity
         // Replace whatever is in the fragment_container view with this fragment,
         // and add the transaction to the back stack so the user can navigate back
         transaction.replace(R.id.fragment_placeholder, newFragment);
-        //transaction.addToBackStack(null);
+        transaction.addToBackStack(null);
         // Commit the transaction
         transaction.commit();
     }
@@ -235,7 +246,7 @@ public class FullscreenActivity extends AppCompatActivity
         // Replace whatever is in the fragment_container view with this fragment,
         // and add the transaction to the back stack so the user can navigate back
         transaction.replace(R.id.fragment_placeholder, newFragment);
-        //transaction.addToBackStack(null);
+        transaction.addToBackStack(null);
         // Commit the transaction
         transaction.commit();
     }
@@ -249,14 +260,14 @@ public class FullscreenActivity extends AppCompatActivity
         // Replace whatever is in the fragment_container view with this fragment,
         // and add the transaction to the back stack so the user can navigate back
         transaction.replace(R.id.fragment_placeholder, newFragment);
-        //transaction.addToBackStack(null);
+        transaction.addToBackStack(null);
         // Commit the transaction
         transaction.commit();
     }
 
     @Override
     public void onChooseCategoryButtonClicked(Serializable players) {
-        for (Player pl : (ArrayList<Player>)players) {
+        for (Player pl : (ArrayList<Player>) players) {
             playersList.add(pl);
         }
 
