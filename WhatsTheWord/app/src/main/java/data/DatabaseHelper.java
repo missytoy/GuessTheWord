@@ -1,10 +1,11 @@
-package helpers;
+package data;
 
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
+import helpers.Utils;
 import models.Category;
 
 public class DatabaseHelper extends SQLiteOpenHelper{
