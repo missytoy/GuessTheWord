@@ -95,8 +95,8 @@ public class AddNewWord extends Fragment implements View.OnClickListener {
             Toast toast = Toast.makeText(getContext(), "Word to add cannot be empty.", Toast.LENGTH_SHORT);
             LinearLayout toastLayout = (LinearLayout) toast.getView();
             TextView toastTV = (TextView) toastLayout.getChildAt(0);
-            toastTV.setTextSize(30);
-            toastTV.setTextColor(Color.RED);
+            toastTV.setTextSize(20);
+            toastTV.setTextColor(Color.WHITE);
             toast.setGravity(Gravity.CENTER, 0, 0);
             toast.show();
 
@@ -105,18 +105,18 @@ public class AddNewWord extends Fragment implements View.OnClickListener {
             Toast toast = Toast.makeText(getContext(), "Word already exists.", Toast.LENGTH_SHORT);
             LinearLayout toastLayout = (LinearLayout) toast.getView();
             TextView toastTV = (TextView) toastLayout.getChildAt(0);
-            toastTV.setTextSize(30);
-            toastTV.setTextColor(Color.RED);
+            toastTV.setTextSize(20);
+            toastTV.setTextColor(Color.WHITE);
             toast.setGravity(Gravity.CENTER, 0, 0);
             toast.show();
 
             return;
         } else if(chosenCategoryName == "Choose category"){
-            Toast toast = Toast.makeText(getContext(), "You must chose category.", Toast.LENGTH_SHORT);
+            Toast toast = Toast.makeText(getContext(), "You must choose category", Toast.LENGTH_SHORT);
             LinearLayout toastLayout = (LinearLayout) toast.getView();
             TextView toastTV = (TextView) toastLayout.getChildAt(0);
             toastTV.setTextSize(20);
-            toastTV.setTextColor(Color.RED);
+            toastTV.setTextColor(Color.WHITE);
             toast.setGravity(Gravity.CENTER, 0, 0);
             toast.show();
 
@@ -169,8 +169,8 @@ public class AddNewWord extends Fragment implements View.OnClickListener {
             Toast toast = Toast.makeText(getContext(), "You successfully added the word \"" + wordModelToAdd.getContent() + "\"", Toast.LENGTH_SHORT);
             LinearLayout toastLayout = (LinearLayout) toast.getView();
             TextView toastTV = (TextView) toastLayout.getChildAt(0);
-            toastTV.setTextSize(30);
-            toastTV.setTextColor(Color.GREEN);
+            toastTV.setTextSize(20);
+            toastTV.setTextColor(Color.WHITE);
             toast.setGravity(Gravity.CENTER, 0, 0);
             toast.show();
         }
