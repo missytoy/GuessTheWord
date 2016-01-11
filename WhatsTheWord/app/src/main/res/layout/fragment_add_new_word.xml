@@ -13,7 +13,9 @@
         android:background="@drawable/backtextbox"
         android:hint="Choose category"
         android:textColor="#000"
-        android:layout_above="@+id/editText"
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp"
+        android:layout_above="@+id/word_to_add"
         android:layout_marginBottom="45dp" />
 
     <EditText
@@ -23,7 +25,7 @@
         android:gravity="center"
         android:textAlignment="center"
         android:background="@drawable/backtextbox"
-        android:id="@+id/editText"
+        android:id="@+id/word_to_add"
         android:textColor="#000"
         android:layout_centerVertical="true" />
 
@@ -32,9 +34,9 @@
         android:layout_width="250dp"
         style="@style/MyButtonStyle"
         android:text="Add word"
-        android:layout_below="@+id/editText"
-        android:layout_alignLeft="@+id/editText"
-        android:layout_alignStart="@+id/editText"
+        android:layout_below="@+id/word_to_add"
+        android:layout_alignLeft="@+id/word_to_add"
+        android:layout_alignStart="@+id/word_to_add"
         android:layout_marginTop="45dp" />
 
 </RelativeLayout>

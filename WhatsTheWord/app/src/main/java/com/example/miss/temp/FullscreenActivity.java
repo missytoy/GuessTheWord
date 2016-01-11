@@ -16,7 +16,6 @@ import data.DataAccess;
 import layout.AddNewWord;
 import layout.CategoriesFragment;
 import layout.GamePage;
-import layout.HistoryFragment;
 import layout.MenuPageFragmetn;
 import layout.StartNewGameFragment;
 import models.Category;
@@ -35,7 +34,7 @@ public class FullscreenActivity extends AppCompatActivity
      * {@link #AUTO_HIDE_DELAY_MILLIS} milliseconds.
      */
 
-    private DataAccess data;
+    public DataAccess data;
     Button closeAppBtn;
     private List<Player> playersList;
     List<Category> categoriesList;
@@ -289,6 +288,7 @@ public class FullscreenActivity extends AppCompatActivity
         AddNewWord newFragment = new AddNewWord();
         Bundle args = new Bundle();
         args.putSerializable("categories_array", (Serializable) categoriesList);
+        args.putSerializable("data", (Serializable) data);
         newFragment.setArguments(args);
 
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
