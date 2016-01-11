@@ -267,9 +267,7 @@ public class FullscreenActivity extends AppCompatActivity
 
     @Override
     public void onChooseCategoryButtonClicked(Serializable players) {
-        for (Player pl : (ArrayList<Player>) players) {
-            playersList.add(pl);
-        }
+        playersList = new ArrayList<Player>((ArrayList<Player>) players);
 
 //        Bundle args = new Bundle();
 //        args.putSerializable("players_array", players);
