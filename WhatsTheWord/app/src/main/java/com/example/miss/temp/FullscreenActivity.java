@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import layout.AddNewWord;
+import layout.CategoriesFragment;
 import layout.HistoryFragment;
 import layout.MenuPageFragmetn;
 import layout.StartNewGameFragment;
@@ -273,5 +274,15 @@ public class FullscreenActivity extends AppCompatActivity
 //        args.putSerializable("players_array", players);
 
         // Go to choose category fragment;
+
+        CategoriesFragment newFragment = new CategoriesFragment();
+
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        // Replace whatever is in the fragment_container view with this fragment,
+        // and add the transaction to the back stack so the user can navigate back
+        transaction.replace(R.id.fragment_placeholder, newFragment);
+        transaction.addToBackStack(null);
+        // Commit the transaction
+        transaction.commit();
     }
 }
