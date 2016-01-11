@@ -1,16 +1,19 @@
 package data;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 import models.Category;
+import models.Word;
 
-public class DataAccess {
+public class DataAccess implements Serializable{
     // Database fields
     private SQLiteDatabase database;
     private DatabaseHelper dbHelper;
@@ -51,48 +54,36 @@ public class DataAccess {
         return categories;
     }
 
-//    public Comment createComment(String comment) {
-//        ContentValues values = new ContentValues();
-//        values.put(MySQLiteHelper.COLUMN_COMMENT, comment);
-//        long insertId = database.insert(MySQLiteHelper.TABLE_COMMENTS, null,
-//                values);
-//        Cursor cursor = database.query(MySQLiteHelper.TABLE_COMMENTS,
-//                allColumns, MySQLiteHelper.COLUMN_ID + " = " + insertId, null,
-//                null, null, null);
-//        cursor.moveToFirst();
-//        Comment newComment = cursorToComment(cursor);
-//        cursor.close();
-//        return newComment;
-//    }
-//
-//    public void deleteComment(Comment comment) {
-//        long id = comment.getId();
-//        System.out.println("Comment deleted with id: " + id);
-//        database.delete(MySQLiteHelper.TABLE_COMMENTS, MySQLiteHelper.COLUMN_ID
-//                + " = " + id, null);
-//    }
-//
-//    public List<Comment> getAllComments() {
-//        List<Comment> comments = new ArrayList<Comment>();
-//
-//        Cursor cursor = database.query(MySQLiteHelper.TABLE_COMMENTS,
-//                allColumns, null, null, null, null, null);
-//
-//        cursor.moveToFirst();
-//        while (!cursor.isAfterLast()) {
-//            Comment comment = cursorToComment(cursor);
-//            comments.add(comment);
-//            cursor.moveToNext();
-//        }
-//        // make sure to close the cursor
-//        cursor.close();
-//        return comments;
-//    }
-//
-//    private Comment cursorToComment(Cursor cursor) {
-//        Comment comment = new Comment();
-//        comment.setId(cursor.getLong(0));
-//        comment.setComment(cursor.getString(1));
-//        return comment;
-//    }
+    // Create word
+    public Long createWord(Word wordModelToAdd){
+        ContentValues values = new ContentValues();
+        values.put(DatabaseHelper.KEY_WORD_CONTENT, wordModelToAdd.getContent());
+        values.put(DatabaseHelper.KEY_WORD_CATEGORYID, wordModelToAdd.getCategoryId());
+
+        // insert row
+        Long word_id = database.insert(DatabaseHelper.TABLE_WORD, null, values);
+
+        return word_id;
+    }
+
+    // Get content of all words
+    public List<String> getAllWordsAsContent(){
+        List<String> words = new ArrayList<String>();
+        String selectQuery = "SELECT " + DatabaseHelper.KEY_WORD_CONTENT + " FROM " + DatabaseHelper.TABLE_WORD;
+
+        Cursor c = database.rawQuery(selectQuery, null);
+
+        // looping through all rows and adding to list
+        if (c.moveToFirst()) {
+            do {
+                String word = c.getString(c.getColumnIndex(DatabaseHelper.KEY_WORD_CONTENT));
+
+                // adding to category list
+                words.add(word);
+            } while (c.moveToNext());
+        }
+
+        c.close();
+        return words;
+    }
 }
