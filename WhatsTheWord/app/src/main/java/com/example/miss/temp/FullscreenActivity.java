@@ -8,11 +8,14 @@ import android.view.View;
 import android.widget.Button;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 import layout.AddNewWord;
 import layout.HistoryFragment;
 import layout.MenuPageFragmetn;
 import layout.StartNewGameFragment;
+import models.Player;
 
 /**
  * An example full-screen activity that shows and hides the system UI (i.e.
@@ -28,6 +31,7 @@ public class FullscreenActivity extends AppCompatActivity
      */
 
     Button closeAppBtn;
+    List<Player> playersList;
 
     private static final boolean AUTO_HIDE = true;
 
@@ -53,6 +57,7 @@ public class FullscreenActivity extends AppCompatActivity
 
         setContentView(R.layout.activity_fullscreen);
 
+        playersList = new ArrayList<Player>();
 //        mVisible = true;
 //        mControlsView = findViewById(R.id.fullscreen_content_controls);
 //        mContentView = findViewById(R.id.fullscreen_content);
@@ -251,8 +256,13 @@ public class FullscreenActivity extends AppCompatActivity
 
     @Override
     public void onChooseCategoryButtonClicked(Serializable players) {
-        Bundle args = new Bundle();
-        args.putSerializable("players_array", players);
+        for (Player pl : (ArrayList<Player>)players) {
+            playersList.add(pl);
+        }
 
+//        Bundle args = new Bundle();
+//        args.putSerializable("players_array", players);
+
+        // Go to choose category fragment;
     }
 }
