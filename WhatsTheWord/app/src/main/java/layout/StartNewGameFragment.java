@@ -12,6 +12,7 @@ import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.miss.temp.R;
 
@@ -96,6 +97,12 @@ public class StartNewGameFragment extends Fragment implements View.OnClickListen
     public void onClick(View v) {
         if (v.getId() == addPlayerButton.getId()) {
             String playerNameText = playerName.getText().toString();
+            if (playerNameText.length() == 0){
+                Toast.makeText(getContext(), "Player name cannot be empty", Toast.LENGTH_SHORT)
+                     .show();
+                return;
+            }
+
             Player newPlayer = new Player();
             newPlayer.setName(playerNameText);
             newPlayer.setScore(0);
