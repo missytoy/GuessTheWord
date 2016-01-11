@@ -5,6 +5,7 @@ public class Word {
     private int id;
     // the content should be unique
     private String content;
+    private int categoryId;
     private String category;
 
     public Word(){
@@ -32,5 +33,13 @@ public class Word {
 
     public void setCategory(String category) {
         this.category = category;
+    }
+
+    public int getCategoryId() {
+        return categoryId;
+    }
+
+    public void setCategoryId(int categoryId) {
+        this.categoryId = categoryId;
     }
 }

@@ -27,11 +27,12 @@
             android:layout_height="match_parent"
             android:orientation="vertical">
 
-            <!--<Button-->
-                <!--style="@style/MyCategoryButtonsStyle"-->
-                <!--android:background="@drawable/object_category"-->
-                <!--android:text="Objects"-->
-                <!--android:textColor="#fff" />-->
+            <Button
+                android:id="@+id/object_btn"
+                style="@style/MyCategoryButtonsStyle"
+                android:background="@drawable/object_category"
+                android:text="Objects"
+                android:textColor="#fff" />
 
             <!--<Button-->
                 <!--style="@style/MyCategoryButtonsStyle"-->

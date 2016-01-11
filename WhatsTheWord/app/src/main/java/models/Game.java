@@ -12,6 +12,7 @@ public class Game {
     private String location;
 
     public Game(){
+        this.players = new ArrayList<Player>();
     }
 
     public int getId() {

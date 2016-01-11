@@ -24,7 +24,13 @@ public class AddNewWord extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_add_new_word, container, false);
-    }
+        View view = inflater.inflate(R.layout.fragment_add_new_word, container, false);
 
+        // this is only for reference how to get the id of a drawable resource by name;
+//        Button objectBtn = (Button) view.findViewById(R.id.object_btn);
+//        int backgroundReId = Utils.getResId("animal_category");
+//        objectBtn.setBackgroundResource(backgroundReId);
+
+        return view;
+    }
 }
