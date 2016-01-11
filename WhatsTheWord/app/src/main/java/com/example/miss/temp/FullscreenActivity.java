@@ -18,6 +18,7 @@ import layout.CategoriesFragment;
 import layout.HistoryFragment;
 import layout.MenuPageFragmetn;
 import layout.StartNewGameFragment;
+import models.Category;
 import models.Player;
 
 /**
@@ -35,7 +36,8 @@ public class FullscreenActivity extends AppCompatActivity
 
     private DataAccess data;
     Button closeAppBtn;
-    List<Player> playersList;
+    private List<Player> playersList;
+    List<Category> categoriesList;
 
     private static final boolean AUTO_HIDE = true;
 
@@ -62,7 +64,7 @@ public class FullscreenActivity extends AppCompatActivity
         setContentView(R.layout.activity_fullscreen);
 
         data = new DataAccess(this);
-        new GetDatabaseTask().execute();
+        new GetCategoriesTask().execute(data);
 
         playersList = new ArrayList<Player>();
 //        mVisible = true;
@@ -132,12 +134,18 @@ public class FullscreenActivity extends AppCompatActivity
         }
     }
 
-    private class GetDatabaseTask extends AsyncTask<Void, Void, Void> {
+    private class GetCategoriesTask extends AsyncTask<DataAccess, Void, List<Category>> {
         @Override
-        protected Void doInBackground(Void... params) {
+        protected List<Category> doInBackground(DataAccess... params) {
             data.open();
-            // Download all the categories in the case of our project
-            return null;
+            List<Category> categories = params[0].getAllCategories();
+
+            return categories;
+        }
+
+        @Override
+        protected void onPostExecute(List<Category> categories) {
+            categoriesList = new ArrayList<Category>(categories);
         }
     }
 
@@ -277,6 +285,9 @@ public class FullscreenActivity extends AppCompatActivity
     public void onAddWordButtonClicked() {
 
         AddNewWord newFragment = new AddNewWord();
+        Bundle args = new Bundle();
+        args.putSerializable("categories_array", (Serializable) categoriesList);
+        newFragment.setArguments(args);
 
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         // Replace whatever is in the fragment_container view with this fragment,
@@ -291,12 +302,13 @@ public class FullscreenActivity extends AppCompatActivity
     public void onChooseCategoryButtonClicked(Serializable players) {
         playersList = new ArrayList<Player>((ArrayList<Player>) players);
 
-//        Bundle args = new Bundle();
-//        args.putSerializable("players_array", players);
+        Bundle args = new Bundle();
+        args.putSerializable("categories_array", (Serializable) categoriesList);
 
         // Go to choose category fragment;
 
         CategoriesFragment newFragment = new CategoriesFragment();
+        newFragment.setArguments(args);
 
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         // Replace whatever is in the fragment_container view with this fragment,
