@@ -1,16 +1,20 @@
 package layout;
 
 
+import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.miss.temp.R;
@@ -52,6 +56,7 @@ public class AddNewWord extends Fragment implements View.OnClickListener {
 //        Button objectBtn = (Button) view.findViewById(R.id.object_btn);
 //        int backgroundReId = Utils.getResId("animal_category");
 //        objectBtn.setBackgroundResource(backgroundReId);
+        wordsList = new ArrayList<String>();
 
         Bundle args = this.getArguments();
         categories = new ArrayList<Category>((List<Category>) args.getSerializable("categories_array"));
@@ -83,19 +88,38 @@ public class AddNewWord extends Fragment implements View.OnClickListener {
 
     @Override
     public void onClick(View v) {
-        String wordToAdd = addNewWordEditText.getText().toString().trim();
+        String wordToAdd = addNewWordEditText.getText().toString()
+                                                       .trim();
         String chosenCategoryName = String.valueOf(categoryName.getSelectedItem());
         if (wordToAdd.length() == 0){
-            Toast.makeText(getContext(), "Word to add cannot be empty.", Toast.LENGTH_SHORT)
-                 .show();
+            Toast toast = Toast.makeText(getContext(), "Word to add cannot be empty.", Toast.LENGTH_SHORT);
+            LinearLayout toastLayout = (LinearLayout) toast.getView();
+            TextView toastTV = (TextView) toastLayout.getChildAt(0);
+            toastTV.setTextSize(30);
+            toastTV.setTextColor(Color.RED);
+            toast.setGravity(Gravity.CENTER, 0, 0);
+            toast.show();
+
             return;
-        } else if(wordsList.contains(wordToAdd)){
-            Toast.makeText(getContext(), "Word already exists.", Toast.LENGTH_SHORT)
-                 .show();
+        } else if(wordsList.contains(wordToAdd.toLowerCase())){
+            Toast toast = Toast.makeText(getContext(), "Word already exists.", Toast.LENGTH_SHORT);
+            LinearLayout toastLayout = (LinearLayout) toast.getView();
+            TextView toastTV = (TextView) toastLayout.getChildAt(0);
+            toastTV.setTextSize(30);
+            toastTV.setTextColor(Color.RED);
+            toast.setGravity(Gravity.CENTER, 0, 0);
+            toast.show();
+
             return;
         } else if(chosenCategoryName == "Choose category"){
-            Toast.makeText(getContext(), "You must chose category.", Toast.LENGTH_SHORT)
-                    .show();
+            Toast toast = Toast.makeText(getContext(), "You must chose category.", Toast.LENGTH_SHORT);
+            LinearLayout toastLayout = (LinearLayout) toast.getView();
+            TextView toastTV = (TextView) toastLayout.getChildAt(0);
+            toastTV.setTextSize(20);
+            toastTV.setTextColor(Color.RED);
+            toast.setGravity(Gravity.CENTER, 0, 0);
+            toast.show();
+
             return;
         }
 
@@ -107,7 +131,7 @@ public class AddNewWord extends Fragment implements View.OnClickListener {
             }
         }
         Category chosenCategory = categories.get(indexOfChosenCategory);
-        wordsList.add(wordToAdd);
+        wordsList.add(wordToAdd.toLowerCase());
         wordModelToAdd = new Word();
         wordModelToAdd.setContent(wordToAdd);
         wordModelToAdd.setCategoryId(chosenCategory.getId());
@@ -125,7 +149,9 @@ public class AddNewWord extends Fragment implements View.OnClickListener {
 
         @Override
         protected void onPostExecute(List<String> words) {
-            wordsList = new ArrayList<String>(words);
+            for (String word : words) {
+                wordsList.add(word.toLowerCase());
+            }
         }
     }
 
@@ -140,8 +166,13 @@ public class AddNewWord extends Fragment implements View.OnClickListener {
 
         @Override
         protected void onPostExecute(Long word_id) {
-            Toast.makeText(getContext(), "You successfully added new word.", Toast.LENGTH_SHORT)
-                 .show();
+            Toast toast = Toast.makeText(getContext(), "You successfully added the word \"" + wordModelToAdd.getContent() + "\"", Toast.LENGTH_SHORT);
+            LinearLayout toastLayout = (LinearLayout) toast.getView();
+            TextView toastTV = (TextView) toastLayout.getChildAt(0);
+            toastTV.setTextSize(30);
+            toastTV.setTextColor(Color.GREEN);
+            toast.setGravity(Gravity.CENTER, 0, 0);
+            toast.show();
         }
     }
 //
