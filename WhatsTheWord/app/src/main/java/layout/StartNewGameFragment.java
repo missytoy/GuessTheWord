@@ -8,8 +8,9 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.TextView;
 
 import com.example.miss.temp.R;
@@ -24,13 +25,17 @@ import models.Player;
  * A simple {@link Fragment} subclass.
  */
 public class StartNewGameFragment extends Fragment implements View.OnClickListener {
+    // Will be filled from the database so that we don't have to type our full name if we have already played.
+    // For now it is hardcoded in onCreateView method.
+    private String[] playerNames;
+    private ArrayAdapter<String> autoCompleteAdapter;
 
     OnChooseCategoryBtnClicked onChooseCategoryPressed;
 
     Button addPlayerButton;
     Button chooseCategoryBtn;
     TextView viewPlayers;
-    EditText playerName;
+    AutoCompleteTextView playerName;
     List<Player> playersList;
 
     public StartNewGameFragment() {
@@ -48,9 +53,22 @@ public class StartNewGameFragment extends Fragment implements View.OnClickListen
         chooseCategoryBtn.setOnClickListener(this);
 
         viewPlayers = (TextView) view.findViewById(R.id.view_players);
-        playerName = (EditText) view.findViewById(R.id.editTextPlayerName);
+        playerName = (AutoCompleteTextView) view.findViewById(R.id.editTextPlayerName);
 
         playersList = new ArrayList<Player>();
+
+        playerNames = new String[5];
+        playerNames[0] = "titi";
+        playerNames[1] = "ceco";
+        playerNames[2] = "pesho";
+        playerNames[3] = "gosho";
+        playerNames[4] = "tosho";
+
+        autoCompleteAdapter = new ArrayAdapter<String>(getContext(), android.R.layout.simple_list_item_1, playerNames);
+
+        playerName.setAdapter(autoCompleteAdapter);
+        // specify the minimum type of characters before drop-down list is shown
+        playerName.setThreshold(1);
 
         return view;
     }
