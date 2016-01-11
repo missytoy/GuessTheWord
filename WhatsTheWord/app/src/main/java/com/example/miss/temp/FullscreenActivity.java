@@ -1,6 +1,7 @@
 package com.example.miss.temp;
 
 import android.annotation.SuppressLint;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
@@ -11,6 +12,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+import data.DataAccess;
 import layout.AddNewWord;
 import layout.CategoriesFragment;
 import layout.HistoryFragment;
@@ -31,6 +33,7 @@ public class FullscreenActivity extends AppCompatActivity
      * {@link #AUTO_HIDE_DELAY_MILLIS} milliseconds.
      */
 
+    private DataAccess data;
     Button closeAppBtn;
     List<Player> playersList;
 
@@ -57,6 +60,9 @@ public class FullscreenActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_fullscreen);
+
+        data = new DataAccess(this);
+        new GetDatabaseTask().execute();
 
         playersList = new ArrayList<Player>();
 //        mVisible = true;
@@ -99,6 +105,12 @@ public class FullscreenActivity extends AppCompatActivity
     }
 
     @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        data.close();
+    }
+
+    @Override
     protected void onPostCreate(Bundle savedInstanceState) {
         super.onPostCreate(savedInstanceState);
 
@@ -117,6 +129,15 @@ public class FullscreenActivity extends AppCompatActivity
             getFragmentManager().popBackStack();
         } else {
             super.onBackPressed();
+        }
+    }
+
+    private class GetDatabaseTask extends AsyncTask<Void, Void, Void> {
+        @Override
+        protected Void doInBackground(Void... params) {
+            data.open();
+            // Download all the categories in the case of our project
+            return null;
         }
     }
 

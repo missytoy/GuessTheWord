@@ -65,28 +65,26 @@ public class DatabaseHelper extends SQLiteOpenHelper{
             + "("
             + KEY_ID + " INTEGER PRIMARY KEY,"
             + KEY_GAME_NAME + " TEXT,"
-            + KEY_GAME_PLAYED_ON + " DATETIME"
+            + KEY_GAME_PLAYED_ON + " DATETIME, "
+            + KEY_GAME_LOCATION + " TEXT, "
             + KEY_GAME_CATEGORYID + " INTEGER,FOREIGN KEY(" + KEY_GAME_CATEGORYID + ") REFERENCES " + TABLE_CATEGORY + "(" + KEY_ID + ")"
-            + KEY_GAME_LOCATION + "TEXT"
             + ")";
 
     // Category table create statement
     private static final String CREATE_TABLE_CATEGORY = "CREATE TABLE " + TABLE_CATEGORY
             + "("
             + KEY_ID + " INTEGER PRIMARY KEY,"
-            + KEY_CATEGORY_NAME + " TEXT"
-            + KEY_CATEGORY_IMAGEID + "INTEGER"
+            + KEY_CATEGORY_NAME + " TEXT,"
+            + KEY_CATEGORY_IMAGEID + " INTEGER"
             + ")";
 
     // Word table create statement
     private static final String CREATE_TABLE_WORD= "CREATE TABLE " + TABLE_WORD
             + "("
             + KEY_ID + " INTEGER PRIMARY KEY,"
-            + KEY_WORD_CONTENT + " TEXT,CONSTRAINT content_UNIQUE UNIQUE (" + KEY_WORD_CONTENT + ")"
+            + KEY_WORD_CONTENT + " TEXT UNIQUE, "
             + KEY_WORD_CATEGORYID + " INTEGER,FOREIGN KEY(" + KEY_WORD_CATEGORYID + ") REFERENCES " + TABLE_CATEGORY + "(" + KEY_ID + ")"
             + ")";
-
-    private SQLiteDatabase db;
 
     public DatabaseHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -99,7 +97,7 @@ public class DatabaseHelper extends SQLiteOpenHelper{
         db.execSQL(CREATE_TABLE_GAME);
         db.execSQL(CREATE_TABLE_PLAYER);
         db.execSQL(CREATE_TABLE_WORD);
-        seedDatabase();
+        seedDatabase(db);
     }
 
     @Override
@@ -114,7 +112,7 @@ public class DatabaseHelper extends SQLiteOpenHelper{
         onCreate(db);
     }
 
-    public long createCategory(Category category) {
+    public long createCategory(Category category, SQLiteDatabase db) {
 
         ContentValues values = new ContentValues();
         values.put(KEY_CATEGORY_NAME, category.getName());
@@ -127,8 +125,8 @@ public class DatabaseHelper extends SQLiteOpenHelper{
     }
 
 
-    private void seedDatabase(){
-        db = this.getWritableDatabase();
+    private void seedDatabase(SQLiteDatabase db){
+        //db = this.getWritableDatabase();
 
         for (int i = 0; i < CATEGORY_NAMES.length; i++) {
             Category newCategory = new Category();
@@ -136,9 +134,7 @@ public class DatabaseHelper extends SQLiteOpenHelper{
             // when we load categories in the view we will use this to set their background image
             newCategory.setImageResourceId(Utils.getDrawableId(CATEGORY_IMAGE_NAMES[i]));
 
-            createCategory(newCategory);
+            createCategory(newCategory, db);
         }
-
-        db.close();
     }
 }
