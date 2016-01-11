@@ -6,7 +6,14 @@
     tools:context="layout.AddNewWord">
 
 
-
+    <Spinner
+        style="@style/MyButtonStyle"
+        android:id="@+id/category_spinner"
+        android:background="@drawable/backtextbox"
+        android:gravity="center"
+        android:hint="Choose category"
+        android:textColor="@color/colorAccent"
+        />
 
 
 </RelativeLayout>

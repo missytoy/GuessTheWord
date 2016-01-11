@@ -51,7 +51,6 @@
                 android:textSize="20sp" />
         </ScrollView>
 
-        <!--android:text="ffrfr\nrffr r\n r\nrr\nfrfr\nrfrr\n  fr fr frr\n fr r\nrr r fr r"-->
             <Button
                 android:id="@+id/chose_category"
                 style="@style/MyButtonStyle"
