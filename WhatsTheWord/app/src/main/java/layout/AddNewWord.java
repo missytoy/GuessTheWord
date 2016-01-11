@@ -26,8 +26,7 @@ public class AddNewWord extends Fragment {
     private List<Category> categories;
     private ArrayAdapter<String> spinnerAdapter;
     public int pos;
-    Spinner categoryName; //AutoCompleteTextView
-  //  List<String> categoriesList;
+    Spinner categoryName;
 
     public AddNewWord() {
         // Required empty public constructor
