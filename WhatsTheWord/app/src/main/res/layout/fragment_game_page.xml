@@ -1,4 +1,4 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -6,14 +6,24 @@
     tools:context="layout.GamePage">
 
     <TextView
+        android:id="@+id/random_word_textview_id"
+        style="@style/MyTextViewGamePageStyle"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
-        android:gravity="center"
         android:layout_gravity="center"
-        android:text="Harry Potter - Goblet of fire"
-        android:textSize="50sp"
-        android:textColor="#fff"/>
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:text="Harry Potter - Goblet of fire" />
+
+    <TextView
+        android:id="@+id/timer_textview_id"
+        style="@style/MyTextViewGamePageStyle"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
+        android:text="60" />
 
 
-
-</FrameLayout>
+</RelativeLayout>
