@@ -58,7 +58,7 @@ public class DatabaseHelper extends SQLiteOpenHelper{
     private static final String CREATE_TABLE_GAME = "CREATE TABLE " + TABLE_GAME
             + "("
             + KEY_ID + " INTEGER PRIMARY KEY,"
-            + KEY_GAME_PLAYED_ON + " DATETIME, "
+            + KEY_GAME_PLAYED_ON + " INTEGER, "
             + KEY_GAME_LOCATION + " TEXT, "
             + KEY_GAME_CATEGORYID + " INTEGER,FOREIGN KEY(" + KEY_GAME_CATEGORYID + ") REFERENCES " + TABLE_CATEGORY + "(" + KEY_ID + ")"
             + ")";

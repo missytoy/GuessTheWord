@@ -161,6 +161,7 @@ public class GamePage extends Fragment implements View.OnClickListener {
                     }
 
                     // Make async task that saves the game object to the database - here or in activity see how to do it.
+                    new SaveGameObjectAndPlayersToBaseTask().execute((DataAccess) getArguments().getSerializable("data"));
                     onGameOver.onGameEnding(playerScores);
                 } else{
                     randomWordAndTimer.setVisibility(View.INVISIBLE);
@@ -251,6 +252,12 @@ public class GamePage extends Fragment implements View.OnClickListener {
                 pl.setGameId(gameId);
                 params[0].createPlayer(pl);
             }
+
+//            List<Game> games = params[0].getAllGames();
+//            Date bla = games.get(0).getPlayedOn();
+//            DateFormat hm = new SimpleDateFormat("dd.MM.yy");
+//            String date = hm.format(bla);
+//            int b = 5;
 
             return null;
         }

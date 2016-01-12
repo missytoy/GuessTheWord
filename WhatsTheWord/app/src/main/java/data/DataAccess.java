@@ -9,6 +9,7 @@ import android.database.sqlite.SQLiteDatabase;
 import java.io.Serializable;
 import java.util.AbstractSet;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 
@@ -115,14 +116,41 @@ public class DataAccess implements Serializable{
 
     // Create game
     public long createGame(Game gameModel){
-//        ContentValues values = new ContentValues();
-//        values.put(DatabaseHelper.KEY_WORD_CONTENT, wordModelToAdd.getContent());
-//        values.put(DatabaseHelper.KEY_WORD_CATEGORYID, wordModelToAdd.getCategoryId());
-//
-//        // insert row
-//        Long word_id = database.insert(DatabaseHelper.TABLE_WORD, null, values);
+        ContentValues values = new ContentValues();
+        values.put(DatabaseHelper.KEY_GAME_CATEGORYID, gameModel.getCategoryId());
+        values.put(DatabaseHelper.KEY_GAME_LOCATION, gameModel.getLocation());
+        values.put(DatabaseHelper.KEY_GAME_PLAYED_ON, persistDate(gameModel.getPlayedOn()));
+
+        // insert row
+        Long game_id = database.insert(DatabaseHelper.TABLE_GAME, null, values);
 
         return 5L;
+    }
+
+    // Get of all games
+    public List<Game> getAllGames(){
+        List<Game> games = new ArrayList<Game>();
+        String selectQuery = "SELECT * FROM " + DatabaseHelper.TABLE_GAME
+                + " ORDER BY " + DatabaseHelper.KEY_GAME_PLAYED_ON + " DESC";
+
+        Cursor c = database.rawQuery(selectQuery, null);
+
+        // looping through all rows and adding to list
+        if (c.moveToFirst()) {
+            do {
+                Game game = new Game();
+                game.setId(c.getInt(c.getColumnIndex(DatabaseHelper.KEY_ID)));
+                game.setCategoryId(c.getInt((c.getColumnIndex(DatabaseHelper.KEY_GAME_CATEGORYID))));
+                game.setLocation(c.getString(c.getColumnIndex(DatabaseHelper.KEY_GAME_LOCATION)));
+                game.setPlayedOn(loadDate(c, c.getColumnIndex(DatabaseHelper.KEY_GAME_PLAYED_ON)));
+
+                // adding to category list
+                games.add(game);
+            } while (c.moveToNext());
+        }
+
+        c.close();
+        return games;
     }
 
     // Create player
@@ -135,5 +163,19 @@ public class DataAccess implements Serializable{
 //        Long word_id = database.insert(DatabaseHelper.TABLE_WORD, null, values);
 
         return 5L;
+    }
+
+    private static Long persistDate(Date date) {
+        if (date != null) {
+            return date.getTime();
+        }
+        return null;
+    }
+
+    private static Date loadDate(Cursor cursor, int index) {
+        if (cursor.isNull(index)) {
+            return null;
+        }
+        return new Date(cursor.getLong(index));
     }
 }
