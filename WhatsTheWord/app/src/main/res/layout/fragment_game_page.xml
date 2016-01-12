@@ -32,6 +32,22 @@
             android:layout_alignParentTop="true"
             android:text="60" />
 
+        <Button
+            style="@style/MyButtonStyle"
+            android:text="correct"
+            android:id="@+id/correct_btn"
+            android:layout_alignTop="@+id/wrong_btn"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true" />
+
+        <Button
+            style="@style/MyButtonStyle"
+            android:text="wrong"
+            android:id="@+id/wrong_btn"
+            android:layout_alignParentBottom="true"
+            android:layout_toLeftOf="@+id/correct_btn"
+            android:layout_toStartOf="@+id/correct_btn" />
+
     </RelativeLayout>
 
     <RelativeLayout
