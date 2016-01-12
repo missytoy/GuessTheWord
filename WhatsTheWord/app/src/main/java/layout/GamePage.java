@@ -23,11 +23,13 @@ import com.example.miss.temp.R;
 import java.util.AbstractSet;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Random;
 
 import data.DataAccess;
+import models.Game;
 import models.Player;
 
 /**
@@ -231,6 +233,26 @@ public class GamePage extends Fragment implements View.OnClickListener {
                 toast.setGravity(Gravity.CENTER, 0, 0);
                 toast.show();
             }
+        }
+    }
+
+    private class SaveGameObjectAndPlayersToBaseTask extends AsyncTask<DataAccess, Void, Void> {
+        @Override
+        protected Void doInBackground(DataAccess... params) {
+            Game gameModel = new Game();
+            gameModel.setCategoryId(currentCategoryId);
+            // TODO: see if this one works correctly
+            gameModel.setPlayedOn(new Date());
+            // TODO: get the location from the activity as a string via Bundle
+            gameModel.setLocation("some location string");
+
+            int gameId = (int) params[0].createGame(gameModel);
+            for (Player pl : players) {
+                pl.setGameId(gameId);
+                params[0].createPlayer(pl);
+            }
+
+            return null;
         }
     }
 }

@@ -13,6 +13,8 @@ import java.util.HashSet;
 import java.util.List;
 
 import models.Category;
+import models.Game;
+import models.Player;
 import models.Word;
 
 public class DataAccess implements Serializable{
@@ -109,5 +111,29 @@ public class DataAccess implements Serializable{
 
         c.close();
         return words;
+    }
+
+    // Create game
+    public long createGame(Game gameModel){
+//        ContentValues values = new ContentValues();
+//        values.put(DatabaseHelper.KEY_WORD_CONTENT, wordModelToAdd.getContent());
+//        values.put(DatabaseHelper.KEY_WORD_CATEGORYID, wordModelToAdd.getCategoryId());
+//
+//        // insert row
+//        Long word_id = database.insert(DatabaseHelper.TABLE_WORD, null, values);
+
+        return 5L;
+    }
+
+    // Create player
+    public long createPlayer(Player playerModel){
+//        ContentValues values = new ContentValues();
+//        values.put(DatabaseHelper.KEY_WORD_CONTENT, wordModelToAdd.getContent());
+//        values.put(DatabaseHelper.KEY_WORD_CATEGORYID, wordModelToAdd.getCategoryId());
+//
+//        // insert row
+//        Long word_id = database.insert(DatabaseHelper.TABLE_WORD, null, values);
+
+        return 5L;
     }
 }

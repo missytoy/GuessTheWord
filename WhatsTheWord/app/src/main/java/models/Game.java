@@ -5,7 +5,7 @@ import java.util.Date;
 
 public class Game {
     private int id;
-    private String category;
+    private Integer categoryId;
     private ArrayList<Player> players;
     private Date playedOn;
     private Player winner;
@@ -55,11 +55,11 @@ public class Game {
         this.location = location;
     }
 
-    public String getCategory() {
-        return category;
+    public Integer getCategoryId() {
+        return categoryId;
     }
 
-    public void setCategory(String category) {
-        this.category = category;
+    public void setCategoryId(Integer category) {
+        this.categoryId = category;
     }
 }

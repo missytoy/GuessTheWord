@@ -32,7 +32,6 @@ public class DatabaseHelper extends SQLiteOpenHelper{
     public static final String KEY_PLAYER_GAMEID = "game_id";
 
     // GAME Table - column names
-    public static final String KEY_GAME_NAME = "game_name";
     public static final String KEY_GAME_PLAYED_ON = "played_on";
     public static final String KEY_GAME_LOCATION = "location";
     public static final String KEY_GAME_CATEGORYID = "category_id";
@@ -59,7 +58,6 @@ public class DatabaseHelper extends SQLiteOpenHelper{
     private static final String CREATE_TABLE_GAME = "CREATE TABLE " + TABLE_GAME
             + "("
             + KEY_ID + " INTEGER PRIMARY KEY,"
-            + KEY_GAME_NAME + " TEXT,"
             + KEY_GAME_PLAYED_ON + " DATETIME, "
             + KEY_GAME_LOCATION + " TEXT, "
             + KEY_GAME_CATEGORYID + " INTEGER,FOREIGN KEY(" + KEY_GAME_CATEGORYID + ") REFERENCES " + TABLE_CATEGORY + "(" + KEY_ID + ")"
