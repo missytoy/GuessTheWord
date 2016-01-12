@@ -20,6 +20,7 @@
         android:layout_width="250dp"
         android:hint="Enter new word"
         android:gravity="center"
+        android:padding="15dp"
         android:textAlignment="center"
         android:background="@drawable/backtextbox"
         android:id="@+id/word_to_add"
