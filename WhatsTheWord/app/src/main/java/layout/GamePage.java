@@ -158,11 +158,9 @@ public class GamePage extends Fragment implements View.OnClickListener {
                         playerScores[i] = playerScoreInfo;
                     }
 
+                    // Make async task that saves the game object to the database - here or in activity see how to do it.
                     onGameOver.onGameEnding(playerScores);
-
-                    Toast.makeText(getContext(), "bla bla", Toast.LENGTH_SHORT).show();
-                }
-                else{
+                } else{
                     randomWordAndTimer.setVisibility(View.INVISIBLE);
                     currentUserInfo.setVisibility(View.VISIBLE);
 

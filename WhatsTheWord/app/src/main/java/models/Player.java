@@ -44,9 +44,9 @@ public class Player implements Comparable<Player> {
     @Override
     public int compareTo(Player another) {
         if (this.getScore() < another.getScore()){
-            return -1;
-        }else{
             return 1;
+        }else{
+            return -1;
         }
     }
 }

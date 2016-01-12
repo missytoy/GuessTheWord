@@ -16,7 +16,6 @@ import data.DataAccess;
 import layout.AddNewWord;
 import layout.CategoriesFragment;
 import layout.GamePage;
-import layout.HistoryFragment;
 import layout.MenuPageFragmetn;
 import layout.Ranking;
 import layout.StartNewGameFragment;
@@ -260,18 +259,16 @@ public class FullscreenActivity extends AppCompatActivity
 
     @Override
     public void onGameEnding(String[] playersScores) {
-//        GamePage newFragment = new GamePage();
-//        Bundle args = new Bundle();
-//        args.putInt("category_id", categoryId);
-//        args.putSerializable("players_list", (Serializable) playersList);
-//        args.putSerializable("data", (Serializable) data);
-//        newFragment.setArguments(args);
-//
-//        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-//        // Replace whatever is in the fragment_container view with this fragment
-//        transaction.replace(R.id.fragment_placeholder, newFragment);
-//        // Commit the transaction
-//        transaction.commit();
+        Ranking newFragment = new Ranking();
+        Bundle args = new Bundle();
+        args.putSerializable("players_scores", playersScores);
+        newFragment.setArguments(args);
+
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        // Replace whatever is in the fragment_container view with this fragment
+        transaction.replace(R.id.fragment_placeholder, newFragment);
+        // Commit the transaction
+        transaction.commit();
     }
 
     @Override
@@ -280,6 +277,7 @@ public class FullscreenActivity extends AppCompatActivity
         Bundle args = new Bundle();
         args.putInt("category_id", categoryId);
         args.putSerializable("players_list", (Serializable) playersList);
+        // Maybe put here the game object with location string to be persisted to base
         args.putSerializable("data", (Serializable) data);
         newFragment.setArguments(args);
 
