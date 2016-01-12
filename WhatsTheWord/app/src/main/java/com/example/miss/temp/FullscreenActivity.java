@@ -16,6 +16,7 @@ import data.DataAccess;
 import layout.AddNewWord;
 import layout.CategoriesFragment;
 import layout.GamePage;
+import layout.HistoryFragment;
 import layout.MenuPageFragmetn;
 import layout.StartNewGameFragment;
 import models.Category;
@@ -88,8 +89,9 @@ public class FullscreenActivity extends AppCompatActivity
             // Intent, pass the Intent's extras to the fragment as arguments
             //firstFragment.setArguments(getIntent().getExtras());
             // Add the fragment to the 'fragment_container' FrameLayout
-            getSupportFragmentManager().beginTransaction()
-                    .add(R.id.fragment_placeholder, firstFragment).commit();
+            FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+            transaction.add(R.id.fragment_placeholder, firstFragment);
+            transaction.commit();
         }
 
         // Set up the user interaction to manually show or hide the system UI.
@@ -125,14 +127,11 @@ public class FullscreenActivity extends AppCompatActivity
 
     @Override
     public void onBackPressed() {
+        MenuPageFragmetn firstFragment = new MenuPageFragmetn();
 
-        int count = getFragmentManager().getBackStackEntryCount();
-
-        if (count > 0) {
-            getFragmentManager().popBackStack();
-        } else {
-            super.onBackPressed();
-        }
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        transaction.add(R.id.fragment_placeholder, firstFragment);
+        transaction.commit();
     }
 
     private class GetCategoriesTask extends AsyncTask<DataAccess, Void, List<Category>> {
@@ -266,10 +265,8 @@ public class FullscreenActivity extends AppCompatActivity
         newFragment.setArguments(args);
 
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        // Replace whatever is in the fragment_container view with this fragment,
-        // and add the transaction to the back stack so the user can navigate back
+        // Replace whatever is in the fragment_container view with this fragment
         transaction.replace(R.id.fragment_placeholder, newFragment);
-        transaction.addToBackStack(null);
         // Commit the transaction
         transaction.commit();
     }
@@ -279,10 +276,8 @@ public class FullscreenActivity extends AppCompatActivity
         StartNewGameFragment newFragment = new StartNewGameFragment();
 
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        // Replace whatever is in the fragment_container view with this fragment,
-        // and add the transaction to the back stack so the user can navigate back
+        // Replace whatever is in the fragment_container view with this fragment
         transaction.replace(R.id.fragment_placeholder, newFragment);
-        transaction.addToBackStack(null);
         // Commit the transaction
         transaction.commit();
     }
@@ -290,16 +285,14 @@ public class FullscreenActivity extends AppCompatActivity
     @Override
     public void onHistoryButtonClicked() {
 
-//        HistoryFragment newFragment = new HistoryFragment();
-//        //GamePage newFragment = new GamePage();
-//
-//        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-//        // Replace whatever is in the fragment_container view with this fragment,
-//        // and add the transaction to the back stack so the user can navigate back
-//        transaction.replace(R.id.fragment_placeholder, newFragment);
-//        transaction.addToBackStack(null);
-//        // Commit the transaction
-//        transaction.commit();
+        HistoryFragment newFragment = new HistoryFragment();
+        //GamePage newFragment = new GamePage();
+
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        // Replace whatever is in the fragment_container view with this fragment
+        transaction.replace(R.id.fragment_placeholder, newFragment);
+        // Commit the transaction
+        transaction.commit();
     }
 
     @Override
@@ -311,10 +304,8 @@ public class FullscreenActivity extends AppCompatActivity
         newFragment.setArguments(args);
 
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        // Replace whatever is in the fragment_container view with this fragment,
-        // and add the transaction to the back stack so the user can navigate back
+        // Replace whatever is in the fragment_container view with this fragment
         transaction.replace(R.id.fragment_placeholder, newFragment);
-        transaction.addToBackStack(null);
         // Commit the transaction
         transaction.commit();
     }
@@ -332,10 +323,8 @@ public class FullscreenActivity extends AppCompatActivity
         newFragment.setArguments(args);
 
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        // Replace whatever is in the fragment_container view with this fragment,
-        // and add the transaction to the back stack so the user can navigate back
+        // Replace whatever is in the fragment_container view with this fragment
         transaction.replace(R.id.fragment_placeholder, newFragment);
-        transaction.addToBackStack(null);
         // Commit the transaction
         transaction.commit();
     }
