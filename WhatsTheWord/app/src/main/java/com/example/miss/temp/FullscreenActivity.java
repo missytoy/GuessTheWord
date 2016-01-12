@@ -290,16 +290,16 @@ public class FullscreenActivity extends AppCompatActivity
     @Override
     public void onHistoryButtonClicked() {
 
-        // HistoryFragment newFragment = new HistoryFragment();
-        GamePage newFragment = new GamePage();
-
-        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        // Replace whatever is in the fragment_container view with this fragment,
-        // and add the transaction to the back stack so the user can navigate back
-        transaction.replace(R.id.fragment_placeholder, newFragment);
-        transaction.addToBackStack(null);
-        // Commit the transaction
-        transaction.commit();
+//        HistoryFragment newFragment = new HistoryFragment();
+//        //GamePage newFragment = new GamePage();
+//
+//        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+//        // Replace whatever is in the fragment_container view with this fragment,
+//        // and add the transaction to the back stack so the user can navigate back
+//        transaction.replace(R.id.fragment_placeholder, newFragment);
+//        transaction.addToBackStack(null);
+//        // Commit the transaction
+//        transaction.commit();
     }
 
     @Override
