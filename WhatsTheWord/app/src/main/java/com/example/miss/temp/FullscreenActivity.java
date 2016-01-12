@@ -130,7 +130,7 @@ public class FullscreenActivity extends AppCompatActivity
         MenuPageFragmetn firstFragment = new MenuPageFragmetn();
 
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        transaction.add(R.id.fragment_placeholder, firstFragment);
+        transaction.replace(R.id.fragment_placeholder, firstFragment);
         transaction.commit();
     }
 
