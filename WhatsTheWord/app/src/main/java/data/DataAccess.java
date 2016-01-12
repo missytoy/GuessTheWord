@@ -9,10 +9,10 @@ import android.database.sqlite.SQLiteDatabase;
 import java.io.Serializable;
 import java.util.AbstractSet;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 
+import helpers.Utils;
 import models.Category;
 import models.Game;
 import models.Player;
@@ -35,6 +35,7 @@ public class DataAccess implements Serializable{
         dbHelper.close();
     }
 
+    /******** CATEGORIES **********/
     // Get all Categories
     public List<Category> getAllCategories() {
         List<Category> categories = new ArrayList<Category>();
@@ -59,6 +60,7 @@ public class DataAccess implements Serializable{
         return categories;
     }
 
+    /******** WORDS **********/
     // Create word
     public Long createWord(Word wordModelToAdd){
         ContentValues values = new ContentValues();
@@ -114,24 +116,28 @@ public class DataAccess implements Serializable{
         return words;
     }
 
+    /******** GAMES **********/
     // Create game
     public long createGame(Game gameModel){
         ContentValues values = new ContentValues();
         values.put(DatabaseHelper.KEY_GAME_CATEGORYID, gameModel.getCategoryId());
         values.put(DatabaseHelper.KEY_GAME_LOCATION, gameModel.getLocation());
-        values.put(DatabaseHelper.KEY_GAME_PLAYED_ON, persistDate(gameModel.getPlayedOn()));
+        values.put(DatabaseHelper.KEY_GAME_PLAYED_ON, Utils.persistDate(gameModel.getPlayedOn()));
 
         // insert row
         Long game_id = database.insert(DatabaseHelper.TABLE_GAME, null, values);
 
-        return 5L;
+        return game_id;
     }
 
-    // Get of all games
-    public List<Game> getAllGames(){
+    // Get all games(optional parameter - count of games to take)
+    public List<Game> getAllGames(Integer... count){
         List<Game> games = new ArrayList<Game>();
         String selectQuery = "SELECT * FROM " + DatabaseHelper.TABLE_GAME
                 + " ORDER BY " + DatabaseHelper.KEY_GAME_PLAYED_ON + " DESC";
+        if (count.length > 0){
+            selectQuery += " LIMIT " + count[0].toString();
+        }
 
         Cursor c = database.rawQuery(selectQuery, null);
 
@@ -142,7 +148,7 @@ public class DataAccess implements Serializable{
                 game.setId(c.getInt(c.getColumnIndex(DatabaseHelper.KEY_ID)));
                 game.setCategoryId(c.getInt((c.getColumnIndex(DatabaseHelper.KEY_GAME_CATEGORYID))));
                 game.setLocation(c.getString(c.getColumnIndex(DatabaseHelper.KEY_GAME_LOCATION)));
-                game.setPlayedOn(loadDate(c, c.getColumnIndex(DatabaseHelper.KEY_GAME_PLAYED_ON)));
+                game.setPlayedOn(Utils.loadDate(c, c.getColumnIndex(DatabaseHelper.KEY_GAME_PLAYED_ON)));
 
                 // adding to category list
                 games.add(game);
@@ -153,6 +159,7 @@ public class DataAccess implements Serializable{
         return games;
     }
 
+    /******** PLAYERS **********/
     // Create player
     public long createPlayer(Player playerModel){
         ContentValues values = new ContentValues();
@@ -186,17 +193,27 @@ public class DataAccess implements Serializable{
         return names;
     }
 
-    private static Long persistDate(Date date) {
-        if (date != null) {
-            return date.getTime();
-        }
-        return null;
-    }
+    // Get all players by game ID
+    public List<Player> getAllPlayersByGame(int gameId){
+        List<Player> players = new ArrayList<Player>();
 
-    private static Date loadDate(Cursor cursor, int index) {
-        if (cursor.isNull(index)) {
-            return null;
+        String selectQuery = "SELECT  * FROM " + DatabaseHelper.TABLE_PLAYER
+                 + " WHERE " + DatabaseHelper.KEY_PLAYER_GAMEID + " = " + gameId;
+
+        Cursor c = database.rawQuery(selectQuery, null);
+
+        // looping through all rows and adding to list
+        if (c.moveToFirst()) {
+            do {
+                Player pl = new Player();
+                pl.setName((c.getString(c.getColumnIndex(DatabaseHelper.KEY_PLAYER_NAME))));
+                pl.setScore(c.getInt(c.getColumnIndex(DatabaseHelper.KEY_PLAYER_SCORE)));
+
+                players.add(pl);
+            } while (c.moveToNext());
         }
-        return new Date(cursor.getLong(index));
+
+        c.close();
+        return players;
     }
 }

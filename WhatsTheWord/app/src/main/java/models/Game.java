@@ -10,6 +10,7 @@ public class Game {
     private Date playedOn;
     private Player winner;
     private String location;
+    private Integer numberInView;
 
     public Game(){
         this.players = new ArrayList<Player>();
@@ -61,5 +62,13 @@ public class Game {
 
     public void setCategoryId(Integer category) {
         this.categoryId = category;
+    }
+
+    public Integer getNumberInView() {
+        return numberInView;
+    }
+
+    public void setNumberInView(int numberInView) {
+        this.numberInView = numberInView;
     }
 }

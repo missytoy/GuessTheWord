@@ -1,9 +1,12 @@
 package helpers;
 
 
+import android.database.Cursor;
+
 import com.example.miss.temp.R;
 
 import java.lang.reflect.Field;
+import java.util.Date;
 
 public class Utils {
 
@@ -17,5 +20,19 @@ public class Utils {
             e.printStackTrace();
             return -1;
         }
+    }
+
+    public static Long persistDate(Date date) {
+        if (date != null) {
+            return date.getTime();
+        }
+        return null;
+    }
+
+    public static Date loadDate(Cursor cursor, int index) {
+        if (cursor.isNull(index)) {
+            return null;
+        }
+        return new Date(cursor.getLong(index));
     }
 }

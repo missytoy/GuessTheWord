@@ -309,6 +309,10 @@ public class FullscreenActivity extends AppCompatActivity
         HistoryFragment newFragment = new HistoryFragment();
         //GamePage newFragment = new GamePage();
 
+        Bundle args = new Bundle();
+        args.putSerializable("data", this.data);
+        newFragment.setArguments(args);
+
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         // Replace whatever is in the fragment_container view with this fragment
         transaction.replace(R.id.fragment_placeholder, newFragment);

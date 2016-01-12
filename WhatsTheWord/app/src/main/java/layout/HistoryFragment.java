@@ -1,24 +1,32 @@
 package layout;
 
 
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 import com.example.miss.temp.R;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
+import data.DataAccess;
+import models.Game;
+import models.Player;
 
 /**
  * A simple {@link Fragment} subclass.
  */
 public class HistoryFragment extends Fragment {
 
-    private ArrayAdapter<String> adapter;
-    private String[] playersHistory  = {"1. Konstantina (25.10.2015)","2. Pesho (25.10.2015)","2. Pesho (25.10.2015)"};
+    private GamesListAdapter adapter;
     private ListView historyListView;
+    private List<Game> lastGames;
 
     public HistoryFragment() {
         // Required empty public constructor
@@ -32,13 +40,42 @@ public class HistoryFragment extends Fragment {
 
         View view = inflater.inflate(R.layout.fragment_history, container, false);
 
-       // Bundle args = this.getArguments();
-       // history = (String[]) args.getSerializable("players_scores");
-        historyListView = (ListView) view.findViewById(R.id.history_listview);
-        adapter = new ArrayAdapter<String>(getContext(), R.layout.history_listview_item,playersHistory);
-        historyListView.setAdapter(adapter);
+        Bundle args = this.getArguments();
+        new GetLastGamesHistoryTask().execute((DataAccess) args.getSerializable("data"));
 
         return view;
+    }
+
+    private class GetLastGamesHistoryTask extends AsyncTask<DataAccess, Void, List<Game>> {
+        @Override
+        protected List<Game> doInBackground(DataAccess... params) {
+            List<Game> games = params[0].getAllGames(10);
+
+            int numberInView = 1;
+            for (Game game : games) {
+                int gameId = game.getId();
+
+                List<Player> players = params[0].getAllPlayersByGame(gameId);
+                Collections.sort(players);
+                game.setNumberInView(numberInView);
+                game.setWinner(players.get(0));
+                for (int j = 0; j < players.size(); j++) {
+                    game.addPlayer(players.get(j));
+                }
+
+                numberInView++;
+            }
+
+            return games;
+        }
+
+        @Override
+        protected void onPostExecute(List<Game> games) {
+            lastGames = new ArrayList<Game>(games);
+            historyListView = (ListView) getView().findViewById(R.id.history_listview);
+            adapter = new GamesListAdapter(getContext(), lastGames);
+            historyListView.setAdapter(adapter);
+        }
     }
 
 }

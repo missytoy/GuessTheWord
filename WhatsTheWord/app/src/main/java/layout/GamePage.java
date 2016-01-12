@@ -253,12 +253,6 @@ public class GamePage extends Fragment implements View.OnClickListener {
                 params[0].createPlayer(pl);
             }
 
-//            List<Game> games = params[0].getAllGames();
-//            Date bla = games.get(0).getPlayedOn();
-//            DateFormat hm = new SimpleDateFormat("dd.MM.yy");
-//            String date = hm.format(bla);
-//            int b = 5;
-
             return null;
         }
     }
