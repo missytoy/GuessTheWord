@@ -155,14 +155,35 @@ public class DataAccess implements Serializable{
 
     // Create player
     public long createPlayer(Player playerModel){
-//        ContentValues values = new ContentValues();
-//        values.put(DatabaseHelper.KEY_WORD_CONTENT, wordModelToAdd.getContent());
-//        values.put(DatabaseHelper.KEY_WORD_CATEGORYID, wordModelToAdd.getCategoryId());
-//
-//        // insert row
-//        Long word_id = database.insert(DatabaseHelper.TABLE_WORD, null, values);
+        ContentValues values = new ContentValues();
+        values.put(DatabaseHelper.KEY_PLAYER_NAME, playerModel.getName());
+        values.put(DatabaseHelper.KEY_PLAYER_SCORE, playerModel.getScore());
+        values.put(DatabaseHelper.KEY_PLAYER_GAMEID, playerModel.getGameId());
 
-        return 5L;
+        // insert row
+        Long player_id = database.insert(DatabaseHelper.TABLE_PLAYER, null, values);
+
+        return player_id;
+    }
+
+    // Get all player names
+    public AbstractSet<String> getAllPlayerNames(){
+        AbstractSet<String> names = new HashSet<String>();
+        String selectQuery = "SELECT " + DatabaseHelper.KEY_PLAYER_NAME + " FROM " + DatabaseHelper.TABLE_PLAYER;
+
+        Cursor c = database.rawQuery(selectQuery, null);
+
+        // looping through all rows and adding to list
+        if (c.moveToFirst()) {
+            do {
+                String name = c.getString(c.getColumnIndex(DatabaseHelper.KEY_PLAYER_NAME));
+
+                names.add(name);
+            } while (c.moveToNext());
+        }
+
+        c.close();
+        return names;
     }
 
     private static Long persistDate(Date date) {

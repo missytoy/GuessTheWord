@@ -4,6 +4,7 @@ package layout;
 import android.app.Activity;
 import android.content.Context;
 import android.graphics.Color;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.Gravity;
@@ -20,9 +21,11 @@ import android.widget.Toast;
 import com.example.miss.temp.R;
 
 import java.io.Serializable;
+import java.util.AbstractSet;
 import java.util.ArrayList;
 import java.util.List;
 
+import data.DataAccess;
 import models.Player;
 
 /**
@@ -31,7 +34,7 @@ import models.Player;
 public class StartNewGameFragment extends Fragment implements View.OnClickListener {
     // Will be filled from the database so that we don't have to type our full name if we have already played.
     // For now it is hardcoded in onCreateView method.
-    private String[] playerNames;
+    private List<String> allPlayerNames;
     private ArrayAdapter<String> autoCompleteAdapter;
 
     OnChooseCategoryBtnClicked onChooseCategoryPressed;
@@ -60,15 +63,10 @@ public class StartNewGameFragment extends Fragment implements View.OnClickListen
         playerName = (AutoCompleteTextView) view.findViewById(R.id.editTextPlayerName);
 
         playersList = new ArrayList<Player>();
+        allPlayerNames = new ArrayList<String>();
+        new GetPlayerNamesTask().execute((DataAccess) getArguments().getSerializable("data"));
 
-        playerNames = new String[5];
-        playerNames[0] = "titi";
-        playerNames[1] = "ceco";
-        playerNames[2] = "pesho";
-        playerNames[3] = "gosho";
-        playerNames[4] = "tosho";
-
-        autoCompleteAdapter = new ArrayAdapter<String>(getContext(), android.R.layout.simple_list_item_1, playerNames);
+        autoCompleteAdapter = new ArrayAdapter<String>(getContext(), android.R.layout.simple_list_item_1, allPlayerNames);
 
         playerName.setAdapter(autoCompleteAdapter);
         // specify the minimum type of characters before drop-down list is shown
@@ -144,6 +142,22 @@ public class StartNewGameFragment extends Fragment implements View.OnClickListen
                 return;
             }
             onChooseCategoryPressed.onChooseCategoryButtonClicked((Serializable)playersList);
+        }
+    }
+
+    private class GetPlayerNamesTask extends AsyncTask<DataAccess, Void, AbstractSet<String>> {
+        @Override
+        protected AbstractSet<String> doInBackground(DataAccess... params) {
+            AbstractSet<String> names = params[0].getAllPlayerNames();
+
+            return names;
+        }
+
+        @Override
+        protected void onPostExecute(AbstractSet<String> names) {
+            for (String name : names) {
+                allPlayerNames.add(name);
+            }
         }
     }
 }

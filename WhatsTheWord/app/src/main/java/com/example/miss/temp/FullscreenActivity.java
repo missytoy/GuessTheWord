@@ -292,6 +292,9 @@ public class FullscreenActivity extends AppCompatActivity
     @Override
     public void onStartButtonClicked() {
         StartNewGameFragment newFragment = new StartNewGameFragment();
+        Bundle args = new Bundle();
+        args.putSerializable("data", this.data);
+        newFragment.setArguments(args);
 
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         // Replace whatever is in the fragment_container view with this fragment
