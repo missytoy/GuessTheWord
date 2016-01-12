@@ -16,7 +16,6 @@ import data.DataAccess;
 import layout.AddNewWord;
 import layout.CategoriesFragment;
 import layout.GamePage;
-import layout.HistoryFragment;
 import layout.MenuPageFragmetn;
 import layout.Ranking;
 import layout.StartNewGameFragment;
@@ -31,7 +30,8 @@ public class FullscreenActivity extends AppCompatActivity
         implements View.OnClickListener,
         MenuPageFragmetn.OnButtonsClick,
         StartNewGameFragment.OnChooseCategoryBtnClicked,
-        CategoriesFragment.OnListViewItemSelected{
+        CategoriesFragment.OnListViewItemSelected,
+        GamePage.OnGameOver{
     /**
      * Whether or not the system UI should be auto-hidden after
      * {@link #AUTO_HIDE_DELAY_MILLIS} milliseconds.
@@ -245,6 +245,7 @@ public class FullscreenActivity extends AppCompatActivity
 //        mHideHandler.postDelayed(mHideRunnable, delayMillis);
 //    }
 
+
     @Override
     public void onClick(View v) {
         ////TODO: Here clear the back stack of fragments!!
@@ -257,11 +258,26 @@ public class FullscreenActivity extends AppCompatActivity
     }
 
     @Override
+    public void onGameEnding(String[] playersScores) {
+        Ranking newFragment = new Ranking();
+        Bundle args = new Bundle();
+        args.putSerializable("players_scores", playersScores);
+        newFragment.setArguments(args);
+
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        // Replace whatever is in the fragment_container view with this fragment
+        transaction.replace(R.id.fragment_placeholder, newFragment);
+        // Commit the transaction
+        transaction.commit();
+    }
+
+    @Override
     public void onCategoryItemClicked(int categoryId) {
         GamePage newFragment = new GamePage();
         Bundle args = new Bundle();
         args.putInt("category_id", categoryId);
         args.putSerializable("players_list", (Serializable) playersList);
+        // Maybe put here the game object with location string to be persisted to base
         args.putSerializable("data", (Serializable) data);
         newFragment.setArguments(args);
 

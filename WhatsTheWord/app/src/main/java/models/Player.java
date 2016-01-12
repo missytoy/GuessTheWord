@@ -1,6 +1,6 @@
 package models;
 
-public class Player {
+public class Player implements Comparable<Player> {
     private int id;
     private String name;
     private int score;
@@ -39,5 +39,14 @@ public class Player {
 
     public void setGameId(int gameId) {
         this.gameId = gameId;
+    }
+
+    @Override
+    public int compareTo(Player another) {
+        if (this.getScore() < another.getScore()){
+            return 1;
+        }else{
+            return -1;
+        }
     }
 }

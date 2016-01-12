@@ -101,8 +101,24 @@ public class StartNewGameFragment extends Fragment implements View.OnClickListen
         if (v.getId() == addPlayerButton.getId()) {
             String playerNameText = playerName.getText().toString();
             if (playerNameText.length() == 0){
-                Toast.makeText(getContext(), "Player name cannot be empty", Toast.LENGTH_SHORT)
-                     .show();
+                Toast toast = Toast.makeText(getContext(), "Player name cannot be empty", Toast.LENGTH_SHORT);
+                LinearLayout toastLayout = (LinearLayout) toast.getView();
+                TextView toastTV = (TextView) toastLayout.getChildAt(0);
+                toastTV.setTextSize(20);
+                toastTV.setTextColor(Color.WHITE);
+                toast.setGravity(Gravity.CENTER, 0, 0);
+                toast.show();
+
+                return;
+            } else if(playerNameText.length() > 12){
+                Toast toast = Toast.makeText(getContext(), "Player's name too long. Must be less than 13 symbols :)", Toast.LENGTH_SHORT);
+                LinearLayout toastLayout = (LinearLayout) toast.getView();
+                TextView toastTV = (TextView) toastLayout.getChildAt(0);
+                toastTV.setTextSize(20);
+                toastTV.setTextColor(Color.WHITE);
+                toast.setGravity(Gravity.CENTER, 0, 0);
+                toast.show();
+
                 return;
             }
 
@@ -116,8 +132,8 @@ public class StartNewGameFragment extends Fragment implements View.OnClickListen
             viewPlayers.setText(allPlayers);
             playerName.setText("");
         } else if(v.getId() == chooseCategoryBtn.getId()) {
-            if(this.playersList.size() == 0){
-                Toast toast = Toast.makeText(getContext(), "Add player to start a game.", Toast.LENGTH_SHORT);
+            if(this.playersList.size() < 2){
+                Toast toast = Toast.makeText(getContext(), "Add at least 2 players to start a game.", Toast.LENGTH_SHORT);
                 LinearLayout toastLayout = (LinearLayout) toast.getView();
                 TextView toastTV = (TextView) toastLayout.getChildAt(0);
                 toastTV.setTextSize(20);

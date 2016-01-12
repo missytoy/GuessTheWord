@@ -69,7 +69,7 @@
             android:textSize="20sp"
             android:gravity="center"
             android:textColor="@color/colorAccent"
-            android:id="@+id/textView"
+            android:id="@+id/player_score_view"
             android:layout_alignParentTop="true"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="149dp" />
