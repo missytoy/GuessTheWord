@@ -3,14 +3,17 @@ package layout;
 
 import android.app.Activity;
 import android.content.Context;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -113,6 +116,17 @@ public class StartNewGameFragment extends Fragment implements View.OnClickListen
             viewPlayers.setText(allPlayers);
             playerName.setText("");
         } else if(v.getId() == chooseCategoryBtn.getId()) {
+            if(this.playersList.size() == 0){
+                Toast toast = Toast.makeText(getContext(), "Add player to start a game.", Toast.LENGTH_SHORT);
+                LinearLayout toastLayout = (LinearLayout) toast.getView();
+                TextView toastTV = (TextView) toastLayout.getChildAt(0);
+                toastTV.setTextSize(20);
+                toastTV.setTextColor(Color.WHITE);
+                toast.setGravity(Gravity.CENTER, 0, 0);
+                toast.show();
+
+                return;
+            }
             onChooseCategoryPressed.onChooseCategoryButtonClicked((Serializable)playersList);
         }
     }

@@ -31,6 +31,8 @@ import models.Word;
  */
 public class AddNewWord extends Fragment implements View.OnClickListener {
 
+    private final int   TOAST_TEXT_SIZE = 20;
+
     private String[] categoriesNames;
     private List<Category> categories;
     private List<String> wordsList;
@@ -95,7 +97,7 @@ public class AddNewWord extends Fragment implements View.OnClickListener {
             Toast toast = Toast.makeText(getContext(), "Word to add cannot be empty.", Toast.LENGTH_SHORT);
             LinearLayout toastLayout = (LinearLayout) toast.getView();
             TextView toastTV = (TextView) toastLayout.getChildAt(0);
-
+            toastTV.setTextSize(TOAST_TEXT_SIZE);
  
             toastTV.setTextColor(Color.WHITE);
             toast.setGravity(Gravity.CENTER, 0, 0);
@@ -106,7 +108,7 @@ public class AddNewWord extends Fragment implements View.OnClickListener {
             Toast toast = Toast.makeText(getContext(), "Word already exists.", Toast.LENGTH_SHORT);
             LinearLayout toastLayout = (LinearLayout) toast.getView();
             TextView toastTV = (TextView) toastLayout.getChildAt(0);
-            
+            toastTV.setTextSize(TOAST_TEXT_SIZE);
             toastTV.setTextColor(Color.WHITE);
             toast.setGravity(Gravity.CENTER, 0, 0);
             toast.show();
@@ -117,9 +119,7 @@ public class AddNewWord extends Fragment implements View.OnClickListener {
             Toast toast = Toast.makeText(getContext(), "You must choose category", Toast.LENGTH_SHORT);
             LinearLayout toastLayout = (LinearLayout) toast.getView();
             TextView toastTV = (TextView) toastLayout.getChildAt(0);
-          
-            toastTV.setTextSize(30);
-            
+            toastTV.setTextSize(TOAST_TEXT_SIZE);
             toastTV.setTextColor(Color.WHITE);
             toast.setGravity(Gravity.CENTER, 0, 0);
             toast.show();
@@ -174,8 +174,7 @@ public class AddNewWord extends Fragment implements View.OnClickListener {
             Toast toast = Toast.makeText(getContext(), "You successfully added the word \"" + wordModelToAdd.getContent() + "\"", Toast.LENGTH_SHORT);
             LinearLayout toastLayout = (LinearLayout) toast.getView();
             TextView toastTV = (TextView) toastLayout.getChildAt(0);
-         
-         
+            toastTV.setTextSize(TOAST_TEXT_SIZE);
             toastTV.setTextColor(Color.WHITE);
             toast.setGravity(Gravity.CENTER, 0, 0);
             toast.show();
