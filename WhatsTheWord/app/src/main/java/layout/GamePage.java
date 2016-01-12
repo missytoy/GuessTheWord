@@ -4,6 +4,7 @@ package layout;
 import android.app.Activity;
 import android.content.Context;
 import android.graphics.Color;
+import android.media.MediaPlayer;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.CountDownTimer;
@@ -43,6 +44,7 @@ public class GamePage extends Fragment implements View.OnClickListener {
     private Integer currentCategoryId;
     private Integer currentPlayerIndex;
     private HashSet<String> usedWords;
+    int randNum;
 
     TextView timerTextView;
     TextView randomWord;
@@ -100,13 +102,16 @@ public class GamePage extends Fragment implements View.OnClickListener {
     public void onClick(View v) {
         if (v.getId() == nextPlayerButton.getId()) {
 
+            playNextWordTone(getContext());
             randomWordAndTimer.setVisibility(View.VISIBLE);
             currentUserInfo.setVisibility(View.INVISIBLE);
             usedWords.clear();
             int indexOfRandomWord = random.nextInt(wordsToGuess.size() - 1 + 1);
             randomWord.setText(wordsToGuess.get(indexOfRandomWord));
             playerTimer();
-        } else if(v.getId() == correctButton.getId()){
+        } else if (v.getId() == correctButton.getId()) {
+
+            playCorrectTone(getContext());
             Player currentPlayer = players.get(currentPlayerIndex);
             int currentScore = currentPlayer.getScore();
             currentPlayer.setScore(currentScore + 1);
@@ -114,7 +119,7 @@ public class GamePage extends Fragment implements View.OnClickListener {
 
             int indexOfRandomWord = random.nextInt(wordsToGuess.size() - 1 + 1);
             String wordToGuess = wordsToGuess.get(indexOfRandomWord);
-            while(usedWords.contains(wordToGuess)){
+            while (usedWords.contains(wordToGuess)) {
                 indexOfRandomWord = random.nextInt(wordsToGuess.size() - 1 + 1);
                 wordToGuess = wordsToGuess.get(indexOfRandomWord);
             }
@@ -122,12 +127,12 @@ public class GamePage extends Fragment implements View.OnClickListener {
             randomWord.setText(wordToGuess);
             usedWords.add(wordToGuess);
 
-        } else if(v.getId() == wrongButton.getId()){
+        } else if (v.getId() == wrongButton.getId()) {
             // TODO: notify with sound
-
+            playNextWordTone(getContext());
             int indexOfRandomWord = random.nextInt(wordsToGuess.size() - 1 + 1);
             String wordToGuess = wordsToGuess.get(indexOfRandomWord);
-            while(usedWords.contains(wordToGuess)){
+            while (usedWords.contains(wordToGuess)) {
                 indexOfRandomWord = random.nextInt(wordsToGuess.size() - 1 + 1);
                 wordToGuess = wordsToGuess.get(indexOfRandomWord);
             }
@@ -149,27 +154,27 @@ public class GamePage extends Fragment implements View.OnClickListener {
 
             public void onFinish() {
                 timerTextView.setText("0");
-                if (currentPlayerIndex == players.size() - 1){
+                if (currentPlayerIndex == players.size() - 1) {
                     Collections.sort(players);
                     String[] playerScores = new String[players.size()];
                     for (int i = 0; i < players.size(); i++) {
-                         String playerScoreInfo = String.format("%d. %s (%d points)",
-                                 i + 1,
-                                 players.get(i).getName(),
-                                 players.get(i).getScore());
+                        String playerScoreInfo = String.format("%d. %s (%d points)",
+                                i + 1,
+                                players.get(i).getName(),
+                                players.get(i).getScore());
                         playerScores[i] = playerScoreInfo;
                     }
 
                     // Make async task that saves the game object to the database - here or in activity see how to do it.
                     new SaveGameObjectAndPlayersToBaseTask().execute((DataAccess) getArguments().getSerializable("data"));
                     onGameOver.onGameEnding(playerScores);
-                } else{
+                } else {
                     randomWordAndTimer.setVisibility(View.INVISIBLE);
                     currentUserInfo.setVisibility(View.VISIBLE);
 
                     String playerScoreText = String.format("%s has %d points.",
-                                                            players.get(currentPlayerIndex).getName(),
-                                                            players.get(currentPlayerIndex).getScore());
+                            players.get(currentPlayerIndex).getName(),
+                            players.get(currentPlayerIndex).getScore());
 
                     String nextButtonPlayerText = String.format("%s's turn",
                             players.get(currentPlayerIndex + 1).getName());
@@ -182,14 +187,14 @@ public class GamePage extends Fragment implements View.OnClickListener {
         }.start();
     }
 
-    public interface OnGameOver{
+    public interface OnGameOver {
         void onGameEnding(String[] playersScores);
     }
 
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        Activity activity  =(Activity) context;
+        Activity activity = (Activity) context;
 
         // This makes sure that the container activity has implemented
         // the callback interface. If not, it throws an exception
@@ -222,8 +227,7 @@ public class GamePage extends Fragment implements View.OnClickListener {
                 usedWords.add(wordToGuess);
 
                 playerTimer();
-            }
-            else{
+            } else {
                 randomWord.setText("No words in category");
                 // TODO: stylize this toast;
                 Toast toast = Toast.makeText(getContext(), "Go back and ad some words to this category", Toast.LENGTH_SHORT);
@@ -256,4 +260,60 @@ public class GamePage extends Fragment implements View.OnClickListener {
             return null;
         }
     }
+
+    public void playCorrectTone(final Context context) {
+
+
+        Thread t = new Thread() {
+            public void run() {
+                MediaPlayer player = null;
+                player = MediaPlayer.create(context, R.raw.correct);
+                player.start();
+                try {
+
+                    Thread.sleep(player.getDuration());
+                    player.release();
+                } catch (InterruptedException e) {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+
+                }
+            }
+        };
+
+        t.start();
+
+    }
+
+    public void playNextWordTone(final Context context) {
+
+        Random rand = new Random();
+        randNum = rand.nextInt(2);
+
+        Thread t = new Thread() {
+            public void run() {
+                MediaPlayer player = null;
+                if (randNum == 1) {
+
+                    player = MediaPlayer.create(context, R.raw.hahasound);
+                } else {
+                    player = MediaPlayer.create(context, R.raw.flip);
+                }
+                player.start();
+                try {
+
+                    Thread.sleep(player.getDuration());
+                    player.release();
+                } catch (InterruptedException e) {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+                }
+            }
+
+        };
+
+        t.start();
+
+    }
+
 }
