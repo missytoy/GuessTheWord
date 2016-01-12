@@ -1,16 +1,32 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/background"
-    tools:context="layout.HistoryFragment">
+    android:background="@drawable/history"
+    tools:context="layout.Ranking">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:textSize="40dp"
-        android:textColor="@android:color/white"
-        android:text="History" />
 
-</FrameLayout>
+    <ListView
+        android:id="@+id/history_listview"
+        android:layout_width="235dp"
+        android:layout_height="265dp"
+        android:layout_marginLeft="31dp"
+        android:layout_marginStart="31dp"
+        android:layout_centerVertical="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <Button
+        style="@style/MyButtonStyle"
+        android:text="Go to main page"
+        android:layout_height="40dp"
+        android:layout_width="150dp"
+        android:id="@+id/go_to_main_page"
+        android:layout_alignParentBottom="true"
+        android:layout_alignLeft="@+id/history_listview"
+        android:layout_alignStart="@+id/history_listview"
+        android:layout_marginBottom="35dp" />
+
+
+
+</RelativeLayout>
