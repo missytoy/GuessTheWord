@@ -16,6 +16,7 @@ import data.DataAccess;
 import layout.AddNewWord;
 import layout.CategoriesFragment;
 import layout.GamePage;
+import layout.HistoryFragment;
 import layout.MenuPageFragmetn;
 import layout.Ranking;
 import layout.StartNewGameFragment;
@@ -31,7 +32,7 @@ public class FullscreenActivity extends AppCompatActivity
         MenuPageFragmetn.OnButtonsClick,
         StartNewGameFragment.OnChooseCategoryBtnClicked,
         CategoriesFragment.OnListViewItemSelected,
-        GamePage.OnGameOver{
+        GamePage.OnGameOver {
     /**
      * Whether or not the system UI should be auto-hidden after
      * {@link #AUTO_HIDE_DELAY_MILLIS} milliseconds.
@@ -302,8 +303,7 @@ public class FullscreenActivity extends AppCompatActivity
     @Override
     public void onHistoryButtonClicked() {
 
-        Ranking newFragment = new Ranking();
-    //    HistoryFragment newFragment = new HistoryFragment();
+        HistoryFragment newFragment = new HistoryFragment();
         //GamePage newFragment = new GamePage();
 
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
