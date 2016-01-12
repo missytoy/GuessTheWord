@@ -6,16 +6,11 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
 import helpers.Utils;
+import helpers.WordsAndCategoriesConstants;
 import models.Category;
+import models.Word;
 
 public class DatabaseHelper extends SQLiteOpenHelper{
-
-    private final static String[] CATEGORY_NAMES = new String[]{"Objects", "Songs", "Animals", "Bg Stars",
-                                                                "Cars", "Food", "Movies", "Bg Songs", "Stars"};
-
-    private final static String[] CATEGORY_IMAGE_NAMES = new String[]{"object_category", "music_category", "animal_category",
-                                                                      "bgstars_category", "cars_category", "food_category",
-                                                                      "movie_category", "musicbg_category", "stars_category"};
     // Database Version
     public static final int DATABASE_VERSION = 1;
 
@@ -112,29 +107,49 @@ public class DatabaseHelper extends SQLiteOpenHelper{
         onCreate(db);
     }
 
-    public long createCategory(Category category, SQLiteDatabase db) {
+    private void seedDatabase(SQLiteDatabase db){
+        for (int i = 0; i < WordsAndCategoriesConstants.CATEGORY_NAMES.length; i++) {
+            Category newCategory = new Category();
+            newCategory.setName(WordsAndCategoriesConstants.CATEGORY_NAMES[i]);
+            // when we load categories in the view we will use this to set their background image
+            newCategory.setImageResourceId(Utils.getDrawableId(WordsAndCategoriesConstants.CATEGORY_IMAGE_NAMES[i]));
+
+            int categoryId = (int) createCategory(newCategory, db);
+
+            String[] catWords = WordsAndCategoriesConstants.WORDS_BY_CATEGORYNAME.get(WordsAndCategoriesConstants.CATEGORY_NAMES[i]);
+
+            for (int j = 0; j < catWords.length; j++) {
+                Word wordModelToAdd = new Word();
+                wordModelToAdd.setContent(catWords[j]);
+                wordModelToAdd.setCategoryId(categoryId);
+
+                this.createWord(wordModelToAdd, db);
+            }
+        }
+    }
+
+    // Create category
+    private long createCategory(Category category, SQLiteDatabase database) {
 
         ContentValues values = new ContentValues();
-        values.put(KEY_CATEGORY_NAME, category.getName());
-        values.put(KEY_CATEGORY_IMAGEID, category.getImageResourceId());
+        values.put(DatabaseHelper.KEY_CATEGORY_NAME, category.getName());
+        values.put(DatabaseHelper.KEY_CATEGORY_IMAGEID, category.getImageResourceId());
 
         // insert row
-        long category_id = db.insert(TABLE_CATEGORY, null, values);
+        long category_id = database.insert(DatabaseHelper.TABLE_CATEGORY, null, values);
 
         return category_id;
     }
 
+    // Create word
+    private Long createWord(Word wordModelToAdd, SQLiteDatabase database){
+        ContentValues values = new ContentValues();
+        values.put(DatabaseHelper.KEY_WORD_CONTENT, wordModelToAdd.getContent());
+        values.put(DatabaseHelper.KEY_WORD_CATEGORYID, wordModelToAdd.getCategoryId());
 
-    private void seedDatabase(SQLiteDatabase db){
-        //db = this.getWritableDatabase();
+        // insert row
+        Long word_id = database.insert(DatabaseHelper.TABLE_WORD, null, values);
 
-        for (int i = 0; i < CATEGORY_NAMES.length; i++) {
-            Category newCategory = new Category();
-            newCategory.setName(CATEGORY_NAMES[i]);
-            // when we load categories in the view we will use this to set their background image
-            newCategory.setImageResourceId(Utils.getDrawableId(CATEGORY_IMAGE_NAMES[i]));
-
-            createCategory(newCategory, db);
-        }
+        return word_id;
     }
 }

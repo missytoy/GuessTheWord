@@ -1,6 +1,7 @@
 package layout;
 
 
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.support.v4.app.Fragment;
@@ -14,13 +15,24 @@ import android.widget.Toast;
 
 import com.example.miss.temp.R;
 
-import java.util.Timer;
-import java.util.TimerTask;
+import java.util.AbstractSet;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
+
+import data.DataAccess;
+import models.Player;
 
 /**
  * A simple {@link Fragment} subclass.
  */
 public class GamePage extends Fragment implements View.OnClickListener {
+
+    private static final Random random = new Random();
+
+    private List<String> wordsToGuess;
+    private List<Player> players;
+    private Integer currentCategoryId;
 
     TextView timerTextView;
     TextView randomWord;
@@ -40,6 +52,14 @@ public class GamePage extends Fragment implements View.OnClickListener {
         // Inflate the layout for this fragment
 
         View view = inflater.inflate(R.layout.fragment_game_page, container, false);
+
+        wordsToGuess = new ArrayList<String>();
+        Bundle args = this.getArguments();
+        currentCategoryId = args.getInt("category_id");
+        players = new ArrayList<Player>((List<Player>) args.getSerializable("players_list"));
+
+        new GetWordsTask().execute((DataAccess) args.getSerializable("data"));
+
         timerTextView = (TextView) view.findViewById(R.id.timer_textview_id);
         randomWord = (TextView) view.findViewById(R.id.random_word_textview_id);
         randomWordAndTimer = (RelativeLayout) view.findViewById(R.id.random_word_and_timer_Layout);
@@ -47,8 +67,6 @@ public class GamePage extends Fragment implements View.OnClickListener {
         nextPlayerButton = (Button) view.findViewById(R.id.next_player_button);
         nextPlayerButton.setOnClickListener(this);
 
-
-        playerTimer();
         return view;
     }
 
@@ -58,8 +76,9 @@ public class GamePage extends Fragment implements View.OnClickListener {
 
             randomWordAndTimer.setVisibility(View.VISIBLE);
             currentUserInfo.setVisibility(View.INVISIBLE);
+            int indexOfRandomWord = random.nextInt(wordsToGuess.size() - 1 + 1);
+            randomWord.setText(wordsToGuess.get(indexOfRandomWord));
             playerTimer();
-
         }
     }
 
@@ -80,5 +99,34 @@ public class GamePage extends Fragment implements View.OnClickListener {
                 currentUserInfo.setVisibility(View.VISIBLE);
             }
         }.start();
+    }
+
+    private class GetWordsTask extends AsyncTask<DataAccess, Void, AbstractSet<String>> {
+        @Override
+        protected AbstractSet<String> doInBackground(DataAccess... params) {
+            AbstractSet<String> words = params[0].getAllWordsContentByCategory(currentCategoryId);
+
+            return words;
+        }
+
+        @Override
+        protected void onPostExecute(AbstractSet<String> words) {
+            if (words.size() > 0) {
+                for (String word : words) {
+                    wordsToGuess.add(word);
+                }
+
+                int indexOfRandomWord = random.nextInt(wordsToGuess.size() - 1 + 1);
+                randomWord.setText(wordsToGuess.get(indexOfRandomWord));
+
+                playerTimer();
+            }
+            else{
+                randomWord.setText("No words in category");
+                // TODO: stylize this toast;
+                Toast.makeText(getContext(), "Go back and ad some words to this category", Toast.LENGTH_SHORT)
+                        .show();
+            }
+        }
     }
 }

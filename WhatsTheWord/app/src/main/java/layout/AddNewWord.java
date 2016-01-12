@@ -115,7 +115,7 @@ public class AddNewWord extends Fragment implements View.OnClickListener {
             Toast toast = Toast.makeText(getContext(), "You must chose category.", Toast.LENGTH_SHORT);
             LinearLayout toastLayout = (LinearLayout) toast.getView();
             TextView toastTV = (TextView) toastLayout.getChildAt(0);
-            toastTV.setTextSize(20);
+            toastTV.setTextSize(30);
             toastTV.setTextColor(Color.RED);
             toast.setGravity(Gravity.CENTER, 0, 0);
             toast.show();
@@ -126,7 +126,7 @@ public class AddNewWord extends Fragment implements View.OnClickListener {
         int indexOfChosenCategory = 0;
         for (int i = 0; i < categoriesNames.length; i++) {
             if (categoriesNames[i] == chosenCategoryName){
-                indexOfChosenCategory = i;
+                indexOfChosenCategory = i - 1;
                 break;
             }
         }

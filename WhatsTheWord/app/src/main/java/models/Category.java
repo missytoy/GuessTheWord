@@ -1,8 +1,6 @@
 package models;
 
 
-import java.util.List;
-
 public class Category {
     private int id;
     private String name;
@@ -33,5 +31,9 @@ public class Category {
 
     public void setImageResourceId(int imageResourceId) {
         this.imageResourceId = imageResourceId;
+    }
+
+    public String toString(){
+        return this.getName();
     }
 }

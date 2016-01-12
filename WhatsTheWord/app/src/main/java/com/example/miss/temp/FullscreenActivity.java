@@ -28,7 +28,8 @@ import models.Player;
 public class FullscreenActivity extends AppCompatActivity
         implements View.OnClickListener,
         MenuPageFragmetn.OnButtonsClick,
-        StartNewGameFragment.OnChooseCategoryBtnClicked {
+        StartNewGameFragment.OnChooseCategoryBtnClicked,
+        CategoriesFragment.OnListViewItemSelected{
     /**
      * Whether or not the system UI should be auto-hidden after
      * {@link #AUTO_HIDE_DELAY_MILLIS} milliseconds.
@@ -246,12 +247,31 @@ public class FullscreenActivity extends AppCompatActivity
 
     @Override
     public void onClick(View v) {
+        ////TODO: Here clear the back stack of fragments!!
         // if (v.getId() == closeAppBtn.getId()) {
 //          //  Toast.makeText(getApplicationContext(), "Closed", Toast.LENGTH_SHORT).show();
 //             MenuPageFragmetn firstFragment = new MenuPageFragmetn();
 //             getSupportFragmentManager().beginTransaction()
 //                     .add(R.id.fragment_placeholder, firstFragment).commit();
         //  }
+    }
+
+    @Override
+    public void onCategoryItemClicked(int categoryId) {
+        GamePage newFragment = new GamePage();
+        Bundle args = new Bundle();
+        args.putInt("category_id", categoryId);
+        args.putSerializable("players_list", (Serializable) playersList);
+        args.putSerializable("data", (Serializable) data);
+        newFragment.setArguments(args);
+
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        // Replace whatever is in the fragment_container view with this fragment,
+        // and add the transaction to the back stack so the user can navigate back
+        transaction.replace(R.id.fragment_placeholder, newFragment);
+        transaction.addToBackStack(null);
+        // Commit the transaction
+        transaction.commit();
     }
 
     @Override
@@ -284,7 +304,6 @@ public class FullscreenActivity extends AppCompatActivity
 
     @Override
     public void onAddWordButtonClicked() {
-
         AddNewWord newFragment = new AddNewWord();
         Bundle args = new Bundle();
         args.putSerializable("categories_array", (Serializable) categoriesList);

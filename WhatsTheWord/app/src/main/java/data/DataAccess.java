@@ -7,7 +7,9 @@ import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 
 import java.io.Serializable;
+import java.util.AbstractSet;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 
 import models.Category;
@@ -70,6 +72,28 @@ public class DataAccess implements Serializable{
     public List<String> getAllWordsAsContent(){
         List<String> words = new ArrayList<String>();
         String selectQuery = "SELECT " + DatabaseHelper.KEY_WORD_CONTENT + " FROM " + DatabaseHelper.TABLE_WORD;
+
+        Cursor c = database.rawQuery(selectQuery, null);
+
+        // looping through all rows and adding to list
+        if (c.moveToFirst()) {
+            do {
+                String word = c.getString(c.getColumnIndex(DatabaseHelper.KEY_WORD_CONTENT));
+
+                // adding to category list
+                words.add(word);
+            } while (c.moveToNext());
+        }
+
+        c.close();
+        return words;
+    }
+
+    // Get content of all words by category
+    public AbstractSet<String> getAllWordsContentByCategory(int currentCategoryId){
+        AbstractSet<String> words = new HashSet<String>();
+        String selectQuery = "SELECT " + DatabaseHelper.KEY_WORD_CONTENT + " FROM " + DatabaseHelper.TABLE_WORD
+                             + " WHERE " + DatabaseHelper.KEY_WORD_CATEGORYID + " = " + currentCategoryId;
 
         Cursor c = database.rawQuery(selectQuery, null);
 
