@@ -1,14 +1,19 @@
 package layout;
 
 
+import android.app.Activity;
+import android.content.Context;
+import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.support.v4.app.Fragment;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -17,6 +22,8 @@ import com.example.miss.temp.R;
 
 import java.util.AbstractSet;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Random;
 
@@ -27,19 +34,26 @@ import models.Player;
  * A simple {@link Fragment} subclass.
  */
 public class GamePage extends Fragment implements View.OnClickListener {
-
     private static final Random random = new Random();
 
     private List<String> wordsToGuess;
     private List<Player> players;
     private Integer currentCategoryId;
+    private Integer currentPlayerIndex;
+    private HashSet<String> usedWords;
 
     TextView timerTextView;
     TextView randomWord;
     RelativeLayout randomWordAndTimer;
     RelativeLayout currentUserInfo;
     Button nextPlayerButton;
+    TextView playerScoreView;
+
     public Long timerStep;
+    private OnGameOver onGameOver;
+
+    Button correctButton;
+    Button wrongButton;
 
     public GamePage() {
         // Required empty public constructor
@@ -54,9 +68,12 @@ public class GamePage extends Fragment implements View.OnClickListener {
         View view = inflater.inflate(R.layout.fragment_game_page, container, false);
 
         wordsToGuess = new ArrayList<String>();
+        usedWords = new HashSet<String>();
+
         Bundle args = this.getArguments();
         currentCategoryId = args.getInt("category_id");
         players = new ArrayList<Player>((List<Player>) args.getSerializable("players_list"));
+        currentPlayerIndex = 0;
 
         new GetWordsTask().execute((DataAccess) args.getSerializable("data"));
 
@@ -67,6 +84,13 @@ public class GamePage extends Fragment implements View.OnClickListener {
         nextPlayerButton = (Button) view.findViewById(R.id.next_player_button);
         nextPlayerButton.setOnClickListener(this);
 
+        playerScoreView = (TextView) view.findViewById(R.id.player_score_view);
+
+        correctButton = (Button) view.findViewById(R.id.correct_btn);
+        wrongButton = (Button) view.findViewById(R.id.wrong_btn);
+        correctButton.setOnClickListener(this);
+        wrongButton.setOnClickListener(this);
+
         return view;
     }
 
@@ -76,9 +100,38 @@ public class GamePage extends Fragment implements View.OnClickListener {
 
             randomWordAndTimer.setVisibility(View.VISIBLE);
             currentUserInfo.setVisibility(View.INVISIBLE);
+            usedWords.clear();
             int indexOfRandomWord = random.nextInt(wordsToGuess.size() - 1 + 1);
             randomWord.setText(wordsToGuess.get(indexOfRandomWord));
             playerTimer();
+        } else if(v.getId() == correctButton.getId()){
+            Player currentPlayer = players.get(currentPlayerIndex);
+            int currentScore = currentPlayer.getScore();
+            currentPlayer.setScore(currentScore + 1);
+            // TODO: notify with sound
+
+            int indexOfRandomWord = random.nextInt(wordsToGuess.size() - 1 + 1);
+            String wordToGuess = wordsToGuess.get(indexOfRandomWord);
+            while(usedWords.contains(wordToGuess)){
+                indexOfRandomWord = random.nextInt(wordsToGuess.size() - 1 + 1);
+                wordToGuess = wordsToGuess.get(indexOfRandomWord);
+            }
+
+            randomWord.setText(wordToGuess);
+            usedWords.add(wordToGuess);
+
+        } else if(v.getId() == wrongButton.getId()){
+            // TODO: notify with sound
+
+            int indexOfRandomWord = random.nextInt(wordsToGuess.size() - 1 + 1);
+            String wordToGuess = wordsToGuess.get(indexOfRandomWord);
+            while(usedWords.contains(wordToGuess)){
+                indexOfRandomWord = random.nextInt(wordsToGuess.size() - 1 + 1);
+                wordToGuess = wordsToGuess.get(indexOfRandomWord);
+            }
+
+            randomWord.setText(wordToGuess);
+            usedWords.add(wordToGuess);
         }
     }
 
@@ -94,11 +147,57 @@ public class GamePage extends Fragment implements View.OnClickListener {
 
             public void onFinish() {
                 timerTextView.setText("0");
+                if (currentPlayerIndex == players.size() - 1){
+                    Collections.sort(players);
+                    String[] playerScores = new String[players.size()];
+                    for (int i = 0; i < players.size(); i++) {
+                         String playerScoreInfo = String.format("%d. %s (%d points)",
+                                 i + 1,
+                                 players.get(i).getName(),
+                                 players.get(i).getScore());
+                        playerScores[i] = playerScoreInfo;
+                    }
 
-                randomWordAndTimer.setVisibility(View.INVISIBLE);
-                currentUserInfo.setVisibility(View.VISIBLE);
+                    onGameOver.onGameEnding(playerScores);
+
+                    Toast.makeText(getContext(), "bla bla", Toast.LENGTH_SHORT).show();
+                }
+                else{
+                    randomWordAndTimer.setVisibility(View.INVISIBLE);
+                    currentUserInfo.setVisibility(View.VISIBLE);
+
+                    String playerScoreText = String.format("%s has %d points.",
+                                                            players.get(currentPlayerIndex).getName(),
+                                                            players.get(currentPlayerIndex).getScore());
+
+                    String nextButtonPlayerText = String.format("%s's turn",
+                            players.get(currentPlayerIndex + 1).getName());
+
+                    playerScoreView.setText(playerScoreText);
+                    nextPlayerButton.setText(nextButtonPlayerText);
+                    currentPlayerIndex++;
+                }
             }
         }.start();
+    }
+
+    public interface OnGameOver{
+        void onGameEnding(String[] playersScores);
+    }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        Activity activity  =(Activity) context;
+
+        // This makes sure that the container activity has implemented
+        // the callback interface. If not, it throws an exception
+        try {
+            onGameOver = (OnGameOver) activity;
+        } catch (ClassCastException e) {
+            throw new ClassCastException(activity.toString()
+                    + " must implement OnGameOver");
+        }
     }
 
     private class GetWordsTask extends AsyncTask<DataAccess, Void, AbstractSet<String>> {
@@ -117,15 +216,22 @@ public class GamePage extends Fragment implements View.OnClickListener {
                 }
 
                 int indexOfRandomWord = random.nextInt(wordsToGuess.size() - 1 + 1);
-                randomWord.setText(wordsToGuess.get(indexOfRandomWord));
+                String wordToGuess = wordsToGuess.get(indexOfRandomWord);
+                randomWord.setText(wordToGuess);
+                usedWords.add(wordToGuess);
 
                 playerTimer();
             }
             else{
                 randomWord.setText("No words in category");
                 // TODO: stylize this toast;
-                Toast.makeText(getContext(), "Go back and ad some words to this category", Toast.LENGTH_SHORT)
-                        .show();
+                Toast toast = Toast.makeText(getContext(), "Go back and ad some words to this category", Toast.LENGTH_SHORT);
+                LinearLayout toastLayout = (LinearLayout) toast.getView();
+                TextView toastTV = (TextView) toastLayout.getChildAt(0);
+                toastTV.setTextSize(20);
+                toastTV.setTextColor(Color.WHITE);
+                toast.setGravity(Gravity.CENTER, 0, 0);
+                toast.show();
             }
         }
     }

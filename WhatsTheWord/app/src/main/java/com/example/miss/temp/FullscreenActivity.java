@@ -30,7 +30,8 @@ public class FullscreenActivity extends AppCompatActivity
         implements View.OnClickListener,
         MenuPageFragmetn.OnButtonsClick,
         StartNewGameFragment.OnChooseCategoryBtnClicked,
-        CategoriesFragment.OnListViewItemSelected{
+        CategoriesFragment.OnListViewItemSelected,
+        GamePage.OnGameOver{
     /**
      * Whether or not the system UI should be auto-hidden after
      * {@link #AUTO_HIDE_DELAY_MILLIS} milliseconds.
@@ -244,6 +245,7 @@ public class FullscreenActivity extends AppCompatActivity
 //        mHideHandler.postDelayed(mHideRunnable, delayMillis);
 //    }
 
+
     @Override
     public void onClick(View v) {
         ////TODO: Here clear the back stack of fragments!!
@@ -253,6 +255,22 @@ public class FullscreenActivity extends AppCompatActivity
 //             getSupportFragmentManager().beginTransaction()
 //                     .add(R.id.fragment_placeholder, firstFragment).commit();
         //  }
+    }
+
+    @Override
+    public void onGameEnding(String[] playersScores) {
+//        GamePage newFragment = new GamePage();
+//        Bundle args = new Bundle();
+//        args.putInt("category_id", categoryId);
+//        args.putSerializable("players_list", (Serializable) playersList);
+//        args.putSerializable("data", (Serializable) data);
+//        newFragment.setArguments(args);
+//
+//        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+//        // Replace whatever is in the fragment_container view with this fragment
+//        transaction.replace(R.id.fragment_placeholder, newFragment);
+//        // Commit the transaction
+//        transaction.commit();
     }
 
     @Override
