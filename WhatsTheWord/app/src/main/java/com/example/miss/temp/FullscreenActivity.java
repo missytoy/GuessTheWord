@@ -18,6 +18,7 @@ import layout.CategoriesFragment;
 import layout.GamePage;
 import layout.HistoryFragment;
 import layout.MenuPageFragmetn;
+import layout.Ranking;
 import layout.StartNewGameFragment;
 import models.Category;
 import models.Player;
@@ -285,7 +286,8 @@ public class FullscreenActivity extends AppCompatActivity
     @Override
     public void onHistoryButtonClicked() {
 
-        HistoryFragment newFragment = new HistoryFragment();
+        Ranking newFragment = new Ranking();
+    //    HistoryFragment newFragment = new HistoryFragment();
         //GamePage newFragment = new GamePage();
 
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
