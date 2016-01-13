@@ -59,6 +59,7 @@ public class StartNewGameFragment extends Fragment implements View.OnClickListen
         View view = inflater.inflate(R.layout.fragment_start_new_game, container, false);
         addPlayerButton = (Button) view.findViewById(R.id.add_player);
         addPlayerButton.setOnClickListener(this);
+
         chooseCategoryBtn = (Button) view.findViewById(R.id.chose_category);
         chooseCategoryBtn.setOnClickListener(this);
 

@@ -16,8 +16,20 @@ public class WordsAndCategoriesConstants {
     // Words
     public final static String[] OBJECTS_WORDS = new String[]{"microphone", "piano", "umbrella", "bottle", "neck",
                                                               "pillow", "tail", "saxophone", "condom"};
-    public final static String[] SONGS_WORDS = new String[]{"My name is", "O sole mio", "Still DRE", "Satisfaction",
-                                                            "Californication", "California Love"};
+    public final static String[] SONGS_WORDS = new String[]{"Eminem - My name is", "Still DRE", "Satisfaction",
+                                                            "Californication", "California Love", "Eminem - Lose yourself",
+            "Eminem - Mockingbird", "Rehanna -rehab", "Miley - Can't stop","2pac - Changes", "Justin Timberlake - What goes around comes back around",
+            "Eminem - When I'm Gone","Justin Bieber - Love yourself", "Mark Lower -  Bad Boys Cry", "The Weeknd - The Hills"    ,
+            "Eminem - Superman","Justin Bieber - Sorry", "Years & Years - Take Shelter", "Years & Years - King",
+            "Cassie - Me&u","Redman - put It Down", "Mark Lower -  Bad Boys Cry", "The Weeknd - The Hills",
+            "Three days grace - Pain","Justin Bieber - Love yourself", "Cher -Strong Enough", "The Weekend - Wicked games",
+            "Michael Jackson - Billie Jean","Matt Pokora - Catch Me If You Can", "Justin T - My Love", "Daniel Powter-Bad Day",
+            "Linkin Park - From the inside","Linkin Park - Numb", "Robbie Williams - Feel", "Justin Timberlake - Cry Me A River",
+            "The Pussycat Dolls - I Don't Need A Man","Robbie Williams - Something Stupid", "Robin Schulz - Waves", "Rob Thomas - Lonely No More"
+
+
+
+    };
     public final static String[] ANIMALS_WORDS = new String[]{"frog", "cat", "dog", "snake", "turtle",
             "tasmanian devil", "sloth", "elephant", "chicken"};
     public final static String[] BG_STARS_WORDS = new String[]{"Слави Трифонов", "Стоичков", "Бербатов", "Гонзо", "Криско",

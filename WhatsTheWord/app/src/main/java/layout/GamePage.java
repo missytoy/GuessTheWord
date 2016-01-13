@@ -9,8 +9,10 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.support.v4.app.Fragment;
+import android.view.GestureDetector;
 import android.view.Gravity;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -40,6 +42,9 @@ import models.Player;
 public class GamePage extends Fragment implements View.OnClickListener {
     private static final Random random = new Random();
 
+    private float x1, x2;
+    static final int MIN_DISTANCE = 150;
+
     private List<String> wordsToGuess;
     private List<Player> players;
     private Integer currentCategoryId;
@@ -48,8 +53,11 @@ public class GamePage extends Fragment implements View.OnClickListener {
 
     TextView timerTextView;
     TextView randomWord;
+
     RelativeLayout randomWordAndTimer;
     RelativeLayout currentUserInfo;
+    RelativeLayout playerFirstPage;
+
     Button nextPlayerButton;
     TextView playerScoreView;
 
@@ -58,6 +66,8 @@ public class GamePage extends Fragment implements View.OnClickListener {
 
     Button correctButton;
     Button wrongButton;
+
+    Button startWithFirstPlayerButton;
 
     public GamePage() {
         // Required empty public constructor
@@ -81,19 +91,72 @@ public class GamePage extends Fragment implements View.OnClickListener {
 
         new GetWordsTask().execute((DataAccess) args.getSerializable("data"));
 
+        startWithFirstPlayerButton = (Button) view.findViewById(R.id.first_player_play_btn);
+        String firstPlayerName = players.get(currentPlayerIndex).getName();
+        startWithFirstPlayerButton.setText(firstPlayerName + "'s turn");
+        startWithFirstPlayerButton.setOnClickListener(this);
+
+
         timerTextView = (TextView) view.findViewById(R.id.timer_textview_id);
         randomWord = (TextView) view.findViewById(R.id.random_word_textview_id);
+
         randomWordAndTimer = (RelativeLayout) view.findViewById(R.id.random_word_and_timer_Layout);
         currentUserInfo = (RelativeLayout) view.findViewById(R.id.current_user_info);
+        playerFirstPage = (RelativeLayout) view.findViewById(R.id.fist_player_layout);
+
         nextPlayerButton = (Button) view.findViewById(R.id.next_player_button);
         nextPlayerButton.setOnClickListener(this);
 
         playerScoreView = (TextView) view.findViewById(R.id.player_score_view);
 
         correctButton = (Button) view.findViewById(R.id.correct_btn);
-        wrongButton = (Button) view.findViewById(R.id.wrong_btn);
         correctButton.setOnClickListener(this);
+
+        wrongButton = (Button) view.findViewById(R.id.wrong_btn);
         wrongButton.setOnClickListener(this);
+
+        startWithFirstPlayerButton = (Button) view.findViewById(R.id.first_player_play_btn);
+        startWithFirstPlayerButton.setOnClickListener(this);
+
+        final GestureDetector gesture = new GestureDetector(getActivity(),
+                new GestureDetector.SimpleOnGestureListener() {
+
+                    @Override
+                    public boolean onDown(MotionEvent e) {
+                        return true;
+                    }
+
+                    @Override
+                    public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX,
+                                           float velocityY) {
+
+
+                        final int SWIPE_MIN_DISTANCE = 120;
+                        final int SWIPE_MAX_OFF_PATH = 250;
+                        final int SWIPE_THRESHOLD_VELOCITY = 200;
+                        try {
+                            if (Math.abs(e1.getY() - e2.getY()) > SWIPE_MAX_OFF_PATH)
+                                return false;
+                            if (e1.getX() - e2.getX() > SWIPE_MIN_DISTANCE
+                                    && Math.abs(velocityX) > SWIPE_THRESHOLD_VELOCITY) {
+                                handleSwipeLeft();
+                            } else if (e2.getX() - e1.getX() > SWIPE_MIN_DISTANCE
+                                    && Math.abs(velocityX) > SWIPE_THRESHOLD_VELOCITY) {
+                                handleSwipeRight();
+                            }
+                        } catch (Exception e) {
+                            // nothing
+                        }
+                        return super.onFling(e1, e2, velocityX, velocityY);
+                    }
+                });
+
+        view.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                return gesture.onTouchEvent(event);
+            }
+        });
 
         return view;
     }
@@ -129,7 +192,7 @@ public class GamePage extends Fragment implements View.OnClickListener {
             usedWords.add(wordToGuess);
 
         } else if (v.getId() == wrongButton.getId()) {
-            // TODO: notify with sound
+
             MySoundManager.playNextWordTone(getContext());
             int indexOfRandomWord = random.nextInt(wordsToGuess.size() - 1 + 1);
             String wordToGuess = wordsToGuess.get(indexOfRandomWord);
@@ -140,7 +203,18 @@ public class GamePage extends Fragment implements View.OnClickListener {
 
             randomWord.setText(wordToGuess);
             usedWords.add(wordToGuess);
+        } else if (v.getId() == startWithFirstPlayerButton.getId()) {
+
+
+            int indexOfRandomWord = random.nextInt(wordsToGuess.size() - 1 + 1);
+            String wordToGuess = wordsToGuess.get(indexOfRandomWord);
+            randomWord.setText(wordToGuess);
+            usedWords.add(wordToGuess);
+            playerFirstPage.setVisibility(View.GONE);
+            randomWordAndTimer.setVisibility(View.VISIBLE);
+            playerTimer();
         }
+
     }
 
     public void playerTimer() {
@@ -173,6 +247,7 @@ public class GamePage extends Fragment implements View.OnClickListener {
                     randomWordAndTimer.setVisibility(View.INVISIBLE);
                     currentUserInfo.setVisibility(View.VISIBLE);
 
+
                     String playerScoreText = String.format("%s has %d points.",
                             players.get(currentPlayerIndex).getName(),
                             players.get(currentPlayerIndex).getScore());
@@ -190,6 +265,38 @@ public class GamePage extends Fragment implements View.OnClickListener {
 
     public interface OnGameOver {
         void onGameEnding(String[] playersScores);
+    }
+
+    public void handleSwipeLeft() {
+
+        MySoundManager.playCorrectTone(getContext());
+        Player currentPlayer = players.get(currentPlayerIndex);
+        int currentScore = currentPlayer.getScore();
+        currentPlayer.setScore(currentScore + 1);
+
+        int indexOfRandomWord = random.nextInt(wordsToGuess.size() - 1 + 1);
+        String wordToGuess = wordsToGuess.get(indexOfRandomWord);
+        while (usedWords.contains(wordToGuess)) {
+            indexOfRandomWord = random.nextInt(wordsToGuess.size() - 1 + 1);
+            wordToGuess = wordsToGuess.get(indexOfRandomWord);
+        }
+
+        randomWord.setText(wordToGuess);
+        usedWords.add(wordToGuess);
+    }
+
+    public void handleSwipeRight() {
+
+        MySoundManager.playNextWordTone(getContext());
+        int indexOfRandomWord = random.nextInt(wordsToGuess.size() - 1 + 1);
+        String wordToGuess = wordsToGuess.get(indexOfRandomWord);
+        while (usedWords.contains(wordToGuess)) {
+            indexOfRandomWord = random.nextInt(wordsToGuess.size() - 1 + 1);
+            wordToGuess = wordsToGuess.get(indexOfRandomWord);
+        }
+
+        randomWord.setText(wordToGuess);
+        usedWords.add(wordToGuess);
     }
 
     @Override
@@ -221,13 +328,6 @@ public class GamePage extends Fragment implements View.OnClickListener {
                 for (String word : words) {
                     wordsToGuess.add(word);
                 }
-
-                int indexOfRandomWord = random.nextInt(wordsToGuess.size() - 1 + 1);
-                String wordToGuess = wordsToGuess.get(indexOfRandomWord);
-                randomWord.setText(wordToGuess);
-                usedWords.add(wordToGuess);
-
-                playerTimer();
             } else {
                 randomWord.setText("No words in category");
                 // TODO: stylize this toast;
