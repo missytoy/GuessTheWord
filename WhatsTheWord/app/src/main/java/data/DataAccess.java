@@ -36,6 +36,28 @@ public class DataAccess implements Serializable{
     }
 
     /******** CATEGORIES **********/
+
+    // Get category name by id
+    public String getCategoryName(int currentCategoryId){
+        String name = null;
+        String selectQuery = "SELECT " + DatabaseHelper.KEY_CATEGORY_NAME + " FROM " + DatabaseHelper.TABLE_CATEGORY
+                + " WHERE " + DatabaseHelper.KEY_ID + " = " + currentCategoryId;
+
+        Cursor c = database.rawQuery(selectQuery, null);
+
+        // looping through all rows and adding to list
+        if (c.moveToFirst()) {
+            do {
+                String catName = c.getString(c.getColumnIndex(DatabaseHelper.KEY_CATEGORY_NAME));
+
+                name = catName;
+            } while (c.moveToNext());
+        }
+
+        c.close();
+        return name;
+    }
+
     // Get all Categories
     public List<Category> getAllCategories() {
         List<Category> categories = new ArrayList<Category>();

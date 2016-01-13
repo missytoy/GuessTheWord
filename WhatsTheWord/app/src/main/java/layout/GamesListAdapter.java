@@ -15,6 +15,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import helpers.Utils;
 import models.Game;
 
 public class GamesListAdapter extends ArrayAdapter<Game> {
@@ -39,7 +40,7 @@ public class GamesListAdapter extends ArrayAdapter<Game> {
         text += games.get(position).getWinner().getName() + " (";
         Date playedOn = games.get(position).getPlayedOn();
         DateFormat formatter = new SimpleDateFormat("dd.MM.yyyy");
-        String date = formatter.format(playedOn);
+        String date = Utils.getDateAsString(games.get(position).getPlayedOn());
         text += date + ")";
 
         textView.setText(text);

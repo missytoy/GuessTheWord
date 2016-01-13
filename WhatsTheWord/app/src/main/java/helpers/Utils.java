@@ -2,11 +2,12 @@ package helpers;
 
 
 import android.database.Cursor;
-import android.widget.Button;
 
 import com.example.miss.temp.R;
 
 import java.lang.reflect.Field;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class Utils {
@@ -36,5 +37,12 @@ public class Utils {
         }
 
         return new Date(cursor.getLong(index));
+    }
+
+    public static  String getDateAsString(Date date){
+        DateFormat formatter = new SimpleDateFormat("dd.MM.yyyy");
+        String dateAsString = formatter.format(date);
+
+        return dateAsString;
     }
 }

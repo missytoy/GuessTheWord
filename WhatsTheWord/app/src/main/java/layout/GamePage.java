@@ -4,7 +4,6 @@ package layout;
 import android.app.Activity;
 import android.content.Context;
 import android.graphics.Color;
-import android.media.MediaPlayer;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.CountDownTimer;
@@ -50,6 +49,8 @@ public class GamePage extends Fragment implements View.OnClickListener {
     private Integer currentCategoryId;
     private Integer currentPlayerIndex;
     private HashSet<String> usedWords;
+    private String address;
+    private String city;
 
     TextView timerTextView;
     TextView randomWord;
@@ -86,6 +87,8 @@ public class GamePage extends Fragment implements View.OnClickListener {
 
         Bundle args = this.getArguments();
         currentCategoryId = args.getInt("category_id");
+        address = args.getString("location");
+        city = args.getString("city");
         players = new ArrayList<Player>((List<Player>) args.getSerializable("players_list"));
         currentPlayerIndex = 0;
 
@@ -179,7 +182,6 @@ public class GamePage extends Fragment implements View.OnClickListener {
             Player currentPlayer = players.get(currentPlayerIndex);
             int currentScore = currentPlayer.getScore();
             currentPlayer.setScore(currentScore + 1);
-            // TODO: notify with sound
 
             int indexOfRandomWord = random.nextInt(wordsToGuess.size() - 1 + 1);
             String wordToGuess = wordsToGuess.get(indexOfRandomWord);
@@ -330,7 +332,6 @@ public class GamePage extends Fragment implements View.OnClickListener {
                 }
             } else {
                 randomWord.setText("No words in category");
-                // TODO: stylize this toast;
                 Toast toast = Toast.makeText(getContext(), "Go back and ad some words to this category", Toast.LENGTH_SHORT);
                 LinearLayout toastLayout = (LinearLayout) toast.getView();
                 TextView toastTV = (TextView) toastLayout.getChildAt(0);
@@ -347,10 +348,9 @@ public class GamePage extends Fragment implements View.OnClickListener {
         protected Void doInBackground(DataAccess... params) {
             Game gameModel = new Game();
             gameModel.setCategoryId(currentCategoryId);
-            // TODO: see if this one works correctly
             gameModel.setPlayedOn(new Date());
-            // TODO: get the location from the activity as a string via Bundle
-            gameModel.setLocation("some location string");
+
+            gameModel.setLocation(address == null ? "Could not get location." : address);
 
             int gameId = (int) params[0].createGame(gameModel);
             for (Player pl : players) {

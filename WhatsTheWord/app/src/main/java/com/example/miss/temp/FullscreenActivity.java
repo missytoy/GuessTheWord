@@ -63,6 +63,7 @@ public class FullscreenActivity extends AppCompatActivity
     Button closeAppBtn;
     private List<Player> playersList;
     List<Category> categoriesList;
+    Address currentLocation;
 
     private static final boolean AUTO_HIDE = true;
 
@@ -181,7 +182,7 @@ public class FullscreenActivity extends AppCompatActivity
             double longitude = location.getLongitude();
 
             addresses = geocoder.getFromLocation(latitude, longitude, 1);
-            //addresses = geocoder.getFromLocation(latitude, longitude, 1); // Here 1 represent max location result to returned, by documents it recommended 1 to 5
+            currentLocation = addresses.get(0);
 
             String address = addresses.get(0).getAddressLine(0); // If any additional address line present than only, check with max available address lines by getMaxAddressLineIndex()
             String city = addresses.get(0).getLocality();
@@ -367,6 +368,10 @@ public class FullscreenActivity extends AppCompatActivity
         Bundle args = new Bundle();
         args.putInt("category_id", categoryId);
         args.putSerializable("players_list", (Serializable) playersList);
+        if(currentLocation != null){
+            args.putString("location", currentLocation.getAddressLine(0));
+            args.putString("city", currentLocation.getLocality());
+        }
         // Maybe put here the game object with location string to be persisted to base
         args.putSerializable("data", (Serializable) data);
         newFragment.setArguments(args);

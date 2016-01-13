@@ -11,6 +11,7 @@ public class Game {
     private Player winner;
     private String location;
     private Integer numberInView;
+    private String categoryName;
 
     public Game(){
         this.players = new ArrayList<Player>();
@@ -70,5 +71,13 @@ public class Game {
 
     public void setNumberInView(int numberInView) {
         this.numberInView = numberInView;
+    }
+
+    public String getCategoryName() {
+        return categoryName;
+    }
+
+    public void setCategoryName(String categoryName) {
+        this.categoryName = categoryName;
     }
 }

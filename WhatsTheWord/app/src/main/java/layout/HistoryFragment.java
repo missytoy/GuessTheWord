@@ -7,7 +7,6 @@ import android.media.MediaPlayer;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,6 +14,7 @@ import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.example.miss.temp.R;
 
@@ -24,6 +24,7 @@ import java.util.List;
 
 import data.DataAccess;
 import helpers.MySoundManager;
+import helpers.Utils;
 import models.Game;
 import models.Player;
 
@@ -40,6 +41,7 @@ public class HistoryFragment extends Fragment implements View.OnClickListener, A
     private Button goBackToHistory;
     private RelativeLayout historyPage;
     private RelativeLayout detailHistoryPage;
+    private TextView detailsTextView;
 
 
     public HistoryFragment() {
@@ -65,6 +67,8 @@ public class HistoryFragment extends Fragment implements View.OnClickListener, A
         historyListView = (ListView) view.findViewById(R.id.history_listview);
         historyListView.setOnItemClickListener(this);
 
+        detailsTextView = (TextView) view.findViewById(R.id.details_text_view);
+
         Bundle args = this.getArguments();
         new GetLastGamesHistoryTask().execute((DataAccess) args.getSerializable("data"));
 
@@ -73,9 +77,19 @@ public class HistoryFragment extends Fragment implements View.OnClickListener, A
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
+        Game selectedGame = (Game) historyListView.getItemAtPosition(position);
         historyPage.setVisibility(View.GONE);
         detailHistoryPage.setVisibility(View.VISIBLE);
+        String gameDetails = String.format("Winner: %s(%d pts)\nCategory: %s\nPlayed on: %s\nAt location: %s\nPlayed with:\n",
+                selectedGame.getWinner().getName(),
+                selectedGame.getWinner().getScore(),
+                selectedGame.getCategoryName(),
+                Utils.getDateAsString(selectedGame.getPlayedOn()),
+                selectedGame.getLocation());
+        for (int i = 1; i < selectedGame.getPlayers().size(); i++) {
+             gameDetails += "- " + selectedGame.getPlayers().get(i).getName() + "(" + selectedGame.getPlayers().get(i).getScore() + " pts)";
+        }
+        detailsTextView.setText(gameDetails);
     }
 
     public interface IGoToMainPagePressedFromHistory {
@@ -105,6 +119,8 @@ public class HistoryFragment extends Fragment implements View.OnClickListener, A
             int numberInView = 1;
             for (Game game : games) {
                 int gameId = game.getId();
+                String categoryName = params[0].getCategoryName(game.getCategoryId());
+                game.setCategoryName(categoryName);
 
                 List<Player> players = params[0].getAllPlayersByGame(gameId);
                 Collections.sort(players);
