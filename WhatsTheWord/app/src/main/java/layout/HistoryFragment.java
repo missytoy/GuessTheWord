@@ -11,8 +11,10 @@ import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 
 import com.example.miss.temp.R;
 
@@ -28,13 +30,16 @@ import models.Player;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class HistoryFragment extends Fragment implements View.OnClickListener {
+public class HistoryFragment extends Fragment implements View.OnClickListener, AdapterView.OnItemClickListener {
 
     private IGoToMainPagePressedFromHistory goToMainPagePressedFromHistory;
     private GamesListAdapter adapter;
     private ListView historyListView;
     private List<Game> lastGames;
     private Button goToMainPage;
+    private Button goBackToHistory;
+    private RelativeLayout historyPage;
+    private RelativeLayout detailHistoryPage;
 
 
     public HistoryFragment() {
@@ -50,10 +55,27 @@ public class HistoryFragment extends Fragment implements View.OnClickListener {
         playBookSound(getContext());
         goToMainPage = (Button) view.findViewById(R.id.go_to_main_page);
         goToMainPage.setOnClickListener(this);
+
+        goBackToHistory = (Button) view.findViewById(R.id.go_back_to_history);
+        goBackToHistory.setOnClickListener(this);
+
+        historyPage = (RelativeLayout) view.findViewById(R.id.history_layout);
+        detailHistoryPage = (RelativeLayout) view.findViewById(R.id.detail_page_history_layout);
+
+        historyListView = (ListView) view.findViewById(R.id.history_listview);
+        historyListView.setOnItemClickListener(this);
+
         Bundle args = this.getArguments();
         new GetLastGamesHistoryTask().execute((DataAccess) args.getSerializable("data"));
 
         return view;
+    }
+
+    @Override
+    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+        historyPage.setVisibility(View.GONE);
+        detailHistoryPage.setVisibility(View.VISIBLE);
     }
 
     public interface IGoToMainPagePressedFromHistory {
@@ -101,16 +123,26 @@ public class HistoryFragment extends Fragment implements View.OnClickListener {
         @Override
         protected void onPostExecute(List<Game> games) {
             lastGames = new ArrayList<Game>(games);
-            historyListView = (ListView) getView().findViewById(R.id.history_listview);
             adapter = new GamesListAdapter(getContext(), lastGames);
             historyListView.setAdapter(adapter);
         }
     }
 
     public void onClick(View v) {
+
         MySoundManager.playButtonSound(getContext());
-        this.goToMainPagePressedFromHistory.goToMainPageFromHistory();
+
+        if (v.getId() == goBackToHistory.getId()) {
+
+            historyPage.setVisibility(View.VISIBLE);
+            detailHistoryPage.setVisibility(View.GONE);
+        } else if (v.getId() == goToMainPage.getId()) {
+
+            this.goToMainPagePressedFromHistory.goToMainPageFromHistory();
+        }
+
     }
+
     public void playBookSound(final Context context) {
 
 
@@ -134,4 +166,6 @@ public class HistoryFragment extends Fragment implements View.OnClickListener {
         t.start();
 
     }
+
+
 }

@@ -7,12 +7,15 @@ import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.text.Layout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.example.miss.temp.R;
@@ -52,6 +55,7 @@ public class Ranking extends Fragment implements View.OnClickListener {
         return view;
     }
 
+
     public interface IGoToMainPagePressed {
         void goToMainPageFromRanking();
     }
@@ -78,5 +82,4 @@ public class Ranking extends Fragment implements View.OnClickListener {
         MySoundManager.playButtonSound(getContext());
         this.goToMainPagePressedFromRanking.goToMainPageFromRanking();
     }
-
 }

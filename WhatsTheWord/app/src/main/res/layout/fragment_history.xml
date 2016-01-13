@@ -2,31 +2,76 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/last_games"
     tools:context="layout.Ranking">
 
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/last_games"
+        android:visibility="visible"
+        android:id="@+id/history_layout">
 
-    <ListView
-        android:id="@+id/history_listview"
-        android:layout_width="235dp"
-        android:layout_height="265dp"
-        android:layout_marginLeft="31dp"
-        android:layout_marginStart="31dp"
-        android:layout_centerVertical="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+        <ListView
+            android:id="@+id/history_listview"
+            android:layout_width="235dp"
+            android:layout_height="265dp"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="31dp"
+            android:layout_marginStart="31dp" />
 
-    <Button
-        style="@style/MyButtonStyle"
-        android:text="Go to main page"
-        android:layout_height="40dp"
-        android:layout_width="150dp"
-        android:id="@+id/go_to_main_page"
-        android:layout_alignParentBottom="true"
-        android:layout_alignLeft="@+id/history_listview"
-        android:layout_alignStart="@+id/history_listview"
-        android:layout_marginBottom="35dp" />
+        <Button
+            android:id="@+id/go_to_main_page"
+            style="@style/MyButtonStyle"
+            android:layout_width="150dp"
+            android:layout_height="40dp"
+            android:layout_alignLeft="@+id/history_listview"
+            android:layout_alignParentBottom="true"
+            android:layout_alignStart="@+id/history_listview"
+            android:layout_marginBottom="35dp"
+            android:text="Go to main page" />
+    </RelativeLayout>
 
+    <RelativeLayout
+        android:id="@+id/detail_page_history_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/detailpagebacground"
+        android:visibility="gone">
 
+        <ScrollView
+            android:layout_width="240dp"
+            android:layout_height="200dp"
+            android:padding="10dp"
+            android:layout_centerVertical="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_marginLeft="46dp"
+            android:layout_marginStart="46dp">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:textSize="20sp"
+                android:text="1. Konstantina (20)\nCategory: Songs\nDate/Time: 14.05.2015\nPlace: ul.Aleksandur malinov 5666\n2. Gosho(12)\n3.Ivan(10)\n1. Peshto (20)\n2. Gosho(12)\n3.Ivan(10)\n1. Peshto (20)\n2. Gosho(12)\n3.Ivan(10)\n1. Peshto (20)\n2. Gosho(12)\n3.Ivan(10)\n1. Peshto (20)\n2. Gosho(12)\n3.Ivan(10)\n1. Peshto (20)\n2. Gosho(12)\n3.Ivan(10)\nCategory: Songs\nDate/Time: 14.05.2015\nPlace: ul.Aleksandur malinov 5666"
+                android:textColor="@color/colorAccent" />
+
+        </ScrollView>
+
+        <Button
+            android:id="@+id/go_back_to_history"
+            style="@style/MyButtonStyle"
+            android:layout_width="150dp"
+            android:layout_height="50dp"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginBottom="35dp"
+            android:layout_marginEnd="41dp"
+            android:layout_marginRight="41dp"
+            android:text="Back" />
+
+    </RelativeLayout>
 
 </RelativeLayout>
