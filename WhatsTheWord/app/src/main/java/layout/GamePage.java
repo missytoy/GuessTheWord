@@ -102,7 +102,6 @@ public class GamePage extends Fragment implements View.OnClickListener {
     public void onClick(View v) {
         if (v.getId() == nextPlayerButton.getId()) {
 
-            playNextWordTone(getContext());
             randomWordAndTimer.setVisibility(View.VISIBLE);
             currentUserInfo.setVisibility(View.INVISIBLE);
             usedWords.clear();

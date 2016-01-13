@@ -1,6 +1,8 @@
 package layout;
 
 
+import android.app.Activity;
+import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -26,6 +28,7 @@ import models.Player;
  */
 public class HistoryFragment extends Fragment implements View.OnClickListener {
 
+    private IGoToMainPagePressedFromHistory goToMainPagePressedFromHistory;
     private GamesListAdapter adapter;
     private ListView historyListView;
     private List<Game> lastGames;
@@ -49,6 +52,25 @@ public class HistoryFragment extends Fragment implements View.OnClickListener {
         new GetLastGamesHistoryTask().execute((DataAccess) args.getSerializable("data"));
 
         return view;
+    }
+
+    public interface IGoToMainPagePressedFromHistory {
+        void goToMainPageFromHistory();
+    }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        Activity activity = (Activity) context;
+
+        // This makes sure that the container activity has implemented
+        // the callback interface. If not, it throws an exception
+        try {
+            goToMainPagePressedFromHistory = (IGoToMainPagePressedFromHistory) activity;
+        } catch (ClassCastException e) {
+            throw new ClassCastException(activity.toString()
+                    + " must implement IGoToMainPagePressedFromHistory");
+        }
     }
 
     private class GetLastGamesHistoryTask extends AsyncTask<DataAccess, Void, List<Game>> {
@@ -84,12 +106,7 @@ public class HistoryFragment extends Fragment implements View.OnClickListener {
     }
 
     public void onClick(View v) {
-
-        MenuPageFragmetn firstFragment = new MenuPageFragmetn();
-
-        FragmentTransaction transaction = getFragmentManager().beginTransaction();
-        transaction.replace(R.id.fragment_placeholder, firstFragment);
-        transaction.commit();
+        this.goToMainPagePressedFromHistory.goToMainPageFromHistory();
     }
 
 }

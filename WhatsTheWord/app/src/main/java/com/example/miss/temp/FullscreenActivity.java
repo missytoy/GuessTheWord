@@ -32,6 +32,8 @@ public class FullscreenActivity extends AppCompatActivity
         MenuPageFragmetn.OnButtonsClick,
         StartNewGameFragment.OnChooseCategoryBtnClicked,
         CategoriesFragment.OnListViewItemSelected,
+        HistoryFragment.IGoToMainPagePressedFromHistory,
+        Ranking.IGoToMainPagePressed,
         GamePage.OnGameOver {
     /**
      * Whether or not the system UI should be auto-hidden after
@@ -129,6 +131,27 @@ public class FullscreenActivity extends AppCompatActivity
 
     @Override
     public void onBackPressed() {
+        MenuPageFragmetn firstFragment = new MenuPageFragmetn();
+
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        transaction.replace(R.id.fragment_placeholder, firstFragment);
+        transaction.commit();
+    }
+
+    @Override
+    public void goToMainPageFromRanking() {
+
+
+        MenuPageFragmetn firstFragment = new MenuPageFragmetn();
+
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        transaction.replace(R.id.fragment_placeholder, firstFragment);
+        transaction.commit();
+    }
+
+    @Override
+    public void goToMainPageFromHistory() {
+
         MenuPageFragmetn firstFragment = new MenuPageFragmetn();
 
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
