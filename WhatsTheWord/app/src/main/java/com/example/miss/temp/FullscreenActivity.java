@@ -1,8 +1,15 @@
 package com.example.miss.temp;
 
+import android.Manifest;
 import android.annotation.SuppressLint;
+import android.content.Context;
+import android.content.pm.PackageManager;
+import android.location.Criteria;
+import android.location.Location;
+import android.location.LocationManager;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -31,6 +38,7 @@ public class FullscreenActivity extends AppCompatActivity
         implements View.OnClickListener,
         MenuPageFragmetn.OnButtonsClick,
         StartNewGameFragment.OnChooseCategoryBtnClicked,
+        StartNewGameFragment.IOnGeolocationChosen,
         CategoriesFragment.OnListViewItemSelected,
         HistoryFragment.IGoToMainPagePressedFromHistory,
         Ranking.IGoToMainPagePressed,
@@ -39,6 +47,9 @@ public class FullscreenActivity extends AppCompatActivity
      * Whether or not the system UI should be auto-hidden after
      * {@link #AUTO_HIDE_DELAY_MILLIS} milliseconds.
      */
+
+    private LocationManager locationManager;
+    private String provider;
 
     public DataAccess data;
     Button closeAppBtn;
@@ -79,6 +90,12 @@ public class FullscreenActivity extends AppCompatActivity
 
 //        closeAppBtn = (Button) findViewById(R.id.dummy_button);
 //        closeAppBtn.setOnClickListener(this);
+
+        // Get the location manager
+        locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+        // Define the criteria how to select the locatioin provider -> use default
+        Criteria criteria = new Criteria();
+        provider = locationManager.getBestProvider(criteria, false);
 
         if (findViewById(R.id.fragment_placeholder) != null) {
             // However, if we're being restored from a previous state,
@@ -138,6 +155,19 @@ public class FullscreenActivity extends AppCompatActivity
         transaction.commit();
     }
 
+    @Override
+    public void getGeolocation() {
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
+                && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+
+            return;
+        }
+
+        Location location = locationManager.getLastKnownLocation(provider);
+        //Geocoder geocoder = new Geocoder(this, location)
+//        Double lat = location.getLatitude();
+//        longitudeField.setText(lat.toString());
+    }
 
 
     private class GetCategoriesTask extends AsyncTask<DataAccess, Void, List<Category>> {

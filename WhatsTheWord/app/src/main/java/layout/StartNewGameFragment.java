@@ -4,7 +4,6 @@ package layout;
 import android.app.Activity;
 import android.content.Context;
 import android.graphics.Color;
-import android.media.MediaPlayer;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -15,7 +14,9 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
+import android.widget.CompoundButton;
 import android.widget.LinearLayout;
+import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -33,16 +34,18 @@ import models.Player;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class StartNewGameFragment extends Fragment implements View.OnClickListener {
+public class StartNewGameFragment extends Fragment implements View.OnClickListener, CompoundButton.OnCheckedChangeListener {
     // Will be filled from the database so that we don't have to type our full name if we have already played.
     // For now it is hardcoded in onCreateView method.
     private List<String> allPlayerNames;
     private ArrayAdapter<String> autoCompleteAdapter;
+    private IOnGeolocationChosen onChosingGeolocation;
 
     OnChooseCategoryBtnClicked onChooseCategoryPressed;
 
     Button addPlayerButton;
     Button chooseCategoryBtn;
+    Switch takePlaceSwitch;
     TextView viewPlayers;
     AutoCompleteTextView playerName;
     List<Player> playersList;
@@ -62,6 +65,9 @@ public class StartNewGameFragment extends Fragment implements View.OnClickListen
         chooseCategoryBtn = (Button) view.findViewById(R.id.chose_category);
         chooseCategoryBtn.setOnClickListener(this);
 
+        takePlaceSwitch = (Switch) view.findViewById(R.id.take_place);
+        takePlaceSwitch.setOnCheckedChangeListener((CompoundButton.OnCheckedChangeListener) this);
+
         viewPlayers = (TextView) view.findViewById(R.id.view_players);
         playerName = (AutoCompleteTextView) view.findViewById(R.id.editTextPlayerName);
 
@@ -78,8 +84,19 @@ public class StartNewGameFragment extends Fragment implements View.OnClickListen
         return view;
     }
 
+    @Override
+    public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+        if (isChecked){
+
+        }
+    }
+
     public  interface  OnChooseCategoryBtnClicked{
         public void onChooseCategoryButtonClicked(Serializable players);
+    }
+
+    public interface IOnGeolocationChosen{
+        void getGeolocation();
     }
 
     @Override
@@ -91,6 +108,7 @@ public class StartNewGameFragment extends Fragment implements View.OnClickListen
         // the callback interface. If not, it throws an exception
         try {
             onChooseCategoryPressed = (OnChooseCategoryBtnClicked) activity;
+            onChosingGeolocation = (IOnGeolocationChosen) activity;
         } catch (ClassCastException e) {
             throw new ClassCastException(activity.toString()
                     + " must implement OnChooseCategoryBtnClicked");
