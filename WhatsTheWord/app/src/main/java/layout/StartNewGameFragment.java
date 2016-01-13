@@ -22,6 +22,7 @@ import android.widget.Toast;
 
 import com.example.miss.temp.R;
 
+import java.io.IOException;
 import java.io.Serializable;
 import java.util.AbstractSet;
 import java.util.ArrayList;
@@ -85,9 +86,13 @@ public class StartNewGameFragment extends Fragment implements View.OnClickListen
     }
 
     @Override
-    public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+    public void onCheckedChanged (CompoundButton buttonView, boolean isChecked) {
         if (isChecked){
-
+            try {
+                this.onChosingGeolocation.getGeolocation();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
     }
 
@@ -96,7 +101,7 @@ public class StartNewGameFragment extends Fragment implements View.OnClickListen
     }
 
     public interface IOnGeolocationChosen{
-        void getGeolocation();
+        void getGeolocation() throws IOException;
     }
 
     @Override
@@ -164,6 +169,13 @@ public class StartNewGameFragment extends Fragment implements View.OnClickListen
 
                 return;
             }
+
+            try {
+                this.onChosingGeolocation.getGeolocation();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
             onChooseCategoryPressed.onChooseCategoryButtonClicked((Serializable)playersList);
         }
     }
