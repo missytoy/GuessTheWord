@@ -30,6 +30,7 @@ import java.util.List;
 import java.util.Random;
 
 import data.DataAccess;
+import helpers.MySoundManager;
 import models.Game;
 import models.Player;
 
@@ -44,7 +45,6 @@ public class GamePage extends Fragment implements View.OnClickListener {
     private Integer currentCategoryId;
     private Integer currentPlayerIndex;
     private HashSet<String> usedWords;
-    int randNum;
 
     TextView timerTextView;
     TextView randomWord;
@@ -100,8 +100,10 @@ public class GamePage extends Fragment implements View.OnClickListener {
 
     @Override
     public void onClick(View v) {
+
         if (v.getId() == nextPlayerButton.getId()) {
 
+            MySoundManager.playButtonSound(getContext());
             randomWordAndTimer.setVisibility(View.VISIBLE);
             currentUserInfo.setVisibility(View.INVISIBLE);
             usedWords.clear();
@@ -110,7 +112,7 @@ public class GamePage extends Fragment implements View.OnClickListener {
             playerTimer();
         } else if (v.getId() == correctButton.getId()) {
 
-            playCorrectTone(getContext());
+            MySoundManager.playCorrectTone(getContext());
             Player currentPlayer = players.get(currentPlayerIndex);
             int currentScore = currentPlayer.getScore();
             currentPlayer.setScore(currentScore + 1);
@@ -128,7 +130,7 @@ public class GamePage extends Fragment implements View.OnClickListener {
 
         } else if (v.getId() == wrongButton.getId()) {
             // TODO: notify with sound
-            playNextWordTone(getContext());
+            MySoundManager.playNextWordTone(getContext());
             int indexOfRandomWord = random.nextInt(wordsToGuess.size() - 1 + 1);
             String wordToGuess = wordsToGuess.get(indexOfRandomWord);
             while (usedWords.contains(wordToGuess)) {
@@ -258,61 +260,6 @@ public class GamePage extends Fragment implements View.OnClickListener {
 
             return null;
         }
-    }
-
-    public void playCorrectTone(final Context context) {
-
-
-        Thread t = new Thread() {
-            public void run() {
-                MediaPlayer player = null;
-                player = MediaPlayer.create(context, R.raw.correct);
-                player.start();
-                try {
-
-                    Thread.sleep(player.getDuration());
-                    player.release();
-                } catch (InterruptedException e) {
-                    // TODO Auto-generated catch block
-                    e.printStackTrace();
-
-                }
-            }
-        };
-
-        t.start();
-
-    }
-
-    public void playNextWordTone(final Context context) {
-
-        Random rand = new Random();
-        randNum = rand.nextInt(2);
-
-        Thread t = new Thread() {
-            public void run() {
-                MediaPlayer player = null;
-                if (randNum == 1) {
-
-                    player = MediaPlayer.create(context, R.raw.hahasound);
-                } else {
-                    player = MediaPlayer.create(context, R.raw.flip);
-                }
-                player.start();
-                try {
-
-                    Thread.sleep(player.getDuration());
-                    player.release();
-                } catch (InterruptedException e) {
-                    // TODO Auto-generated catch block
-                    e.printStackTrace();
-                }
-            }
-
-        };
-
-        t.start();
-
     }
 
 }

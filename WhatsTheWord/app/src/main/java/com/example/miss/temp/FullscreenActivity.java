@@ -138,26 +138,7 @@ public class FullscreenActivity extends AppCompatActivity
         transaction.commit();
     }
 
-    @Override
-    public void goToMainPageFromRanking() {
 
-
-        MenuPageFragmetn firstFragment = new MenuPageFragmetn();
-
-        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        transaction.replace(R.id.fragment_placeholder, firstFragment);
-        transaction.commit();
-    }
-
-    @Override
-    public void goToMainPageFromHistory() {
-
-        MenuPageFragmetn firstFragment = new MenuPageFragmetn();
-
-        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        transaction.replace(R.id.fragment_placeholder, firstFragment);
-        transaction.commit();
-    }
 
     private class GetCategoriesTask extends AsyncTask<DataAccess, Void, List<Category>> {
         @Override
@@ -323,6 +304,27 @@ public class FullscreenActivity extends AppCompatActivity
         // Replace whatever is in the fragment_container view with this fragment
         transaction.replace(R.id.fragment_placeholder, newFragment);
         // Commit the transaction
+        transaction.commit();
+    }
+
+    @Override
+    public void goToMainPageFromRanking() {
+
+
+        MenuPageFragmetn firstFragment = new MenuPageFragmetn();
+
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        transaction.replace(R.id.fragment_placeholder, firstFragment);
+        transaction.commit();
+    }
+
+    @Override
+    public void goToMainPageFromHistory() {
+
+        MenuPageFragmetn firstFragment = new MenuPageFragmetn();
+
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        transaction.replace(R.id.fragment_placeholder, firstFragment);
         transaction.commit();
     }
 

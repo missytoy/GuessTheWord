@@ -3,6 +3,7 @@ package layout;
 
 import android.app.Activity;
 import android.content.Context;
+import android.media.MediaPlayer;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -20,6 +21,7 @@ import java.util.Collections;
 import java.util.List;
 
 import data.DataAccess;
+import helpers.MySoundManager;
 import models.Game;
 import models.Player;
 
@@ -44,8 +46,8 @@ public class HistoryFragment extends Fragment implements View.OnClickListener {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-
         View view = inflater.inflate(R.layout.fragment_history, container, false);
+        playBookSound(getContext());
         goToMainPage = (Button) view.findViewById(R.id.go_to_main_page);
         goToMainPage.setOnClickListener(this);
         Bundle args = this.getArguments();
@@ -106,7 +108,30 @@ public class HistoryFragment extends Fragment implements View.OnClickListener {
     }
 
     public void onClick(View v) {
+        MySoundManager.playButtonSound(getContext());
         this.goToMainPagePressedFromHistory.goToMainPageFromHistory();
     }
+    public void playBookSound(final Context context) {
 
+
+        Thread t = new Thread() {
+            public void run() {
+                MediaPlayer player = null;
+                player = MediaPlayer.create(context, R.raw.history);
+                player.start();
+                try {
+
+                    Thread.sleep(player.getDuration());
+                    player.release();
+                } catch (InterruptedException e) {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+
+                }
+            }
+        };
+
+        t.start();
+
+    }
 }

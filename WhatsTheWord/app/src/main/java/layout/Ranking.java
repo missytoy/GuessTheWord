@@ -17,6 +17,8 @@ import android.widget.Toast;
 
 import com.example.miss.temp.R;
 
+import helpers.MySoundManager;
+
 /**
  * A simple {@link Fragment} subclass.
  */
@@ -37,7 +39,7 @@ public class Ranking extends Fragment implements View.OnClickListener {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_ranking, container, false);
-        playClapping(getContext());
+        MySoundManager.playClapping(getContext());
         Bundle args = this.getArguments();
         playersRanking = (String[]) args.getSerializable("players_scores");
         rankingListView = (ListView) view.findViewById(R.id.ranking_listview);
@@ -72,31 +74,9 @@ public class Ranking extends Fragment implements View.OnClickListener {
 
     @Override
     public void onClick(View v) {
+
+        MySoundManager.playButtonSound(getContext());
         this.goToMainPagePressedFromRanking.goToMainPageFromRanking();
     }
 
-
-    public void playClapping(final Context context) {
-
-
-        Thread t = new Thread() {
-            public void run() {
-                MediaPlayer player = null;
-                player = MediaPlayer.create(context, R.raw.claps);
-                player.start();
-                try {
-
-                    Thread.sleep(player.getDuration());
-                    player.release();
-                } catch (InterruptedException e) {
-                    // TODO Auto-generated catch block
-                    e.printStackTrace();
-
-                }
-            }
-        };
-
-        t.start();
-
-    }
 }

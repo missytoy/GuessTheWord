@@ -2,6 +2,7 @@ package helpers;
 
 
 import android.database.Cursor;
+import android.widget.Button;
 
 import com.example.miss.temp.R;
 
@@ -33,6 +34,7 @@ public class Utils {
         if (cursor.isNull(index)) {
             return null;
         }
+
         return new Date(cursor.getLong(index));
     }
 }

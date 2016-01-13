@@ -3,6 +3,7 @@ package layout;
 
 import android.app.Activity;
 import android.content.Context;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -11,6 +12,8 @@ import android.view.ViewGroup;
 import android.widget.Button;
 
 import com.example.miss.temp.R;
+
+import helpers.MySoundManager;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -66,6 +69,8 @@ public class MenuPageFragmetn extends Fragment implements View.OnClickListener {
     }
 
     public void onClick(View v) {
+
+        MySoundManager.playButtonSound(getContext());
         if (v.getId() == startGameBtn.getId()) {
              //Toast.makeText(getContext(), "Start Game", Toast.LENGTH_SHORT).show();
             onButtonsPressed.onStartButtonClicked();
@@ -77,4 +82,5 @@ public class MenuPageFragmetn extends Fragment implements View.OnClickListener {
             onButtonsPressed.onHistoryButtonClicked();
         }
     }
+
 }

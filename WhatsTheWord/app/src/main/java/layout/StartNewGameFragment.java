@@ -4,6 +4,7 @@ package layout;
 import android.app.Activity;
 import android.content.Context;
 import android.graphics.Color;
+import android.media.MediaPlayer;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -26,6 +27,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import data.DataAccess;
+import helpers.MySoundManager;
 import models.Player;
 
 /**
@@ -53,6 +55,7 @@ public class StartNewGameFragment extends Fragment implements View.OnClickListen
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        MySoundManager.playLetItBegin(getContext());
         View view = inflater.inflate(R.layout.fragment_start_new_game, container, false);
         addPlayerButton = (Button) view.findViewById(R.id.add_player);
         addPlayerButton.setOnClickListener(this);
@@ -96,6 +99,8 @@ public class StartNewGameFragment extends Fragment implements View.OnClickListen
 
     @Override
     public void onClick(View v) {
+
+        MySoundManager.playButtonSound(getContext());
         if (v.getId() == addPlayerButton.getId()) {
             String playerNameText = playerName.getText().toString();
             if (playerNameText.length() == 0){
@@ -160,4 +165,6 @@ public class StartNewGameFragment extends Fragment implements View.OnClickListen
             }
         }
     }
+
+
 }

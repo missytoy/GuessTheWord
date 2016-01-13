@@ -1,7 +1,9 @@
 package layout;
 
 
+import android.content.Context;
 import android.graphics.Color;
+import android.media.MediaPlayer;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -23,6 +25,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import data.DataAccess;
+import helpers.MySoundManager;
 import models.Category;
 import models.Word;
 
@@ -90,6 +93,8 @@ public class AddNewWord extends Fragment implements View.OnClickListener {
 
     @Override
     public void onClick(View v) {
+
+        MySoundManager.playButtonSound(getContext());
         String wordToAdd = addNewWordEditText.getText().toString()
                                                        .trim();
         String chosenCategoryName = String.valueOf(categoryName.getSelectedItem());
@@ -180,28 +185,5 @@ public class AddNewWord extends Fragment implements View.OnClickListener {
             toast.show();
         }
     }
-//
-//    public class CustomOnItemSelectedListener implements AdapterView.OnItemSelectedListener {
-//
-//        @Override
-//        public void onItemSelected (AdapterView<?> main, View view, int position,
-//                                    long Id) {
-//
-//            if(position > 0){
-////                Toast.makeText(getContext(), position,
-////                        Toast.LENGTH_SHORT).show();
-//            }else{
-////                Toast.makeText(getContext(), "Select category",
-////                        Toast.LENGTH_SHORT).show();
-//            }
-//
-//        }
-//
-//        @Override
-//        public void onNothingSelected(AdapterView<?> parent) {
-////            Toast.makeText(getContext(), "Select category (on nothing selected)",
-////                    Toast.LENGTH_SHORT).show();
-//        }
-//
-//    }
+
 }
