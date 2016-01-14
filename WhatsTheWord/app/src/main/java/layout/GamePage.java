@@ -146,10 +146,16 @@ public class GamePage extends Fragment implements View.OnClickListener {
                                 return false;
                             if (e1.getX() - e2.getX() > SWIPE_MIN_DISTANCE
                                     && Math.abs(velocityX) > SWIPE_THRESHOLD_VELOCITY) {
-                                handleSwipeLeft();
+                                if (playerFirstPage.getVisibility() != View.VISIBLE){
+
+                                    handleSwipeLeft();
+                                }
                             } else if (e2.getX() - e1.getX() > SWIPE_MIN_DISTANCE
                                     && Math.abs(velocityX) > SWIPE_THRESHOLD_VELOCITY) {
-                                handleSwipeRight();
+                                if (playerFirstPage.getVisibility() != View.VISIBLE){
+
+                                    handleSwipeRight();
+                                }
                             }
                         } catch (Exception e) {
                             // nothing

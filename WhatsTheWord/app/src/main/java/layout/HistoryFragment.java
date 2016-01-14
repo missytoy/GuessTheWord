@@ -77,6 +77,8 @@ public class HistoryFragment extends Fragment implements View.OnClickListener, A
         return view;
     }
 
+
+
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         Game selectedGame = (Game) historyListView.getItemAtPosition(position);

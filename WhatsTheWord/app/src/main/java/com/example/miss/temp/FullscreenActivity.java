@@ -140,17 +140,17 @@ public class FullscreenActivity extends AppCompatActivity
         // findViewById(R.id.dummy_button).setOnTouchListener(mDelayHideTouchListener);
     }
 
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        data.close();
-    }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-        data.close();
-    }
+//    @Override
+//    protected void onDestroy() {
+//        super.onDestroy();
+//        data.close();
+//    }
+//
+//    @Override
+//    protected void onPause() {
+//        super.onPause();
+//        data.close();
+//    }
 
 
     @Override
