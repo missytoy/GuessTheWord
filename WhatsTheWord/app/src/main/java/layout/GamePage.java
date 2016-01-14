@@ -43,6 +43,7 @@ public class GamePage extends Fragment implements View.OnClickListener {
 
     private float x1, x2;
     static final int MIN_DISTANCE = 150;
+    private static final int PLAYER_TURN_TIME = 1000;
 
     private List<String> wordsToGuess;
     private List<Player> players;
@@ -51,6 +52,8 @@ public class GamePage extends Fragment implements View.OnClickListener {
     private HashSet<String> usedWords;
     private String address;
     private String city;
+    private  String place;
+    private Boolean isLocationChecked;
 
     TextView timerTextView;
     TextView randomWord;
@@ -86,6 +89,7 @@ public class GamePage extends Fragment implements View.OnClickListener {
         usedWords = new HashSet<String>();
 
         Bundle args = this.getArguments();
+        isLocationChecked = args.getBoolean("is_checked");
         currentCategoryId = args.getInt("category_id");
         address = args.getString("location");
         city = args.getString("city");
@@ -222,7 +226,7 @@ public class GamePage extends Fragment implements View.OnClickListener {
     public void playerTimer() {
         CountDownTimer waitTimer;
         //TODO: set timer to 60000
-        waitTimer = new CountDownTimer(10000, 1000) {
+        waitTimer = new CountDownTimer(PLAYER_TURN_TIME, 1000) {
 
             public void onTick(long millisUntilFinished) {
                 timerStep = millisUntilFinished / 1000;
@@ -350,7 +354,12 @@ public class GamePage extends Fragment implements View.OnClickListener {
             gameModel.setCategoryId(currentCategoryId);
             gameModel.setPlayedOn(new Date());
 
-            gameModel.setLocation(address == null ? "Could not get location." : address);
+
+            if (isLocationChecked){
+                place = city+ ", " + address;
+                gameModel.setLocation(place);
+            }
+
 
             int gameId = (int) params[0].createGame(gameModel);
             for (Player pl : players) {

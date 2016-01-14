@@ -98,7 +98,7 @@ public class StartNewGameFragment extends Fragment implements View.OnClickListen
     }
 
     public  interface  OnChooseCategoryBtnClicked{
-        public void onChooseCategoryButtonClicked(Serializable players);
+        public void onChooseCategoryButtonClicked(Serializable players,Boolean isChecked);
     }
 
     public interface IOnGeolocationChosen{
@@ -179,7 +179,7 @@ public class StartNewGameFragment extends Fragment implements View.OnClickListen
                 }
             }
 
-            onChooseCategoryPressed.onChooseCategoryButtonClicked((Serializable)playersList);
+            onChooseCategoryPressed.onChooseCategoryButtonClicked((Serializable)playersList, takePlaceSwitch.isChecked());
         }
     }
 

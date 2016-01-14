@@ -43,6 +43,8 @@ public class HistoryFragment extends Fragment implements View.OnClickListener, A
     private RelativeLayout detailHistoryPage;
     private TextView detailsTextView;
 
+    private String playersString = "";
+    private String placeString;
 
     public HistoryFragment() {
         // Required empty public constructor
@@ -80,15 +82,30 @@ public class HistoryFragment extends Fragment implements View.OnClickListener, A
         Game selectedGame = (Game) historyListView.getItemAtPosition(position);
         historyPage.setVisibility(View.GONE);
         detailHistoryPage.setVisibility(View.VISIBLE);
-        String gameDetails = String.format("Winner: %s(%d pts)\nCategory: %s\nPlayed on: %s\nAt location: %s\nPlayed with:\n",
+
+
+        for (int i = 1; i < selectedGame.getPlayers().size(); i++) {
+            playersString += "\n- " + selectedGame.getPlayers().get(i).getName() + "(" + selectedGame.getPlayers().get(i).getScore() + " pts)";
+        }
+
+        if (selectedGame.getLocation() == null ||selectedGame.getLocation() =="" ) {
+            placeString = "";
+        } else {
+            placeString = "Place: " + selectedGame.getLocation();
+        }
+
+        String gameDetails = String.format("Winner: %s(%d pts)\nPlayed with:%s\nCategory: %s\nPlayed on: %s\n%s",
                 selectedGame.getWinner().getName(),
                 selectedGame.getWinner().getScore(),
+                playersString,
                 selectedGame.getCategoryName(),
                 Utils.getDateAsString(selectedGame.getPlayedOn()),
-                selectedGame.getLocation());
-        for (int i = 1; i < selectedGame.getPlayers().size(); i++) {
-             gameDetails += "- " + selectedGame.getPlayers().get(i).getName() + "(" + selectedGame.getPlayers().get(i).getScore() + " pts)";
-        }
+                placeString);
+
+//        for (int i = 1; i < selectedGame.getPlayers().size(); i++) {
+//             gameDetails += "- " + selectedGame.getPlayers().get(i).getName() + "(" + selectedGame.getPlayers().get(i).getScore() + " pts)";
+//        }
+
         detailsTextView.setText(gameDetails);
     }
 

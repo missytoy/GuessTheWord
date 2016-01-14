@@ -58,6 +58,7 @@ public class FullscreenActivity extends AppCompatActivity
 
     private LocationManager locationManager;
     private String provider;
+    private  Boolean isChecked;
 
     public DataAccess data;
     Button closeAppBtn;
@@ -146,6 +147,13 @@ public class FullscreenActivity extends AppCompatActivity
     }
 
     @Override
+    protected void onPause() {
+        super.onPause();
+        data.close();
+    }
+
+
+    @Override
     protected void onPostCreate(Bundle savedInstanceState) {
         super.onPostCreate(savedInstanceState);
 
@@ -164,6 +172,12 @@ public class FullscreenActivity extends AppCompatActivity
         transaction.commit();
     }
 
+//    @Override
+//    protected void onPostResume() {
+//        super.onPostResume();
+//        data.open();
+//    }
+
     @Override
     public void getGeolocation() throws IOException {
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
@@ -177,7 +191,7 @@ public class FullscreenActivity extends AppCompatActivity
         geocoder = new Geocoder(this, Locale.getDefault());
 
         Location location = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
-        if(location != null && location.getTime() > Calendar.getInstance().getTimeInMillis() - 5 * 60 * 1000) {
+        if (location != null  && location.getTime() > Calendar.getInstance().getTimeInMillis() - 1 * 60 * 1000) {
             double latitude = location.getLatitude();
             double longitude = location.getLongitude();
 
@@ -190,8 +204,7 @@ public class FullscreenActivity extends AppCompatActivity
             String country = addresses.get(0).getCountryName();
             String postalCode = addresses.get(0).getPostalCode();
             String knownName = addresses.get(0).getFeatureName(); // Only if available else return NULL
-        }
-        else {
+        } else {
             locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0, this);
         }
 
@@ -206,7 +219,7 @@ public class FullscreenActivity extends AppCompatActivity
 
                 return;
             }
-            locationManager.removeUpdates(this);
+            //locationManager.removeUpdates(this);
         }
     }
 
@@ -367,8 +380,9 @@ public class FullscreenActivity extends AppCompatActivity
         GamePage newFragment = new GamePage();
         Bundle args = new Bundle();
         args.putInt("category_id", categoryId);
+        args.putBoolean("is_checked",this.isChecked);
         args.putSerializable("players_list", (Serializable) playersList);
-        if(currentLocation != null){
+        if (currentLocation != null) {
             args.putString("location", currentLocation.getAddressLine(0));
             args.putString("city", currentLocation.getLocality());
         }
@@ -418,6 +432,7 @@ public class FullscreenActivity extends AppCompatActivity
         transaction.commit();
     }
 
+
     @Override
     public void onHistoryButtonClicked() {
 
@@ -451,8 +466,9 @@ public class FullscreenActivity extends AppCompatActivity
     }
 
     @Override
-    public void onChooseCategoryButtonClicked(Serializable players) {
+    public void onChooseCategoryButtonClicked(Serializable players, Boolean isChecked) {
         playersList = new ArrayList<Player>((ArrayList<Player>) players);
+        this.isChecked = isChecked;
 
         Bundle args = new Bundle();
         args.putSerializable("categories_array", (Serializable) categoriesList);
