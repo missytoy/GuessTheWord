@@ -140,18 +140,30 @@ public class FullscreenActivity extends AppCompatActivity
         // findViewById(R.id.dummy_button).setOnTouchListener(mDelayHideTouchListener);
     }
 
-//    @Override
-//    protected void onDestroy() {
-//        super.onDestroy();
-//        data.close();
-//    }
-//
-//    @Override
-//    protected void onPause() {
-//        super.onPause();
-//        data.close();
-//    }
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        data.close();
+    }
 
+    @Override
+    protected void onPause() {
+        super.onPause();
+        data.close();
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        this.finish();
+        System.exit(0);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        data.open();
+    }
 
     @Override
     protected void onPostCreate(Bundle savedInstanceState) {
@@ -172,11 +184,11 @@ public class FullscreenActivity extends AppCompatActivity
         transaction.commit();
     }
 
-//    @Override
-//    protected void onPostResume() {
-//        super.onPostResume();
-//        data.open();
-//    }
+    @Override
+    protected void onPostResume() {
+        super.onPostResume();
+        data.open();
+    }
 
     @Override
     public void getGeolocation() throws IOException {
@@ -191,7 +203,7 @@ public class FullscreenActivity extends AppCompatActivity
         geocoder = new Geocoder(this, Locale.getDefault());
 
         Location location = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
-        if (location != null  && location.getTime() > Calendar.getInstance().getTimeInMillis() - 1 * 60 * 1000) {
+        if (location != null /*&& location.getTime() > Calendar.getInstance().getTimeInMillis() - 1 * 60 * 1000*/) {
             double latitude = location.getLatitude();
             double longitude = location.getLongitude();
 
