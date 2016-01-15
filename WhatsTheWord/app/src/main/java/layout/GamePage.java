@@ -183,10 +183,10 @@ public class GamePage extends Fragment implements View.OnClickListener, SensorEv
                 return gesture.onTouchEvent(event);
             }
         });
-
-        senSensorManager = (SensorManager) getActivity().getSystemService(Context.SENSOR_SERVICE);
-        senAccelerometer = senSensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
-        senSensorManager.registerListener(this, senAccelerometer, SensorManager.SENSOR_DELAY_NORMAL);
+//
+//        senSensorManager = (SensorManager) getActivity().getSystemService(Context.SENSOR_SERVICE);
+//        senAccelerometer = senSensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
+//        senSensorManager.registerListener(this, senAccelerometer, SensorManager.SENSOR_DELAY_NORMAL);
         listener = this;
         return view;
     }
