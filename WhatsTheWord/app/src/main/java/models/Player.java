@@ -43,10 +43,16 @@ public class Player implements Comparable<Player> {
 
     @Override
     public int compareTo(Player another) {
-        if (this.getScore() < another.getScore()) {
-            return 1;
+        if (this.getScore() > another.getScore()) {
+            return -1;
         } else {
-           return this.getName().toString().compareTo(another.getName().toString());
+                if ((this.getName().toString().compareTo(another.getName().toString())) == 1) {
+                    return 1;
+                } else if ((this.getName().toString().compareTo(another.getName().toString())) == -1) {
+                    return -1;
+                } else {
+                    return 0;
+                }
         }
     }
 }

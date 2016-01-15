@@ -37,6 +37,7 @@ public class HistoryFragment extends Fragment implements View.OnClickListener, A
     private GamesListAdapter adapter;
     private ListView historyListView;
     private List<Game> lastGames;
+    private List<Player> playerss;
     private Button goToMainPage;
     private Button goBackToHistory;
     private RelativeLayout historyPage;
@@ -85,9 +86,10 @@ public class HistoryFragment extends Fragment implements View.OnClickListener, A
         historyPage.setVisibility(View.GONE);
         detailHistoryPage.setVisibility(View.VISIBLE);
 
-
-        for (int i = 1; i < selectedGame.getPlayers().size(); i++) {
-            playersString += "\n- " + selectedGame.getPlayers().get(i).getName() + "(" + selectedGame.getPlayers().get(i).getScore() + " pts)";
+        playerss = selectedGame.getPlayers();
+        Collections.sort(playerss);
+        for (int i = 0; i < selectedGame.getPlayers().size(); i++) {
+            playersString += "\n- " + playerss.get(i).getName() + "(" + playerss.get(i).getScore() + " pts)";
         }
 
         if (selectedGame.getLocation() == null ||selectedGame.getLocation() =="" ) {
@@ -96,9 +98,8 @@ public class HistoryFragment extends Fragment implements View.OnClickListener, A
             placeString = "Place: " + selectedGame.getLocation();
         }
 
-        String gameDetails = String.format("Winner: %s(%d pts)\n\nPlayed with:%s\n\nCategory: %s\n\nPlayed on: %s\n\n%s",
-                selectedGame.getWinner().getName(),
-                selectedGame.getWinner().getScore(),
+        Collections.sort(playerss);
+        String gameDetails = String.format("Players:%s\n\nCategory: %s\n\nPlayed on: %s\n\n%s",
                 playersString,
                 selectedGame.getCategoryName(),
                 Utils.getDateAsString(selectedGame.getPlayedOn()),

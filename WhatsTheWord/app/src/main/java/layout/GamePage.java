@@ -372,7 +372,7 @@ public class GamePage extends Fragment implements View.OnClickListener {
                 pl.setGameId(gameId);
                 params[0].createPlayer(pl);
             }
-            //Collections.sort(players);
+            Collections.sort(players);
             return null;
         }
     }
