@@ -4,10 +4,15 @@ package layout;
 import android.app.Activity;
 import android.content.Context;
 import android.graphics.Color;
+import android.hardware.Sensor;
+import android.hardware.SensorEvent;
+import android.hardware.SensorEventListener;
+import android.hardware.SensorManager;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.GestureDetector;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -38,12 +43,20 @@ import models.Player;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class GamePage extends Fragment implements View.OnClickListener {
+public class GamePage extends Fragment implements View.OnClickListener, SensorEventListener {
     private static final Random random = new Random();
+
+    SensorEventListener listener;
 
     private float x1, x2;
     static final int MIN_DISTANCE = 150;
-    private static final int PLAYER_TURN_TIME = 1000;
+    private static final int PLAYER_TURN_TIME = 10000;
+
+    private SensorManager senSensorManager;
+    private Sensor senAccelerometer;
+    private long lastUpdate = 0;
+    private float last_x, last_y, last_z;
+    private static final int SHAKE_THRESHOLD = 600;
 
     private List<String> wordsToGuess;
     private List<Player> players;
@@ -52,7 +65,7 @@ public class GamePage extends Fragment implements View.OnClickListener {
     private HashSet<String> usedWords;
     private String address;
     private String city;
-    private  String place;
+    private String place;
     private Boolean isLocationChecked;
 
     TextView timerTextView;
@@ -146,13 +159,13 @@ public class GamePage extends Fragment implements View.OnClickListener {
                                 return false;
                             if (e1.getX() - e2.getX() > SWIPE_MIN_DISTANCE
                                     && Math.abs(velocityX) > SWIPE_THRESHOLD_VELOCITY) {
-                                if (playerFirstPage.getVisibility() != View.VISIBLE){
+                                if (playerFirstPage.getVisibility() != View.VISIBLE) {
 
                                     handleSwipeLeft();
                                 }
                             } else if (e2.getX() - e1.getX() > SWIPE_MIN_DISTANCE
                                     && Math.abs(velocityX) > SWIPE_THRESHOLD_VELOCITY) {
-                                if (playerFirstPage.getVisibility() != View.VISIBLE){
+                                if (playerFirstPage.getVisibility() != View.VISIBLE) {
 
                                     handleSwipeRight();
                                 }
@@ -171,6 +184,10 @@ public class GamePage extends Fragment implements View.OnClickListener {
             }
         });
 
+        senSensorManager = (SensorManager) getActivity().getSystemService(Context.SENSOR_SERVICE);
+        senAccelerometer = senSensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
+        senSensorManager.registerListener(this, senAccelerometer, SensorManager.SENSOR_DELAY_NORMAL);
+        listener = this;
         return view;
     }
 
@@ -232,6 +249,10 @@ public class GamePage extends Fragment implements View.OnClickListener {
     public void playerTimer() {
         CountDownTimer waitTimer;
         //TODO: set timer to 60000
+        senSensorManager = (SensorManager) getActivity().getSystemService(Context.SENSOR_SERVICE);
+        senAccelerometer = senSensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
+        senSensorManager.registerListener(this, senAccelerometer, SensorManager.SENSOR_DELAY_NORMAL);
+        listener = this;
         waitTimer = new CountDownTimer(PLAYER_TURN_TIME, 1000) {
 
             public void onTick(long millisUntilFinished) {
@@ -241,6 +262,7 @@ public class GamePage extends Fragment implements View.OnClickListener {
 
             public void onFinish() {
                 timerTextView.setText("0");
+                senSensorManager.unregisterListener(listener);
                 if (currentPlayerIndex == players.size() - 1) {
                     Collections.sort(players);
                     String[] playerScores = new String[players.size()];
@@ -256,6 +278,7 @@ public class GamePage extends Fragment implements View.OnClickListener {
                     new SaveGameObjectAndPlayersToBaseTask().execute((DataAccess) getArguments().getSerializable("data"));
                     onGameOver.onGameEnding(playerScores);
                 } else {
+
                     randomWordAndTimer.setVisibility(View.INVISIBLE);
                     currentUserInfo.setVisibility(View.VISIBLE);
 
@@ -273,6 +296,70 @@ public class GamePage extends Fragment implements View.OnClickListener {
                 }
             }
         }.start();
+    }
+
+    @Override
+    public void onSensorChanged(SensorEvent sensorEvent) {
+        Sensor mySensor = sensorEvent.sensor;
+
+//        if (randomWordAndTimer.getVisibility() == View.VISIBLE) {
+//            senSensorManager.unregisterListener(this);
+
+
+        if (mySensor.getType() == Sensor.TYPE_ACCELEROMETER) {
+            float x = sensorEvent.values[0];
+            float y = sensorEvent.values[1];
+            float z = sensorEvent.values[2];
+
+            long curTime = System.currentTimeMillis();
+
+            if ((curTime - lastUpdate) > 1000) {
+                long diffTime = (curTime - lastUpdate);
+                lastUpdate = curTime;
+
+                float speed = Math.abs(x + y + z - last_x - last_y - last_z) / diffTime * 50000;
+
+                if (speed > SHAKE_THRESHOLD) {
+
+                }
+
+                if (z > 3 && y < 5 && x < 0) {            //x>0
+                    // Log.d("pingosvam","z > 3 && y<3 gore");
+                    //  MySoundManager.playCorrectTone(getContext());
+                    if (playerFirstPage.getVisibility() != View.VISIBLE) {
+
+                        handleSwipeLeft();
+                    }
+
+                }
+                Log.d("pingosvam x", String.valueOf(x));
+
+//                if (z < -5 && y>3 && x>1){
+//                    Log.d("ping","normalno");
+//
+//                }
+
+
+                if (z < -3 && y < 3 && x < 1) {
+                    //   Log.d("ping", "dolu");
+                    //   MySoundManager.playNextWordTone(getContext());
+                    if (playerFirstPage.getVisibility() != View.VISIBLE) {
+
+                        handleSwipeRight();
+                    }
+                }
+
+                last_x = x;
+                last_y = y;
+                last_z = z;
+            }
+        }
+
+    }
+
+    @Override
+    public void onAccuracyChanged(Sensor sensor, int accuracy) {
+
     }
 
     public interface OnGameOver {
@@ -361,8 +448,8 @@ public class GamePage extends Fragment implements View.OnClickListener {
             gameModel.setPlayedOn(new Date());
 
 
-            if (isLocationChecked){
-                place = city+ ", " + address;
+            if (isLocationChecked) {
+                place = city + ", " + address;
                 gameModel.setLocation(place);
             }
 
