@@ -5,11 +5,14 @@
     tools:context="layout.Ranking">
 
     <RelativeLayout
+        android:id="@+id/history_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@drawable/last_games"
         android:visibility="visible"
-        android:id="@+id/history_layout">
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true">
 
         <ListView
             android:id="@+id/history_listview"
@@ -18,19 +21,21 @@
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
             android:layout_centerVertical="true"
-            android:layout_marginLeft="31dp"
+            android:layout_marginLeft="30dp"
             android:layout_marginStart="31dp" />
 
         <Button
             android:id="@+id/go_to_main_page"
             style="@style/MyButtonStyle"
-            android:layout_width="150dp"
-            android:layout_height="40dp"
-            android:layout_alignLeft="@+id/history_listview"
+            android:layout_width="185dp"
+            android:layout_height="73dp"
+            android:layout_marginBottom="23dp"
+            android:text="Go to main page"
             android:layout_alignParentBottom="true"
-            android:layout_alignStart="@+id/history_listview"
-            android:layout_marginBottom="35dp"
-            android:text="Go to main page" />
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_marginLeft="35dp"
+            android:layout_marginStart="21dp" />
     </RelativeLayout>
 
     <RelativeLayout
@@ -43,34 +48,34 @@
         <ScrollView
             android:layout_width="240dp"
             android:layout_height="200dp"
-            android:padding="10dp"
-            android:layout_centerVertical="true"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
-            android:layout_marginLeft="46dp"
-            android:layout_marginStart="46dp">
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="43dp"
+            android:layout_marginStart="46dp"
+            android:padding="10dp">
 
             <TextView
                 android:id="@+id/details_text_view"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:textSize="20sp"
                 android:text="1. Konstantina (20)\nCategory: Songs\nDate/Time: 14.05.2015\nPlace: ul.Aleksandur malinov 5666\n2. Gosho(12)\n3.Ivan(10)\n1. Peshto (20)\n2. Gosho(12)\n3.Ivan(10)\n1. Peshto (20)\n2. Gosho(12)\n3.Ivan(10)\n1. Peshto (20)\n2. Gosho(12)\n3.Ivan(10)\n1. Peshto (20)\n2. Gosho(12)\n3.Ivan(10)\n1. Peshto (20)\n2. Gosho(12)\n3.Ivan(10)\nCategory: Songs\nDate/Time: 14.05.2015\nPlace: ul.Aleksandur malinov 5666"
-                android:textColor="@color/colorAccent" />
+                android:textColor="@color/colorAccent"
+                android:textSize="19sp" />
 
         </ScrollView>
 
         <Button
             android:id="@+id/go_back_to_history"
             style="@style/MyButtonStyle"
-            android:layout_width="150dp"
-            android:layout_height="50dp"
+            android:layout_width="185dp"
+            android:layout_height="65dp"
             android:layout_alignParentBottom="true"
             android:layout_alignParentEnd="true"
             android:layout_alignParentRight="true"
-            android:layout_marginBottom="35dp"
+            android:layout_marginBottom="28dp"
             android:layout_marginEnd="41dp"
-            android:layout_marginRight="41dp"
+            android:layout_marginRight="29dp"
             android:text="Back" />
 
     </RelativeLayout>

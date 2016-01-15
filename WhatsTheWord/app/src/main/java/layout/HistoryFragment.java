@@ -96,7 +96,7 @@ public class HistoryFragment extends Fragment implements View.OnClickListener, A
             placeString = "Place: " + selectedGame.getLocation();
         }
 
-        String gameDetails = String.format("Winner: %s(%d pts)\nPlayed with:%s\nCategory: %s\nPlayed on: %s\n%s",
+        String gameDetails = String.format("Winner: %s(%d pts)\n\nPlayed with:%s\n\nCategory: %s\n\nPlayed on: %s\n\n%s",
                 selectedGame.getWinner().getName(),
                 selectedGame.getWinner().getScore(),
                 playersString,

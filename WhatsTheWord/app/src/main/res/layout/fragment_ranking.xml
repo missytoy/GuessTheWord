@@ -18,12 +18,14 @@
         <Button
             android:id="@+id/go_to_main_page_from_ranking"
             style="@style/MyButtonStyle"
-            android:layout_width="150dp"
-            android:layout_height="40dp"
-            android:layout_alignLeft="@+id/ranking_listview"
+            android:layout_width="210dp"
+            android:layout_height="70dp"
+            android:layout_marginBottom="23dp"
+            android:text="Go to main page"
             android:layout_alignParentBottom="true"
-            android:layout_alignStart="@+id/ranking_listview"
-            android:layout_marginBottom="35dp"
-            android:text="Go to main page" />
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_marginLeft="28dp"
+            android:layout_marginStart="22dp" />
 
 </RelativeLayout>

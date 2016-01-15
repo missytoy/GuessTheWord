@@ -6,7 +6,7 @@ public class Player implements Comparable<Player> {
     private int score;
     private int gameId;
 
-    public Player(){
+    public Player() {
     }
 
     public int getScore() {
@@ -43,10 +43,10 @@ public class Player implements Comparable<Player> {
 
     @Override
     public int compareTo(Player another) {
-        if (this.getScore() < another.getScore()){
+        if (this.getScore() < another.getScore()) {
             return 1;
-        }else{
-            return -1;
+        } else {
+           return this.getName().toString().compareTo(another.getName().toString());
         }
     }
 }

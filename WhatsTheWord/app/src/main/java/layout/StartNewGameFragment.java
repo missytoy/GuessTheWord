@@ -138,7 +138,7 @@ public class StartNewGameFragment extends Fragment implements View.OnClickListen
 
                 return;
             } else if(playerNameText.length() > 12){
-                Toast toast = Toast.makeText(getContext(), "Player's name too long. Must be less than 13 symbols :)", Toast.LENGTH_SHORT);
+                Toast toast = Toast.makeText(getContext(), "Player's name too long.:)", Toast.LENGTH_SHORT);
                 LinearLayout toastLayout = (LinearLayout) toast.getView();
                 TextView toastTV = (TextView) toastLayout.getChildAt(0);
                 toastTV.setTextSize(20);

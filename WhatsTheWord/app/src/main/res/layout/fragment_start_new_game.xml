@@ -13,20 +13,21 @@
 
         <AutoCompleteTextView
             android:id="@+id/editTextPlayerName"
-            style="@style/MyButtonStyle"
+            android:layout_height="70dp"
             android:layout_width="250dp"
-            android:layout_alignParentTop="true"
-            android:layout_centerHorizontal="true"
             android:background="@drawable/backtextbox"
             android:gravity="center"
             android:hint="Add player's name "
-            android:textColor="@color/colorAccent" />
+            android:textColorHint="@color/black_overlay"
+            android:textColor="@color/black"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true" />
 
         <Button
             android:id="@+id/add_player"
             style="@style/MyButtonStyle"
-            android:layout_width="170dp"
-            android:layout_height="50dp"
+            android:layout_width="220dp"
+            android:layout_height="70dp"
             android:layout_alignLeft="@+id/chose_category"
             android:layout_alignStart="@+id/chose_category"
             android:layout_below="@+id/editTextPlayerName"
@@ -36,13 +37,11 @@
             android:id="@+id/scrollViewer"
             android:layout_width="250dp"
             android:layout_height="150dp"
-            android:layout_alignLeft="@+id/editTextPlayerName"
-            android:layout_alignStart="@+id/editTextPlayerName"
-            android:layout_below="@+id/add_player"
-            android:layout_marginTop="15dp"
             android:background="@drawable/backtextbox"
             android:paddingBottom="20dp"
-            android:paddingTop="10dp">
+            android:paddingTop="10dp"
+            android:layout_below="@+id/add_player"
+            android:layout_centerHorizontal="true">
 
             <TextView
                 android:id="@+id/view_players"
@@ -59,26 +58,25 @@
         <Button
             android:id="@+id/chose_category"
             style="@style/MyButtonStyle"
-            android:layout_width="170dp"
-            android:layout_height="50dp"
+            android:layout_width="220dp"
+            android:layout_height="70dp"
+            android:text="Choose category"
+            android:layout_marginTop="5dp"
             android:layout_below="@+id/take_place"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="10dp"
-            android:text="Choose category" />
+            android:layout_centerHorizontal="true" />
 
         <Switch
             android:id="@+id/take_place"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/scrollViewer"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="18dp"
-            android:backgroundTint="@color/colorPrimary"
+            android:layout_marginTop="10dp"
             android:checked="false"
             android:enabled="true"
             android:text="Take place "
             android:textColor="#fff"
-            android:thumb="@color/darkPurple" />
+            android:thumb="@color/darkPurple"
+            android:layout_below="@+id/scrollViewer"
+            android:layout_centerHorizontal="true" />
 
 
     </RelativeLayout>
