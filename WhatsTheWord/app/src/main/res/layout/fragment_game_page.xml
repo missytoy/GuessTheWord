@@ -10,7 +10,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@drawable/blankbackground"
-        android:visibility="visible">
+        android:visibility="invisible">
 
         <TextView
             android:id="@+id/random_word_textview_id"
@@ -93,7 +93,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@drawable/player_first_page"
-        android:visibility="invisible">
+        android:visibility="visible">
 
         <TextView
             android:layout_width="290dp"
