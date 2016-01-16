@@ -312,7 +312,7 @@ public class GamePage extends Fragment implements View.OnClickListener, SensorEv
                 long diffTime = (curTime - lastUpdate);
                 lastUpdate = curTime;
 
-                float speed = Math.abs(x + y + z - last_x - last_y - last_z) / diffTime * 20000;
+                float speed = Math.abs(x + y + z - last_x - last_y - last_z) / diffTime * 10000;
 
                 if (speed > SHAKE_THRESHOLD) {
 
@@ -336,7 +336,7 @@ public class GamePage extends Fragment implements View.OnClickListener, SensorEv
 //
 //                }
 
-                if (z < -3 && y < 3 && x < 1) {
+                if (z < -3 && x < 3) { // y < 7 &&
                     //   Log.d("ping", "dolu");
                     //   MySoundManager.playNextWordTone(getContext());
                     if (randomWordAndTimer.getVisibility() == View.VISIBLE) {
