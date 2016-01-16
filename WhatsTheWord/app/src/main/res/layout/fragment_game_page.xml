@@ -10,7 +10,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@drawable/blankbackground"
-        android:visibility="invisible">
+        android:visibility="visible">
 
         <TextView
             android:id="@+id/random_word_textview_id"
@@ -18,10 +18,12 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_centerHorizontal="true"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
+            android:layout_centerVertical="true"
+            android:gravity="center"
+            android:padding="10dp"
             android:text="Harry Potter - Goblet of fire"
-            android:textAlignment="center" />
+            android:textAlignment="center"
+            android:layout_above="@+id/correct_btn" />
 
         <TextView
             android:id="@+id/timer_textview_id"
@@ -36,7 +38,7 @@
         <Button
             android:id="@+id/correct_btn"
             style="@style/MyButtonStyle"
-            android:layout_width="160dp"
+            android:layout_width="163dp"
             android:text="correct"
             android:layout_alignParentBottom="true"
             android:layout_alignParentRight="true"
@@ -45,7 +47,7 @@
         <Button
             android:id="@+id/wrong_btn"
             style="@style/MyButtonStyle"
-            android:layout_width="160dp"
+            android:layout_width="163dp"
             android:text="wrong"
             android:layout_alignParentBottom="true"
             android:layout_alignParentLeft="true"
@@ -91,15 +93,15 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@drawable/player_first_page"
-        android:visibility="visible">
+        android:visibility="invisible">
 
         <TextView
-            android:layout_width="260dp"
-            android:layout_height="180dp"
+            android:layout_width="290dp"
+            android:layout_height="188dp"
             android:padding="10dp"
-            android:text="\n- If someone guesses your word - swipe right\n\n- If you can't explain the word swipe left"
+            android:text="\n- If someone guesses your word - swipe right or put the phone fast to his back\n\n- If you can't explain the word - swipe left or put the phone fast to his face"
             android:textColor="@color/colorAccent"
-            android:textSize="20sp"
+            android:textSize="18sp"
             android:layout_centerVertical="true"
             android:layout_centerHorizontal="true" />
 

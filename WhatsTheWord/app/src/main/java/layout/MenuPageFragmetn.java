@@ -3,6 +3,9 @@ package layout;
 
 import android.app.Activity;
 import android.content.Context;
+import android.hardware.Sensor;
+import android.hardware.SensorEventListener;
+import android.hardware.SensorManager;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -25,6 +28,13 @@ public class MenuPageFragmetn extends Fragment implements View.OnClickListener {
     Button history;
     Button addNewWord;
 
+  // SensorEventListener listener;
+    private SensorManager senSensorManager;
+    private Sensor senAccelerometer;
+    private long lastUpdate = 0;
+    private float last_x, last_y, last_z;
+    private static final int SHAKE_THRESHOLD = 600;
+
     public MenuPageFragmetn() {
         // Required empty public constructor
     }
@@ -35,7 +45,6 @@ public class MenuPageFragmetn extends Fragment implements View.OnClickListener {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_menu_page_fragmetn, container, false);
-
         startGameBtn = (Button) view.findViewById(R.id.start_game);
         history = (Button) view.findViewById(R.id.see_history);
         addNewWord = (Button) view.findViewById(R.id.add_word);
@@ -44,6 +53,12 @@ public class MenuPageFragmetn extends Fragment implements View.OnClickListener {
         history.setOnClickListener(this);
         addNewWord.setOnClickListener(this);
         // Inflate the layout for this fragment
+
+//        //TODO: delete
+//        senSensorManager = (SensorManager) getActivity().getSystemService(Context.SENSOR_SERVICE);
+//        senAccelerometer = senSensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
+//        senSensorManager.registerListener(listener, senAccelerometer, SensorManager.SENSOR_DELAY_NORMAL);
+
         return view;
     }
 

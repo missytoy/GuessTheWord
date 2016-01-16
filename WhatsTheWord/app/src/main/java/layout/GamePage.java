@@ -48,9 +48,7 @@ public class GamePage extends Fragment implements View.OnClickListener, SensorEv
 
     SensorEventListener listener;
 
-    private float x1, x2;
-    static final int MIN_DISTANCE = 150;
-    private static final int PLAYER_TURN_TIME = 10000;
+    private static final int PLAYER_TURN_TIME = 60000;
 
     private SensorManager senSensorManager;
     private Sensor senAccelerometer;
@@ -314,7 +312,7 @@ public class GamePage extends Fragment implements View.OnClickListener, SensorEv
                 long diffTime = (curTime - lastUpdate);
                 lastUpdate = curTime;
 
-                float speed = Math.abs(x + y + z - last_x - last_y - last_z) / diffTime * 50000;
+                float speed = Math.abs(x + y + z - last_x - last_y - last_z) / diffTime * 20000;
 
                 if (speed > SHAKE_THRESHOLD) {
 
@@ -329,13 +327,14 @@ public class GamePage extends Fragment implements View.OnClickListener, SensorEv
                     }
 
                 }
-                Log.d("pingosvam x", String.valueOf(x));
+                Log.d("pingosvamx", String.valueOf(x));
+                Log.d("pingosvamy", String.valueOf(y));
+                Log.d("pingosvamz", String.valueOf(z));
 
 //                if (z < -5 && y>3 && x>1){
 //                    Log.d("ping","normalno");
 //
 //                }
-
 
                 if (z < -3 && y < 3 && x < 1) {
                     //   Log.d("ping", "dolu");
