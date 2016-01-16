@@ -58,6 +58,7 @@ public class AddNewWord extends Fragment implements View.OnClickListener {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_add_new_word, container, false);
+        data= new DataAccess(getContext());
 
         wordsList = new ArrayList<String>();
 
@@ -106,7 +107,19 @@ public class AddNewWord extends Fragment implements View.OnClickListener {
             toast.show();
 
             return;
-        } else if(wordsList.contains(wordToAdd.toLowerCase())){
+        } else if(wordToAdd.length() > 60){
+
+            Toast toast = Toast.makeText(getContext(), "Word is too long", Toast.LENGTH_SHORT);
+            LinearLayout toastLayout = (LinearLayout) toast.getView();
+            TextView toastTV = (TextView) toastLayout.getChildAt(0);
+            toastTV.setTextSize(TOAST_TEXT_SIZE);
+
+            toastTV.setTextColor(Color.WHITE);
+            toast.setGravity(Gravity.CENTER, 0, 0);
+            toast.show();
+
+            return;
+        }else if(wordsList.contains(wordToAdd.toLowerCase())){
             Toast toast = Toast.makeText(getContext(), "Word already exists.", Toast.LENGTH_SHORT);
             LinearLayout toastLayout = (LinearLayout) toast.getView();
             TextView toastTV = (TextView) toastLayout.getChildAt(0);

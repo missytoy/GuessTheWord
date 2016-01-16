@@ -27,6 +27,7 @@ import android.widget.Toast;
 
 import com.example.miss.temp.R;
 
+import java.io.IOException;
 import java.util.AbstractSet;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -47,13 +48,14 @@ public class GamePage extends Fragment implements View.OnClickListener, SensorEv
     private static final Random random = new Random();
 
     SensorEventListener listener;
-    private static final int PLAYER_TURN_TIME = 60000;
+    private static final int PLAYER_TURN_TIME = 1000;
 
     private SensorManager senSensorManager;
     private Sensor senAccelerometer;
     private long lastUpdate = 0;
     private float last_x, last_y, last_z;
     private static final int SHAKE_THRESHOLD = 600;
+
 
     private List<String> wordsToGuess;
     private List<Player> players;
@@ -194,6 +196,16 @@ public class GamePage extends Fragment implements View.OnClickListener, SensorEv
     public void onClick(View v) {
 
         if (v.getId() == nextPlayerButton.getId()) {
+
+            if (currentPlayerIndex == 1){
+                if (isLocationChecked){
+                    try {
+                        ((StartNewGameFragment.IOnGeolocationChosen)this.getActivity()).getGeolocation();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
 
             MySoundManager.playButtonSound(getContext());
             randomWordAndTimer.setVisibility(View.VISIBLE);

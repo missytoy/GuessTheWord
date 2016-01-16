@@ -25,6 +25,7 @@ import android.widget.Button;
 import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 import java.util.Locale;
 
@@ -54,12 +55,10 @@ public class FullscreenActivity extends AppCompatActivity
     private String provider;
     private  Boolean isChecked;
 
-    public DataAccess data;
-    Button closeAppBtn;
+    private DataAccess data;
     private List<Player> playersList;
-    List<Category> categoriesList;
-    Address currentLocation;
-    Location currentLoc;
+   private List<Category> categoriesList;
+   private Address currentLocation;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -179,7 +178,7 @@ public class FullscreenActivity extends AppCompatActivity
         geocoder = new Geocoder(this, Locale.getDefault());
 
         Location location = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
-        if (location != null /* location.getTime() > Calendar.getInstance().getTimeInMillis() - 1 * 60 * 1000*/) {
+        if (location != null && location.getTime() > Calendar.getInstance().getTimeInMillis() - 5 * 60 * 1000) {
             double latitude = location.getLatitude();
             double longitude = location.getLongitude();
 
@@ -202,7 +201,6 @@ public class FullscreenActivity extends AppCompatActivity
     @Override
     public void onLocationChanged(Location location) {
         if (location != null) {
-            currentLoc = location;
             Log.v("Location Changed", location.getLatitude() + " and " + location.getLongitude());
             if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
 

@@ -18,12 +18,13 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_centerHorizontal="true"
-            android:layout_centerVertical="true"
             android:gravity="center"
             android:padding="10dp"
-            android:text="Harry Potter - Goblet of fire"
+            android:textSize="45sp"
+            android:text="Justin Timberlake - What Goes Around Comes Back Around"
             android:textAlignment="center"
-            android:layout_above="@+id/correct_btn" />
+            android:layout_above="@+id/correct_btn"
+            android:layout_below="@+id/timer_textview_id" />
 
         <TextView
             android:id="@+id/timer_textview_id"
@@ -96,12 +97,12 @@
         android:visibility="visible">
 
         <TextView
-            android:layout_width="290dp"
-            android:layout_height="188dp"
+            android:layout_width="263dp"
+            android:layout_height="wrap_content"
             android:padding="10dp"
-            android:text="\n- If someone guesses your word - swipe right or put the phone fast to his back\n\n- If you can't explain the word - swipe left or put the phone fast to his face"
+            android:text="\n- If someone guesses your word - swipe right or put the phone on his back\n\n- If you can't explain the word - swipe left or put the phone on his face"
             android:textColor="@color/colorAccent"
-            android:textSize="18sp"
+            android:textSize="20sp"
             android:layout_centerVertical="true"
             android:layout_centerHorizontal="true" />
 

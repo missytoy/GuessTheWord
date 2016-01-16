@@ -13,7 +13,6 @@ import java.util.Date;
 public class Utils {
 
     public static int getDrawableId(String drawableName) {
-
         try {
             Class res = R.drawable.class;
             Field field = res.getField(drawableName);

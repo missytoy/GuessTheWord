@@ -174,14 +174,6 @@ public class StartNewGameFragment extends Fragment implements View.OnClickListen
                 return;
             }
 
-            if (takePlaceSwitch.isChecked()){
-                try {
-                    this.onChosingGeolocation.getGeolocation();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-
             onChooseCategoryPressed.onChooseCategoryButtonClicked((Serializable)playersList, takePlaceSwitch.isChecked());
         }
     }
