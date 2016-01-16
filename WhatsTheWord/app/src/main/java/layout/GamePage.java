@@ -159,13 +159,13 @@ public class GamePage extends Fragment implements View.OnClickListener, SensorEv
                                 return false;
                             if (e1.getX() - e2.getX() > SWIPE_MIN_DISTANCE
                                     && Math.abs(velocityX) > SWIPE_THRESHOLD_VELOCITY) {
-                                if (playerFirstPage.getVisibility() != View.VISIBLE) {
+                                if (randomWordAndTimer.getVisibility() == View.VISIBLE) {
 
                                     handleSwipeLeft();
                                 }
                             } else if (e2.getX() - e1.getX() > SWIPE_MIN_DISTANCE
                                     && Math.abs(velocityX) > SWIPE_THRESHOLD_VELOCITY) {
-                                if (playerFirstPage.getVisibility() != View.VISIBLE) {
+                                if (randomWordAndTimer.getVisibility() == View.VISIBLE) {
 
                                     handleSwipeRight();
                                 }
@@ -323,7 +323,7 @@ public class GamePage extends Fragment implements View.OnClickListener, SensorEv
                 if (z > 3 && y < 5 && x < 0) {            //x>0
                     // Log.d("pingosvam","z > 3 && y<3 gore");
                     //  MySoundManager.playCorrectTone(getContext());
-                    if ((playerFirstPage.getVisibility() != View.VISIBLE) ||(currentUserInfo.getVisibility() != View.VISIBLE)  ) {
+                    if (randomWordAndTimer.getVisibility() == View.VISIBLE) {
 
                         handleSwipeLeft();
                     }
@@ -340,7 +340,7 @@ public class GamePage extends Fragment implements View.OnClickListener, SensorEv
                 if (z < -3 && y < 3 && x < 1) {
                     //   Log.d("ping", "dolu");
                     //   MySoundManager.playNextWordTone(getContext());
-                    if ((playerFirstPage.getVisibility() != View.VISIBLE) ||(currentUserInfo.getVisibility() != View.VISIBLE) ) {
+                    if (randomWordAndTimer.getVisibility() == View.VISIBLE) {
 
                         handleSwipeRight();
                     }
