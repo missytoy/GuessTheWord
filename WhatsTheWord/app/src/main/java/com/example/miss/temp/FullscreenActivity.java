@@ -1,7 +1,6 @@
 package com.example.miss.temp;
 
 import android.Manifest;
-import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -19,8 +18,6 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
-import android.view.View;
-import android.widget.Button;
 
 import java.io.IOException;
 import java.io.Serializable;
@@ -99,7 +96,7 @@ public class FullscreenActivity extends AppCompatActivity
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        data.close();
+        this.finish();
     }
 
     @Override
@@ -111,8 +108,6 @@ public class FullscreenActivity extends AppCompatActivity
     @Override
     protected void onStop() {
         super.onStop();
-//        this.finish();
-//        System.exit(0);
     }
 
     @Override
@@ -134,6 +129,11 @@ public class FullscreenActivity extends AppCompatActivity
     protected void onPostResume() {
         super.onPostResume();
         data.open();
+    }
+
+    @Override
+    public Address getLocation(){
+        return this.currentLocation;
     }
 
     @Override
@@ -178,7 +178,7 @@ public class FullscreenActivity extends AppCompatActivity
         geocoder = new Geocoder(this, Locale.getDefault());
 
         Location location = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
-        if (location != null && location.getTime() > Calendar.getInstance().getTimeInMillis() - 5 * 60 * 1000) {
+        if (location != null && location.getTime() > Calendar.getInstance().getTimeInMillis() - 1 * 60 * 1000) {
             double latitude = location.getLatitude();
             double longitude = location.getLongitude();
 
@@ -186,6 +186,7 @@ public class FullscreenActivity extends AppCompatActivity
             currentLocation = addresses.get(0);
 
             String address = addresses.get(0).getAddressLine(0); // If any additional address line present than only, check with max available address lines by getMaxAddressLineIndex()
+            Log.v("Location address", address);
             String city = addresses.get(0).getLocality();
             String state = addresses.get(0).getAdminArea();
             String country = addresses.get(0).getCountryName();
@@ -202,11 +203,6 @@ public class FullscreenActivity extends AppCompatActivity
     public void onLocationChanged(Location location) {
         if (location != null) {
             Log.v("Location Changed", location.getLatitude() + " and " + location.getLongitude());
-            if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-
-                return;
-            }
-            //locationManager.removeUpdates(this);
         }
     }
 

@@ -8,6 +8,7 @@ import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
+import android.location.Address;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.CountDownTimer;
@@ -48,7 +49,7 @@ public class GamePage extends Fragment implements View.OnClickListener, SensorEv
     private static final Random random = new Random();
 
     SensorEventListener listener;
-    private static final int PLAYER_TURN_TIME = 1000;
+    private static final int PLAYER_TURN_TIME = 20000;
 
     private SensorManager senSensorManager;
     private Sensor senAccelerometer;
@@ -201,7 +202,9 @@ public class GamePage extends Fragment implements View.OnClickListener, SensorEv
                 if (isLocationChecked){
                     try {
                         ((StartNewGameFragment.IOnGeolocationChosen)this.getActivity()).getGeolocation();
+                        Log.v("location", "called from game page in between turns");
                     } catch (IOException e) {
+                        Log.v("location", "exception called called from game page in between turns");
                         e.printStackTrace();
                     }
                 }
@@ -284,6 +287,10 @@ public class GamePage extends Fragment implements View.OnClickListener, SensorEv
                                 players.get(i).getScore());
                         playerScores[i] = playerScoreInfo;
                     }
+
+                    Address location = ((OnGameOver)getActivity()).getLocation();
+                    address = location.getAddressLine(0);
+                    city = location.getAddressLine(1);
 
                     // Make async task that saves the game object to the database - here or in activity see how to do it.
                     new SaveGameObjectAndPlayersToBaseTask().execute(data);
@@ -373,6 +380,7 @@ public class GamePage extends Fragment implements View.OnClickListener, SensorEv
 
     public interface OnGameOver {
         void onGameEnding(String[] playersScores);
+        Address getLocation();
     }
 
     public void handleSwipeLeft() {

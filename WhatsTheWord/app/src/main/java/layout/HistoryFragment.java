@@ -3,7 +3,6 @@ package layout;
 
 import android.app.Activity;
 import android.content.Context;
-import android.media.MediaPlayer;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -74,7 +73,6 @@ public class HistoryFragment extends Fragment implements View.OnClickListener, A
 
         detailsTextView = (TextView) view.findViewById(R.id.details_text_view);
 
-        Bundle args = this.getArguments();
         new GetLastGamesHistoryTask().execute(data);
 
         return view;
@@ -88,9 +86,10 @@ public class HistoryFragment extends Fragment implements View.OnClickListener, A
         historyPage.setVisibility(View.GONE);
         detailHistoryPage.setVisibility(View.VISIBLE);
 
-        playerss = selectedGame.getPlayers();
+        playerss = new ArrayList<Player>(selectedGame.getPlayers());
         Collections.sort(playerss);
-        for (int i = 0; i < selectedGame.getPlayers().size(); i++) {
+        playersString = "";
+        for (int i = 0; i < playerss.size(); i++) {
             playersString += "\n- " + playerss.get(i).getName() + "(" + playerss.get(i).getScore() + " pts)";
         }
 
