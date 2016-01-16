@@ -41,6 +41,7 @@ public class StartNewGameFragment extends Fragment implements View.OnClickListen
     private List<String> allPlayerNames;
     private ArrayAdapter<String> autoCompleteAdapter;
     private IOnGeolocationChosen onChosingGeolocation;
+    private DataAccess data;
 
     OnChooseCategoryBtnClicked onChooseCategoryPressed;
 
@@ -61,6 +62,8 @@ public class StartNewGameFragment extends Fragment implements View.OnClickListen
                              Bundle savedInstanceState) {
         MySoundManager.playLetItBegin(getContext());
         View view = inflater.inflate(R.layout.fragment_start_new_game, container, false);
+        data = new DataAccess(getContext());
+
         addPlayerButton = (Button) view.findViewById(R.id.add_player);
         addPlayerButton.setOnClickListener(this);
 
@@ -75,7 +78,7 @@ public class StartNewGameFragment extends Fragment implements View.OnClickListen
 
         playersList = new ArrayList<Player>();
         allPlayerNames = new ArrayList<String>();
-        new GetPlayerNamesTask().execute((DataAccess) getArguments().getSerializable("data"));
+        new GetPlayerNamesTask().execute(data);
 
         autoCompleteAdapter = new ArrayAdapter<String>(getContext(), android.R.layout.simple_list_item_1, allPlayerNames);
 
@@ -186,7 +189,9 @@ public class StartNewGameFragment extends Fragment implements View.OnClickListen
     private class GetPlayerNamesTask extends AsyncTask<DataAccess, Void, AbstractSet<String>> {
         @Override
         protected AbstractSet<String> doInBackground(DataAccess... params) {
+            params[0].open();
             AbstractSet<String> names = params[0].getAllPlayerNames();
+            params[0].close();
 
             return names;
         }
@@ -198,6 +203,4 @@ public class StartNewGameFragment extends Fragment implements View.OnClickListen
             }
         }
     }
-
-
 }

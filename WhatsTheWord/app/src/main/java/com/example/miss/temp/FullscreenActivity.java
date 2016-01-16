@@ -2,7 +2,10 @@ package com.example.miss.temp;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Address;
 import android.location.Criteria;
@@ -36,12 +39,8 @@ import layout.StartNewGameFragment;
 import models.Category;
 import models.Player;
 
-/**
- * An example full-screen activity that shows and hides the system UI (i.e.
- * status bar and navigation/system bar) with user interaction.
- */
 public class FullscreenActivity extends AppCompatActivity
-        implements View.OnClickListener,
+        implements
         MenuPageFragmetn.OnButtonsClick,
         StartNewGameFragment.OnChooseCategoryBtnClicked,
         StartNewGameFragment.IOnGeolocationChosen,
@@ -50,10 +49,6 @@ public class FullscreenActivity extends AppCompatActivity
         Ranking.IGoToMainPagePressed,
         GamePage.OnGameOver,
         LocationListener {
-    /**
-     * Whether or not the system UI should be auto-hidden after
-     * {@link #AUTO_HIDE_DELAY_MILLIS} milliseconds.
-     */
 
     private LocationManager locationManager;
     private String provider;
@@ -66,24 +61,6 @@ public class FullscreenActivity extends AppCompatActivity
     Address currentLocation;
     Location currentLoc;
 
-    private static final boolean AUTO_HIDE = true;
-
-    /**
-     * If {@link #AUTO_HIDE} is set, the number of milliseconds to wait after
-     * user interaction before hiding the system UI.
-     */
-    private static final int AUTO_HIDE_DELAY_MILLIS = 3000;
-
-    /**
-     * Some older devices needs a small delay between UI widget updates
-     * and a change of the status and navigation bar.
-     */
-    private static final int UI_ANIMATION_DELAY = 300;
-
-//    private View mContentView;
-//    private View mControlsView;
-//    private boolean mVisible;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -94,12 +71,6 @@ public class FullscreenActivity extends AppCompatActivity
         new GetCategoriesTask().execute(data);
 
         playersList = new ArrayList<Player>();
-//        mVisible = true;
-//        mControlsView = findViewById(R.id.fullscreen_content_controls);
-//        mContentView = findViewById(R.id.fullscreen_content);
-
-//        closeAppBtn = (Button) findViewById(R.id.dummy_button);
-//        closeAppBtn.setOnClickListener(this);
 
         // Get the location manager
         locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
@@ -124,20 +95,6 @@ public class FullscreenActivity extends AppCompatActivity
             transaction.add(R.id.fragment_placeholder, firstFragment);
             transaction.commit();
         }
-
-        // Set up the user interaction to manually show or hide the system UI.
-
-//        mContentView.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                toggle();
-//            }
-//        });
-
-        // Upon interacting with UI controls, delay any scheduled hide()
-        // operations to prevent the jarring behavior of controls going away
-        // while interacting with the UI.
-        // findViewById(R.id.dummy_button).setOnTouchListener(mDelayHideTouchListener);
     }
 
     @Override
@@ -155,24 +112,14 @@ public class FullscreenActivity extends AppCompatActivity
     @Override
     protected void onStop() {
         super.onStop();
-        this.finish();
-        System.exit(0);
+//        this.finish();
+//        System.exit(0);
     }
 
     @Override
     protected void onResume() {
         super.onResume();
         data.open();
-    }
-
-    @Override
-    protected void onPostCreate(Bundle savedInstanceState) {
-        super.onPostCreate(savedInstanceState);
-
-        // Trigger the initial hide() shortly after the activity has been
-        // created, to briefly hint to the user that UI controls
-        // are available.
-        //delayedHide(100);
     }
 
     @Override
@@ -192,10 +139,39 @@ public class FullscreenActivity extends AppCompatActivity
 
     @Override
     public void getGeolocation() throws IOException {
+
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
                 && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
 
             return;
+        }
+
+        if (!((LocationManager) this.getSystemService(Context.LOCATION_SERVICE))
+                .isProviderEnabled(LocationManager.GPS_PROVIDER)) {
+            AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(
+                    this);
+            alertDialogBuilder
+                    .setMessage("GPS is disabled in your device. Enable it?")
+                    .setCancelable(false)
+                    .setPositiveButton("Enable GPS",
+                            new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog,
+                                                    int id) {
+                                    Intent callGPSSettingIntent = new Intent(
+                                            android.provider.Settings.ACTION_LOCATION_SOURCE_SETTINGS);
+                                    startActivityForResult(callGPSSettingIntent, 1);
+                                }
+                            });
+            alertDialogBuilder.setNegativeButton("Cancel",
+                    new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+                            dialog.cancel();
+                        }
+                    });
+            AlertDialog alert = alertDialogBuilder.create();
+            alert.show();
+        }else{
+            //gps is enabled
         }
 
         Geocoder geocoder;
@@ -267,113 +243,6 @@ public class FullscreenActivity extends AppCompatActivity
         }
     }
 
-    /**
-     * Touch listener to use for in-layout UI controls to delay hiding the
-     * system UI. This is to prevent the jarring behavior of controls going away
-     * while interacting with activity UI.
-     */
-//    private final View.OnTouchListener mDelayHideTouchListener = new View.OnTouchListener() {
-//        @Override
-//        public boolean onTouch(View view, MotionEvent motionEvent) {
-//            if (AUTO_HIDE) {
-//                delayedHide(AUTO_HIDE_DELAY_MILLIS);
-//            }
-//            return false;
-//        }
-//    };
-
-//    private void toggle() {
-//        if (mVisible) {
-//            hide();
-//        } else {
-//            show();
-//        }
-//    }
-
-//    private void hide() {
-//        // Hide UI first
-//        ActionBar actionBar = getSupportActionBar();
-//        if (actionBar != null) {
-//            actionBar.hide();
-//        }
-//        mControlsView.setVisibility(View.GONE);
-//        mVisible = false;
-//
-//        // Schedule a runnable to remove the status and navigation bar after a delay
-//        mHideHandler.removeCallbacks(mShowPart2Runnable);
-//        mHideHandler.postDelayed(mHidePart2Runnable, UI_ANIMATION_DELAY);
-//    }
-
-//    private final Runnable mHidePart2Runnable = new Runnable() {
-//        @SuppressLint("InlinedApi")
-//        @Override
-//        public void run() {
-//            // Delayed removal of status and navigation bar
-//
-//            // Note that some of these constants are new as of API 16 (Jelly Bean)
-//            // and API 19 (KitKat). It is safe to use them, as they are inlined
-//            // at compile-time and do nothing on earlier devices.
-//            mContentView.setSystemUiVisibility(View.SYSTEM_UI_FLAG_LOW_PROFILE
-//                    | View.SYSTEM_UI_FLAG_FULLSCREEN
-//                    | View.SYSTEM_UI_FLAG_LAYOUT_STABLE
-//                    | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY
-//                    | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
-//                    | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION);
-//        }
-//    };
-    @SuppressLint("InlinedApi")
-//    private void show() {
-//        // Show the system bar
-//        mContentView.setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
-//                | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION);
-//        mVisible = true;
-//
-//        // Schedule a runnable to display UI elements after a delay
-//        mHideHandler.removeCallbacks(mHidePart2Runnable);
-//        mHideHandler.postDelayed(mShowPart2Runnable, UI_ANIMATION_DELAY);
-//    }
-
-//    private final Runnable mShowPart2Runnable = new Runnable() {
-//        @Override
-//        public void run() {
-//            // Delayed display of UI elements
-//            ActionBar actionBar = getSupportActionBar();
-//            if (actionBar != null) {
-//                actionBar.show();
-//            }
-//            mControlsView.setVisibility(View.VISIBLE);
-//        }
-//    };
-
-//    private final Handler mHideHandler = new Handler();
-//    private final Runnable mHideRunnable = new Runnable() {
-//        @Override
-//        public void run() {
-//            hide();
-//        }
-//    };
-
-    /**
-     * Schedules a call to hide() in [delay] milliseconds, canceling any
-     * previously scheduled calls.
-     */
-//    private void delayedHide(int delayMillis) {
-//        mHideHandler.removeCallbacks(mHideRunnable);
-//        mHideHandler.postDelayed(mHideRunnable, delayMillis);
-//    }
-
-
-    @Override
-    public void onClick(View v) {
-        ////TODO: Here clear the back stack of fragments!!
-        // if (v.getId() == closeAppBtn.getId()) {
-//          //  Toast.makeText(getApplicationContext(), "Closed", Toast.LENGTH_SHORT).show();
-//             MenuPageFragmetn firstFragment = new MenuPageFragmetn();
-//             getSupportFragmentManager().beginTransaction()
-//                     .add(R.id.fragment_placeholder, firstFragment).commit();
-        //  }
-    }
-
     @Override
     public void onGameEnding(String[] playersScores) {
         Ranking newFragment = new Ranking();
@@ -399,8 +268,7 @@ public class FullscreenActivity extends AppCompatActivity
             args.putString("location", currentLocation.getAddressLine(0));
             args.putString("city", currentLocation.getLocality());
         }
-        // Maybe put here the game object with location string to be persisted to base
-        args.putSerializable("data", (Serializable) data);
+
         newFragment.setArguments(args);
 
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
@@ -413,9 +281,6 @@ public class FullscreenActivity extends AppCompatActivity
     @Override
     public void onStartButtonClicked() {
         StartNewGameFragment newFragment = new StartNewGameFragment();
-        Bundle args = new Bundle();
-        args.putSerializable("data", this.data);
-        newFragment.setArguments(args);
 
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         // Replace whatever is in the fragment_container view with this fragment
@@ -445,16 +310,10 @@ public class FullscreenActivity extends AppCompatActivity
         transaction.commit();
     }
 
-
     @Override
     public void onHistoryButtonClicked() {
 
         HistoryFragment newFragment = new HistoryFragment();
-        //GamePage newFragment = new GamePage();
-
-        Bundle args = new Bundle();
-        args.putSerializable("data", this.data);
-        newFragment.setArguments(args);
 
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         // Replace whatever is in the fragment_container view with this fragment
@@ -468,7 +327,6 @@ public class FullscreenActivity extends AppCompatActivity
         AddNewWord newFragment = new AddNewWord();
         Bundle args = new Bundle();
         args.putSerializable("categories_array", (Serializable) categoriesList);
-        args.putSerializable("data", (Serializable) data);
         newFragment.setArguments(args);
 
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();

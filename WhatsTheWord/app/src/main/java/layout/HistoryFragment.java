@@ -43,6 +43,7 @@ public class HistoryFragment extends Fragment implements View.OnClickListener, A
     private RelativeLayout historyPage;
     private RelativeLayout detailHistoryPage;
     private TextView detailsTextView;
+    private DataAccess data;
 
     private String playersString = "";
     private String placeString;
@@ -57,7 +58,8 @@ public class HistoryFragment extends Fragment implements View.OnClickListener, A
                              Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.fragment_history, container, false);
-        playBookSound(getContext());
+        data = new DataAccess(getContext());
+        MySoundManager.playBookSound(getContext());
         goToMainPage = (Button) view.findViewById(R.id.go_to_main_page);
         goToMainPage.setOnClickListener(this);
 
@@ -73,7 +75,7 @@ public class HistoryFragment extends Fragment implements View.OnClickListener, A
         detailsTextView = (TextView) view.findViewById(R.id.details_text_view);
 
         Bundle args = this.getArguments();
-        new GetLastGamesHistoryTask().execute((DataAccess) args.getSerializable("data"));
+        new GetLastGamesHistoryTask().execute(data);
 
         return view;
     }
@@ -134,6 +136,7 @@ public class HistoryFragment extends Fragment implements View.OnClickListener, A
     private class GetLastGamesHistoryTask extends AsyncTask<DataAccess, Void, List<Game>> {
         @Override
         protected List<Game> doInBackground(DataAccess... params) {
+            params[0].open();
             List<Game> games = params[0].getAllGames(10);
 
             int numberInView = 1;
@@ -153,6 +156,7 @@ public class HistoryFragment extends Fragment implements View.OnClickListener, A
                 numberInView++;
             }
 
+            params[0].close();
             return games;
         }
 
@@ -178,30 +182,4 @@ public class HistoryFragment extends Fragment implements View.OnClickListener, A
         }
 
     }
-
-    public void playBookSound(final Context context) {
-
-
-        Thread t = new Thread() {
-            public void run() {
-                MediaPlayer player = null;
-                player = MediaPlayer.create(context, R.raw.history);
-                player.start();
-                try {
-
-                    Thread.sleep(player.getDuration());
-                    player.release();
-                } catch (InterruptedException e) {
-                    // TODO Auto-generated catch block
-                    e.printStackTrace();
-
-                }
-            }
-        };
-
-        t.start();
-
-    }
-
-
 }

@@ -140,4 +140,28 @@ public class MySoundManager {
         t.start();
 
     }
+
+
+    public static void playBookSound(final Context context) {
+
+
+        Thread t = new Thread() {
+            public void run() {
+                MediaPlayer player = null;
+                player = MediaPlayer.create(context, R.raw.history);
+                player.start();
+                try {
+
+                    Thread.sleep(player.getDuration());
+                    player.release();
+                } catch (InterruptedException e) {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+
+                }
+            }
+        };
+
+        t.start();
+    }
 }

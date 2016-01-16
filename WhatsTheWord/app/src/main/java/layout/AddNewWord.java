@@ -40,11 +40,13 @@ public class AddNewWord extends Fragment implements View.OnClickListener {
     private List<Category> categories;
     private List<String> wordsList;
     private ArrayAdapter<String> spinnerAdapter;
-    public int pos;
-    Spinner categoryName;
-    Button addNewWordBtn;
-    EditText addNewWordEditText;
-    Word wordModelToAdd;
+    private DataAccess data;
+
+    private Spinner categoryName;
+    private Button addNewWordBtn;
+    private EditText addNewWordEditText;
+    private Word wordModelToAdd;
+    int pos;
 
     public AddNewWord() {
         // Required empty public constructor
@@ -57,16 +59,12 @@ public class AddNewWord extends Fragment implements View.OnClickListener {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_add_new_word, container, false);
 
-        // this is only for reference how to get the id of a drawable resource by name;
-//        Button objectBtn = (Button) view.findViewById(R.id.object_btn);
-//        int backgroundReId = Utils.getResId("animal_category");
-//        objectBtn.setBackgroundResource(backgroundReId);
         wordsList = new ArrayList<String>();
 
         Bundle args = this.getArguments();
         categories = new ArrayList<Category>((List<Category>) args.getSerializable("categories_array"));
 
-        new GetWordsTask().execute((DataAccess) args.getSerializable("data"));
+        new GetWordsTask().execute(data);
 
         categoryName = (Spinner) view.findViewById(R.id.category_spinner);
         categoryName.setSelection(pos);
@@ -80,7 +78,6 @@ public class AddNewWord extends Fragment implements View.OnClickListener {
         }
 
         spinnerAdapter = new ArrayAdapter<String>(getContext(), R.layout.spinner_item, categoriesNames);
-        //categoryName.setOnItemSelectedListener(new CustomOnItemSelectedListener());
         categoryName.setAdapter(spinnerAdapter);
 
         addNewWordBtn = (Button) view.findViewById(R.id.add_new_word_btn);
@@ -146,12 +143,13 @@ public class AddNewWord extends Fragment implements View.OnClickListener {
         wordModelToAdd.setContent(wordToAdd);
         wordModelToAdd.setCategoryId(chosenCategory.getId());
 
-        new AddWordInDatabaseTask().execute((DataAccess) getArguments().getSerializable("data"));
+        new AddWordInDatabaseTask().execute(data);
     }
 
     private class GetWordsTask extends AsyncTask<DataAccess, Void, List<String>> {
         @Override
         protected List<String> doInBackground(DataAccess... params) {
+            params[0].open();
             List<String> words = params[0].getAllWordsAsContent();
 
             return words;
@@ -170,6 +168,7 @@ public class AddNewWord extends Fragment implements View.OnClickListener {
         protected Long doInBackground(DataAccess... params) {
 
             Long word_id = params[0].createWord(wordModelToAdd);
+            params[0].close();
 
             return word_id;
         }

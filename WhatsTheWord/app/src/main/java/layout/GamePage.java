@@ -47,7 +47,6 @@ public class GamePage extends Fragment implements View.OnClickListener, SensorEv
     private static final Random random = new Random();
 
     SensorEventListener listener;
-
     private static final int PLAYER_TURN_TIME = 60000;
 
     private SensorManager senSensorManager;
@@ -65,6 +64,7 @@ public class GamePage extends Fragment implements View.OnClickListener, SensorEv
     private String city;
     private String place;
     private Boolean isLocationChecked;
+    private DataAccess data;
 
     TextView timerTextView;
     TextView randomWord;
@@ -95,6 +95,7 @@ public class GamePage extends Fragment implements View.OnClickListener, SensorEv
         // Inflate the layout for this fragment
 
         View view = inflater.inflate(R.layout.fragment_game_page, container, false);
+        data = new DataAccess(getContext());
 
         wordsToGuess = new ArrayList<String>();
         usedWords = new HashSet<String>();
@@ -107,7 +108,7 @@ public class GamePage extends Fragment implements View.OnClickListener, SensorEv
         players = new ArrayList<Player>((List<Player>) args.getSerializable("players_list"));
         currentPlayerIndex = 0;
 
-        new GetWordsTask().execute((DataAccess) args.getSerializable("data"));
+        new GetWordsTask().execute(data);
 
         startWithFirstPlayerButton = (Button) view.findViewById(R.id.first_player_play_btn);
         String firstPlayerName = players.get(currentPlayerIndex).getName();
@@ -273,7 +274,7 @@ public class GamePage extends Fragment implements View.OnClickListener, SensorEv
                     }
 
                     // Make async task that saves the game object to the database - here or in activity see how to do it.
-                    new SaveGameObjectAndPlayersToBaseTask().execute((DataAccess) getArguments().getSerializable("data"));
+                    new SaveGameObjectAndPlayersToBaseTask().execute(data);
                     onGameOver.onGameEnding(playerScores);
                 } else {
 
@@ -412,6 +413,7 @@ public class GamePage extends Fragment implements View.OnClickListener, SensorEv
     private class GetWordsTask extends AsyncTask<DataAccess, Void, AbstractSet<String>> {
         @Override
         protected AbstractSet<String> doInBackground(DataAccess... params) {
+            params[0].open();
             AbstractSet<String> words = params[0].getAllWordsContentByCategory(currentCategoryId);
 
             return words;
@@ -456,6 +458,7 @@ public class GamePage extends Fragment implements View.OnClickListener, SensorEv
                 params[0].createPlayer(pl);
             }
             Collections.sort(players);
+            params[0].close();
             return null;
         }
     }
