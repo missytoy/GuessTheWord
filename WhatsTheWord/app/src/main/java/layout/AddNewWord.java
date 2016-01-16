@@ -26,6 +26,7 @@ import java.util.List;
 
 import data.DataAccess;
 import helpers.MySoundManager;
+import helpers.Utils;
 import models.Category;
 import models.Word;
 
@@ -33,9 +34,6 @@ import models.Word;
  * A simple {@link Fragment} subclass.
  */
 public class AddNewWord extends Fragment implements View.OnClickListener {
-
-    private final int   TOAST_TEXT_SIZE = 20;
-
     private String[] categoriesNames;
     private List<Category> categories;
     private List<String> wordsList;
@@ -97,48 +95,16 @@ public class AddNewWord extends Fragment implements View.OnClickListener {
                                                        .trim();
         String chosenCategoryName = String.valueOf(categoryName.getSelectedItem());
         if (wordToAdd.length() == 0){
-            Toast toast = Toast.makeText(getContext(), "Word to add cannot be empty.", Toast.LENGTH_SHORT);
-            LinearLayout toastLayout = (LinearLayout) toast.getView();
-            TextView toastTV = (TextView) toastLayout.getChildAt(0);
-            toastTV.setTextSize(TOAST_TEXT_SIZE);
- 
-            toastTV.setTextColor(Color.WHITE);
-            toast.setGravity(Gravity.CENTER, 0, 0);
-            toast.show();
-
+            Utils.showNotification("Word to add cannot be empty.", getContext());
             return;
         } else if(wordToAdd.length() > 60){
-
-            Toast toast = Toast.makeText(getContext(), "Word is too long", Toast.LENGTH_SHORT);
-            LinearLayout toastLayout = (LinearLayout) toast.getView();
-            TextView toastTV = (TextView) toastLayout.getChildAt(0);
-            toastTV.setTextSize(TOAST_TEXT_SIZE);
-
-            toastTV.setTextColor(Color.WHITE);
-            toast.setGravity(Gravity.CENTER, 0, 0);
-            toast.show();
-
+            Utils.showNotification("Word is too long", getContext());
             return;
         }else if(wordsList.contains(wordToAdd.toLowerCase())){
-            Toast toast = Toast.makeText(getContext(), "Word already exists.", Toast.LENGTH_SHORT);
-            LinearLayout toastLayout = (LinearLayout) toast.getView();
-            TextView toastTV = (TextView) toastLayout.getChildAt(0);
-            toastTV.setTextSize(TOAST_TEXT_SIZE);
-            toastTV.setTextColor(Color.WHITE);
-            toast.setGravity(Gravity.CENTER, 0, 0);
-            toast.show();
-
+            Utils.showNotification("Word already exists.", getContext());
             return;
         } else if(chosenCategoryName == "Choose category"){
-            
-            Toast toast = Toast.makeText(getContext(), "You must choose category", Toast.LENGTH_SHORT);
-            LinearLayout toastLayout = (LinearLayout) toast.getView();
-            TextView toastTV = (TextView) toastLayout.getChildAt(0);
-            toastTV.setTextSize(TOAST_TEXT_SIZE);
-            toastTV.setTextColor(Color.WHITE);
-            toast.setGravity(Gravity.CENTER, 0, 0);
-            toast.show();
-
+            Utils.showNotification("You must choose category", getContext());
             return;
         }
 
@@ -188,13 +154,7 @@ public class AddNewWord extends Fragment implements View.OnClickListener {
 
         @Override
         protected void onPostExecute(Long word_id) {
-            Toast toast = Toast.makeText(getContext(), "You successfully added the word \"" + wordModelToAdd.getContent() + "\"", Toast.LENGTH_SHORT);
-            LinearLayout toastLayout = (LinearLayout) toast.getView();
-            TextView toastTV = (TextView) toastLayout.getChildAt(0);
-            toastTV.setTextSize(TOAST_TEXT_SIZE);
-            toastTV.setTextColor(Color.WHITE);
-            toast.setGravity(Gravity.CENTER, 0, 0);
-            toast.show();
+            Utils.showNotification("You successfully added the word \"" + wordModelToAdd.getContent() + "\"", getContext());
         }
     }
 

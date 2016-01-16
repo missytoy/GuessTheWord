@@ -30,6 +30,7 @@ import java.util.List;
 
 import data.DataAccess;
 import helpers.MySoundManager;
+import helpers.Utils;
 import models.Player;
 
 /**
@@ -131,24 +132,10 @@ public class StartNewGameFragment extends Fragment implements View.OnClickListen
         if (v.getId() == addPlayerButton.getId()) {
             String playerNameText = playerName.getText().toString();
             if (playerNameText.length() == 0){
-                Toast toast = Toast.makeText(getContext(), "Player name cannot be empty", Toast.LENGTH_SHORT);
-                LinearLayout toastLayout = (LinearLayout) toast.getView();
-                TextView toastTV = (TextView) toastLayout.getChildAt(0);
-                toastTV.setTextSize(20);
-                toastTV.setTextColor(Color.WHITE);
-                toast.setGravity(Gravity.CENTER, 0, 0);
-                toast.show();
-
+                Utils.showNotification("Player name cannot be empty", getContext());
                 return;
             } else if(playerNameText.length() > 12){
-                Toast toast = Toast.makeText(getContext(), "Player's name too long.:)", Toast.LENGTH_SHORT);
-                LinearLayout toastLayout = (LinearLayout) toast.getView();
-                TextView toastTV = (TextView) toastLayout.getChildAt(0);
-                toastTV.setTextSize(20);
-                toastTV.setTextColor(Color.WHITE);
-                toast.setGravity(Gravity.CENTER, 0, 0);
-                toast.show();
-
+                Utils.showNotification("Player's name too long.:)", getContext());
                 return;
             }
 
@@ -163,14 +150,7 @@ public class StartNewGameFragment extends Fragment implements View.OnClickListen
             playerName.setText("");
         } else if(v.getId() == chooseCategoryBtn.getId()) {
             if(this.playersList.size() < 2){
-                Toast toast = Toast.makeText(getContext(), "Add at least 2 players to start a game.", Toast.LENGTH_SHORT);
-                LinearLayout toastLayout = (LinearLayout) toast.getView();
-                TextView toastTV = (TextView) toastLayout.getChildAt(0);
-                toastTV.setTextSize(20);
-                toastTV.setTextColor(Color.WHITE);
-                toast.setGravity(Gravity.CENTER, 0, 0);
-                toast.show();
-
+                Utils.showNotification("Add at least 2 players to start a game.", getContext());
                 return;
             }
 

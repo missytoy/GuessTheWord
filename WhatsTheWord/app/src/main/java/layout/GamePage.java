@@ -39,6 +39,7 @@ import java.util.Random;
 
 import data.DataAccess;
 import helpers.MySoundManager;
+import helpers.Utils;
 import models.Game;
 import models.Player;
 
@@ -447,13 +448,7 @@ public class GamePage extends Fragment implements View.OnClickListener, SensorEv
                 }
             } else {
                 randomWord.setText("No words in category");
-                Toast toast = Toast.makeText(getContext(), "Go back and ad some words to this category", Toast.LENGTH_SHORT);
-                LinearLayout toastLayout = (LinearLayout) toast.getView();
-                TextView toastTV = (TextView) toastLayout.getChildAt(0);
-                toastTV.setTextSize(20);
-                toastTV.setTextColor(Color.WHITE);
-                toast.setGravity(Gravity.CENTER, 0, 0);
-                toast.show();
+                Utils.showNotification("Go back and add some words to this category", getContext());
             }
         }
     }

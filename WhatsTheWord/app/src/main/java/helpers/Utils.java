@@ -1,7 +1,13 @@
 package helpers;
 
 
+import android.content.Context;
 import android.database.Cursor;
+import android.graphics.Color;
+import android.view.Gravity;
+import android.widget.LinearLayout;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.miss.temp.R;
 
@@ -11,6 +17,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class Utils {
+    private static final int TOAST_TEXT_SIZE = 20;
 
     public static int getDrawableId(String drawableName) {
         try {
@@ -43,5 +50,15 @@ public class Utils {
         String dateAsString = formatter.format(date);
 
         return dateAsString;
+    }
+
+    public static void showNotification(String notification, Context context){
+        Toast toast = Toast.makeText(context, notification, Toast.LENGTH_SHORT);
+        LinearLayout toastLayout = (LinearLayout) toast.getView();
+        TextView toastTV = (TextView) toastLayout.getChildAt(0);
+        toastTV.setTextSize(TOAST_TEXT_SIZE);
+        toastTV.setTextColor(Color.WHITE);
+        toast.setGravity(Gravity.CENTER, 0, 0);
+        toast.show();
     }
 }

@@ -87,13 +87,10 @@ public class MenuPageFragmetn extends Fragment implements View.OnClickListener {
 
         MySoundManager.playButtonSound(getContext());
         if (v.getId() == startGameBtn.getId()) {
-             //Toast.makeText(getContext(), "Start Game", Toast.LENGTH_SHORT).show();
             onButtonsPressed.onStartButtonClicked();
         } else if (v.getId() == addNewWord.getId()) {
-          //   Toast.makeText(getContext(), "Add word", Toast.LENGTH_SHORT).show();
             onButtonsPressed.onAddWordButtonClicked();
         } else if (v.getId() == history.getId()) {
-           //   Toast.makeText(getContext(), "History", Toast.LENGTH_SHORT).show();
             onButtonsPressed.onHistoryButtonClicked();
         }
     }
