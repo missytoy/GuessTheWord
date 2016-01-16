@@ -302,9 +302,6 @@ public class GamePage extends Fragment implements View.OnClickListener, SensorEv
     public void onSensorChanged(SensorEvent sensorEvent) {
         Sensor mySensor = sensorEvent.sensor;
 
-//        if (randomWordAndTimer.getVisibility() == View.VISIBLE) {
-//            senSensorManager.unregisterListener(this);
-
 
         if (mySensor.getType() == Sensor.TYPE_ACCELEROMETER) {
             float x = sensorEvent.values[0];
@@ -326,7 +323,7 @@ public class GamePage extends Fragment implements View.OnClickListener, SensorEv
                 if (z > 3 && y < 5 && x < 0) {            //x>0
                     // Log.d("pingosvam","z > 3 && y<3 gore");
                     //  MySoundManager.playCorrectTone(getContext());
-                    if (playerFirstPage.getVisibility() != View.VISIBLE) {
+                    if ((playerFirstPage.getVisibility() != View.VISIBLE) ||(currentUserInfo.getVisibility() != View.VISIBLE)  ) {
 
                         handleSwipeLeft();
                     }
@@ -343,7 +340,7 @@ public class GamePage extends Fragment implements View.OnClickListener, SensorEv
                 if (z < -3 && y < 3 && x < 1) {
                     //   Log.d("ping", "dolu");
                     //   MySoundManager.playNextWordTone(getContext());
-                    if (playerFirstPage.getVisibility() != View.VISIBLE) {
+                    if ((playerFirstPage.getVisibility() != View.VISIBLE) ||(currentUserInfo.getVisibility() != View.VISIBLE) ) {
 
                         handleSwipeRight();
                     }
