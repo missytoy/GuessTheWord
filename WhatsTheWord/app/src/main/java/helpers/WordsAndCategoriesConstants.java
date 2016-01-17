@@ -16,14 +16,14 @@ public class WordsAndCategoriesConstants {
     // Words
     public final static String[] OBJECTS_WORDS = new String[]{"microphone", "piano", "umbrella", "bottle", "neck",
                                                               "pillow", "tail", "saxophone", "condom"};
-    public final static String[] SONGS_WORDS = new String[]{"Eminem - My name is", "Still DRE", "Satisfaction",
-                                                            "Californication", "California Love", "Eminem - Lose yourself",
-            "Eminem - Mockingbird", "Rehanna -rehab", "Miley - Can't stop","2pac - Changes", "Justin Timberlake - What goes around comes back around",
+    public final static String[] SONGS_WORDS = new String[]{"Eminem - My name is", "Dr DRE - Still DRE", "Rolling Stones - Satisfaction",
+                                                            "Red Hot Chili Peppers - Californication", "2pac - California Love", "Eminem - Lose yourself",
+            "Eminem - Mockingbird", "Rehanna -rehab", "Jimi Hendrix - Voodoo child", "Miley - Can't stop","2pac - Changes", "Justin Timberlake - What goes around comes back around",
             "Eminem - When I'm Gone","Justin Bieber - Love yourself", "Mark Lower -  Bad Boys Cry", "The Weeknd - The Hills"    ,
             "Eminem - Superman","Justin Bieber - Sorry", "Years & Years - Take Shelter", "Years & Years - King",
-            "Cassie - Me&u","Redman - put It Down", "Mark Lower -  Bad Boys Cry", "The Weeknd - The Hills",
-            "Three days grace - Pain","Justin Bieber - Love yourself", "Cher -Strong Enough", "The Weekend - Wicked games",
-            "Michael Jackson - Billie Jean","Matt Pokora - Catch Me If You Can", "Justin T - My Love", "Daniel Powter-Bad Day",
+            "Cassie - Me&u","Redman - put It Down", "2pac - How do you want it",
+            "Three days grace - Pain", "Cher -Strong Enough", "Led Zeppelin - Ramble on", "The Weekend - Wicked games",
+            "Michael Jackson - Billie Jean","Matt Pokora - Catch Me If You Can", "The Doors - Riders of the storm", "Justin T - My Love", "Daniel Powter-Bad Day",
             "Linkin Park - From the inside","Linkin Park - Numb", "Robbie Williams - Feel", "Justin Timberlake - Cry Me A River",
             "The Pussycat Dolls - I Don't Need A Man","Robbie Williams - Something Stupid", "Robin Schulz - Waves", "Rob Thomas - Lonely No More"
 
