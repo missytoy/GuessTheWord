@@ -18,8 +18,8 @@ public class WordsAndCategoriesConstants {
 
 
     // Words
-    public final static String[] OBJECTS_WORDS = new String[]{"Microphone", "Piano", "Umbrella", "Bottle", "Neck",
-            "Pillow", "Saxophone", "Condom",
+    public final static String[] OBJECTS_WORDS = new String[]{
+            "Microphone", "Piano", "Umbrella", "Bottle", "Neck", "Pillow", "Saxophone", "Condom",
             "Table", "Chair", "Glass", "Straw", "Tree", "Wood", "Water", "Gas", "Fork", "Spoon", "PLate", "Stairs", "Phone", "Word", "Game", "Eye", "Nose",
             "Glasses", "Nail", "Liver", "Forum", "Mummy", "Window", "Ninja", "T-shirt", "Skirt", "Dress", "Jeans", "Lamp", "Bulb", "Button",
             "Curtain", "Carpet", "Snow", "Rain", "Car", "Bus", "Elevator", "Gloves", "Scarf", "Computer", "Laptop", "Roof", "Sofa", "Coffee",
@@ -27,7 +27,8 @@ public class WordsAndCategoriesConstants {
             "Price", "Drink", "Song", "Scene", "Theatre", "Cinema", "Movie", "Actor", "Script", "Projector", "Bed", "TV", "Clothes", "Drawer", "Wardrobe",
             "Washing machine", "Stove", "Heater", "Desk", "Teddy bear", "Clock", "Cable", "Web", "Mirror", "Toilet", "Hanger", "Blackboard",
             "Pencil", "Notebook", "Ear", "Rubber", "Eraser", "Family", "Folio", "Forehead", "Makeup",
-            "Doctor", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "",};
+            "Cloud", "Tooth", "Garden", "Pool", "Flower", "Knife", "Box", "Bike", "Bracelet", "Ring", "Necklace", "Hat", "Jacket", "Shoe",
+            "Number", "Blanket", "Perfume", "Shampoo", "Soap", "Sink", "Poster", "Picture", "Chat", "Document", "Flashlight", "Money", "Address", "House", "Key", "Locker",};
     public final static String[] SONGS_WORDS = new String[]{"Eminem - My name is", "Dr DRE - Still DRE",
             "Rolling Stones - Satisfaction", "Red Hot Chili Peppers - Californication",
             "2pac - California Love", "Eminem - Lose yourself",
@@ -46,7 +47,7 @@ public class WordsAndCategoriesConstants {
     };
 
     public final static String[] ANIMALS_WORDS = new String[]{"Frog", "Cat", "Dog", "Snake", "Turtle",
-            "Tasmanian Devil", "Sloth", "Elephant", "Chicken",
+            "Tasmanian Devil", "Sloth", "Chicken",
             "Penguin", "Fox", "Wolf", "Elephant", "Bat", "Bear", "Beetle", "Bird", "Shark", "Bee", "Butterfly", "Camel", "Catfish", "Chameleon", "Cheetah", "Chinchilla", "Fish", "Cockroach", "Cow", "Coyote",
             "Crocodile", "Deer", "Dolphin", "Duck", "Dragonfly", "Eagle", "Giraffe", "Goose", "Pig", "Hamster", "Hippopotamus", "Horse", "Monkey", "Human", "Kangaroo",
             "Jellyfish", "Koala", "Tortoise", "Lion", "Lizard", "Llama", "Mouse", "Gorilla", "Mule", "Octopus", "Opossum", "Panther",
@@ -66,7 +67,21 @@ public class WordsAndCategoriesConstants {
     public final static String[] STARS_WORDS = new String[]{"Messi", "Ronaldo", "Steve Jobs", "Robert De Niro", "Bastian Schweinsteiger",
             "Madonna", "Harrison Ford"};
 
-    public final static String[] IT_WORDS = new String[]{"Java", "Android"};
+    public final static String[] IT_WORDS = new String[]{"Java", "Android", "C#", "Windows", "Console", "Web", "HTML", "CSS",
+            "PHP", "Python", "Ruby", "Bug", "C++", "Objective C", "JavaScript", "Program", "Mouse", "StartUp", "Computer", "IOS", "Linux",
+            "Mac", "Compilation", "Database", "Unit test", "Integration test", "MySql", "SQLite", "Quality Code", "MS SQL", "XAML", "XML",
+            "Post", "Get", "Put", "404", "201", "501", "301", "Install", "Uninstall", "CMD", "Router", "Firewall", "Firefox", "Edge",
+            "Opera", "Safari", "Explorer", "Chrome", "Google", "Video card", "Ram", "CPU", "Motherboard", "Keyboard", "USB",
+            "Touch pad", "Monitor", "ROM", "HDD", "SDD", "LAN", "WWW", "HTTP", "HTTPS", "JSON", "AJAX", "Telerik", "Apple", "Microsoft", "Steve Jobs",
+            "Bill Gates", "Emulator", "Cloud", "Virtual Machine", "HP", "Lenovo", "Promise", "Query", "SELECT *", "Async", "Integer/int", "String/string", "Char/char",
+            "Boolean/bool", "Attribute", "Method", "Class", "OOP", "DSA", "Function", "JQuery", "Angular", "View engine",
+            "Fragment", "Intent", "Handlebars", "Delegate", "Server", "Ping", "Password", "Tag", "Github", "Hash", "Queue",
+            "BigInteger", "List", "Stack", "Exception", "Debug", "Build", "Design Patterns", "SOLID", "KISS", "YAGNI",
+            "Dependency inversion", "Boy scout rule", "Random", "Tree", "Graph", "Algorithm", "Dijkstra", "Source control system", "Binary search",
+            "Bit", "Byte", "Ninject", "Automapper", "Reflection", "Node", "MVC", "MVVM", "Web forms", ".NET", "Artificial intelligence",
+            "Code", "Validation", "UI", "Data binding", "Web site", "TCP", "IP", "Wi-Fi", "Encryption", "Photoshop", "Graphic Design",
+            "Sublime text", "Webstorm", "Jetbrains", "Visual Studio", "Atom","Digital Signature","Data mining","Bitcoin",".cs","DDL",
+            "DML", "CRUD", ".dll", "Thread","goto"};
 
 
     public final static HashMap<String, String[]> WORDS_BY_CATEGORYNAME = new HashMap<String, String[]>() {{
