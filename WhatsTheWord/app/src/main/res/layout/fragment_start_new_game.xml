@@ -17,7 +17,7 @@
             android:layout_width="250dp"
             android:background="@drawable/backtextbox"
             android:gravity="center"
-            android:hint="Add player's name "
+            android:hint="@string/add_players_name"
             android:textColorHint="@color/black_overlay"
             android:textColor="@color/black"
             android:layout_alignParentTop="true"
@@ -31,7 +31,7 @@
             android:layout_alignLeft="@+id/chose_category"
             android:layout_alignStart="@+id/chose_category"
             android:layout_below="@+id/editTextPlayerName"
-            android:text="Add player" />
+            android:text="@string/add_player" />
 
         <ScrollView
             android:id="@+id/scrollViewer"
@@ -49,9 +49,9 @@
                 android:layout_height="wrap_content"
                 android:gravity="center_horizontal"
                 android:paddingBottom="10dp"
-                android:text="Players :\n"
+                android:text="Players: \n"
                 android:textAlignment="center"
-                android:textColor="#000"
+                android:textColor="@color/black"
                 android:textSize="20sp" />
         </ScrollView>
 
@@ -60,7 +60,7 @@
             style="@style/MyButtonStyle"
             android:layout_width="220dp"
             android:layout_height="70dp"
-            android:text="Choose category"
+            android:text="@string/choose_category"
             android:layout_marginTop="5dp"
             android:layout_below="@+id/take_place"
             android:layout_centerHorizontal="true" />
@@ -72,8 +72,8 @@
             android:layout_marginTop="10dp"
             android:checked="false"
             android:enabled="true"
-            android:text="Take place "
-            android:textColor="#fff"
+            android:text="@string/take_place"
+            android:textColor="@color/colorWhite"
             android:thumb="@color/darkPurple"
             android:layout_below="@+id/scrollViewer"
             android:layout_centerHorizontal="true" />

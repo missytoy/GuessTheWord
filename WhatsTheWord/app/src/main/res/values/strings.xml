@@ -1,9 +1,19 @@
 <resources>
     <string name="app_name">Guess the word</string>
 
-    <string name="dummy_button">Dummy Button</string>
-    <string name="dummy_content">DUMMY\nCONTENT</string>
+    <string name="choose_category">Choose category</string>
+    <string name="add_word">Add word</string>
+    <string name="wrong">Wrong</string>
+    <string name="correct">Correct</string>
+    <string name="go_to_main_page">Go to main page</string>
+    <string name="back">Back</string>
+    <string name="start_new_game">Start new game</string>
+    <string name="history">History</string>
+    <string name="add_players_name">Add player\'s name </string>
+    <string name="add_player">Add player</string>
+    <string name="take_place">Take place </string>
+    <string name="add_new_word">Add new word</string>
+    <string name="enter_new_word">Enter new word</string>
+    
 
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
