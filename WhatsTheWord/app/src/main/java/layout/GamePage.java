@@ -45,7 +45,7 @@ import models.Player;
 public class GamePage extends Fragment implements View.OnClickListener, SensorEventListener {
     private static final Random random = new Random();
 
-    SensorEventListener listener;
+    private SensorEventListener listener;
     private static final int PLAYER_TURN_TIME = 20000;
 
     private SensorManager senSensorManager;
@@ -66,23 +66,21 @@ public class GamePage extends Fragment implements View.OnClickListener, SensorEv
     private Boolean isLocationChecked;
     private DataAccess data;
 
-    TextView timerTextView;
-    TextView randomWord;
-
-    RelativeLayout randomWordAndTimer;
-    RelativeLayout currentUserInfo;
-    RelativeLayout playerFirstPage;
-
-    Button nextPlayerButton;
-    TextView playerScoreView;
+    private TextView timerTextView;
+    private TextView randomWord;
+    private RelativeLayout randomWordAndTimer;
+    private RelativeLayout currentUserInfo;
+    private RelativeLayout playerFirstPage;
+    private Button nextPlayerButton;
+    private TextView playerScoreView;
 
     public Long timerStep;
     private OnGameOver onGameOver;
 
-    Button correctButton;
-    Button wrongButton;
+    private Button correctButton;
+    private Button wrongButton;
 
-    Button startWithFirstPlayerButton;
+    private Button startWithFirstPlayerButton;
 
     public GamePage() {
         // Required empty public constructor
