@@ -4,9 +4,7 @@ package layout;
 import android.app.Activity;
 import android.content.Context;
 import android.hardware.Sensor;
-import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
-import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -23,10 +21,10 @@ import helpers.MySoundManager;
  */
 public class MenuPageFragmetn extends Fragment implements View.OnClickListener {
 
-    OnButtonsClick onButtonsPressed;
-    Button startGameBtn;
-    Button history;
-    Button addNewWord;
+    private OnButtonsClick onButtonsPressed;
+    private Button startGameBtn;
+    private Button history;
+    private Button addNewWord;
 
   // SensorEventListener listener;
     private SensorManager senSensorManager;

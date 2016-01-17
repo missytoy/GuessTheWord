@@ -3,11 +3,9 @@ package layout;
 
 import android.app.Activity;
 import android.content.Context;
-import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,10 +13,8 @@ import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.CompoundButton;
-import android.widget.LinearLayout;
 import android.widget.Switch;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.miss.temp.R;
 
@@ -37,21 +33,19 @@ import models.Player;
  * A simple {@link Fragment} subclass.
  */
 public class StartNewGameFragment extends Fragment implements View.OnClickListener, CompoundButton.OnCheckedChangeListener {
-    // Will be filled from the database so that we don't have to type our full name if we have already played.
-    // For now it is hardcoded in onCreateView method.
     private List<String> allPlayerNames;
     private ArrayAdapter<String> autoCompleteAdapter;
     private IOnGeolocationChosen onChosingGeolocation;
     private DataAccess data;
 
-    OnChooseCategoryBtnClicked onChooseCategoryPressed;
+    private OnChooseCategoryBtnClicked onChooseCategoryPressed;
 
-    Button addPlayerButton;
-    Button chooseCategoryBtn;
-    Switch takePlaceSwitch;
-    TextView viewPlayers;
-    AutoCompleteTextView playerName;
-    List<Player> playersList;
+    private Button addPlayerButton;
+    private Button chooseCategoryBtn;
+    private Switch takePlaceSwitch;
+    private TextView viewPlayers;
+    private AutoCompleteTextView playerName;
+    private List<Player> playersList;
 
     public StartNewGameFragment() {
         // Required empty public constructor

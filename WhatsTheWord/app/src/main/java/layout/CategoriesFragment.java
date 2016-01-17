@@ -23,7 +23,7 @@ import models.Category;
  */
 public class CategoriesFragment extends Fragment implements AdapterView.OnItemClickListener {
 
-    OnListViewItemSelected onCategorySelected;
+    private OnListViewItemSelected onCategorySelected;
 
     private List<Category> categories;
     private ListView categoryListView;
