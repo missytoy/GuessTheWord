@@ -50,12 +50,12 @@ public class FullscreenActivity extends AppCompatActivity
 
     private LocationManager locationManager;
     private String provider;
-    private  Boolean isChecked;
+    private Boolean isChecked;
 
     private DataAccess data;
     private List<Player> playersList;
-   private List<Category> categoriesList;
-   private Address currentLocation;
+    private List<Category> categoriesList;
+    private Address currentLocation;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -137,7 +137,7 @@ public class FullscreenActivity extends AppCompatActivity
     }
 
     @Override
-    public Address getLocation(){
+    public Address getLocation() {
         return this.currentLocation;
     }
 
@@ -174,7 +174,7 @@ public class FullscreenActivity extends AppCompatActivity
                     });
             AlertDialog alert = alertDialogBuilder.create();
             alert.show();
-        }else{
+        } else {
             //gps is enabled
         }
 
@@ -261,7 +261,7 @@ public class FullscreenActivity extends AppCompatActivity
         GamePage newFragment = new GamePage();
         Bundle args = new Bundle();
         args.putInt("category_id", categoryId);
-        args.putBoolean("is_checked",this.isChecked);
+        args.putBoolean("is_checked", this.isChecked);
         args.putSerializable("players_list", (Serializable) playersList);
         if (currentLocation != null) {
             args.putString("location", currentLocation.getAddressLine(0));
@@ -293,6 +293,7 @@ public class FullscreenActivity extends AppCompatActivity
                                                                              R.anim.enter_from_left,
                                                                              R.anim.exit_to_right);
         // Replace whatever is in the fragment_container view with this fragment
+       // transaction.setCustomAnimations(R.anim.enter_anim,R.anim.exit_anim);
         transaction.replace(R.id.fragment_placeholder, newFragment);
         // Commit the transaction
         transaction.commit();
