@@ -130,7 +130,6 @@ public class AddNewWord extends Fragment implements View.OnClickListener {
         protected List<String> doInBackground(DataAccess... params) {
             params[0].open();
             List<String> words = params[0].getAllWordsAsContent();
-
             return words;
         }
 
@@ -145,7 +144,6 @@ public class AddNewWord extends Fragment implements View.OnClickListener {
     private class AddWordInDatabaseTask extends AsyncTask<DataAccess, Void, Long> {
         @Override
         protected Long doInBackground(DataAccess... params) {
-
             Long word_id = params[0].createWord(wordModelToAdd);
             params[0].close();
 

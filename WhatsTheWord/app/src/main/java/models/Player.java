@@ -1,6 +1,8 @@
 package models;
 
-public class Player implements Comparable<Player> {
+import java.io.Serializable;
+
+public class Player implements Comparable<Player> ,Serializable {
     private int id;
     private String name;
     private int score;
