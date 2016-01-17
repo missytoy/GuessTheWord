@@ -120,7 +120,12 @@ public class FullscreenActivity extends AppCompatActivity
     public void onBackPressed() {
         MenuPageFragmetn firstFragment = new MenuPageFragmetn();
 
-        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction()
+                                                                     .setCustomAnimations(
+                                                                             R.anim.enter_from_left,
+                                                                             R.anim.exit_to_right,
+                                                                             R.anim.enter_from_right,
+                                                                             R.anim.exit_to_left);
         transaction.replace(R.id.fragment_placeholder, firstFragment);
         transaction.commit();
     }
@@ -265,7 +270,12 @@ public class FullscreenActivity extends AppCompatActivity
 
         newFragment.setArguments(args);
 
-        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction()
+                                                                     .setCustomAnimations(
+                                                                             R.anim.enter_from_right,
+                                                                             R.anim.exit_to_left,
+                                                                             R.anim.enter_from_left,
+                                                                             R.anim.exit_to_right);
         // Replace whatever is in the fragment_container view with this fragment
         transaction.replace(R.id.fragment_placeholder, newFragment);
         // Commit the transaction
@@ -276,7 +286,12 @@ public class FullscreenActivity extends AppCompatActivity
     public void onStartButtonClicked() {
         StartNewGameFragment newFragment = new StartNewGameFragment();
 
-        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction()
+                                                                     .setCustomAnimations(
+                                                                             R.anim.enter_from_right,
+                                                                             R.anim.exit_to_left,
+                                                                             R.anim.enter_from_left,
+                                                                             R.anim.exit_to_right);
         // Replace whatever is in the fragment_container view with this fragment
         transaction.replace(R.id.fragment_placeholder, newFragment);
         // Commit the transaction
@@ -289,7 +304,12 @@ public class FullscreenActivity extends AppCompatActivity
 
         MenuPageFragmetn firstFragment = new MenuPageFragmetn();
 
-        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction()
+                .setCustomAnimations(
+                        R.anim.enter_from_left,
+                        R.anim.exit_to_right,
+                        R.anim.enter_from_right,
+                        R.anim.exit_to_left);
         transaction.replace(R.id.fragment_placeholder, firstFragment);
         transaction.commit();
     }
@@ -299,7 +319,12 @@ public class FullscreenActivity extends AppCompatActivity
 
         MenuPageFragmetn firstFragment = new MenuPageFragmetn();
 
-        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction()
+                .setCustomAnimations(
+                        R.anim.enter_from_left,
+                        R.anim.exit_to_right,
+                        R.anim.enter_from_right,
+                        R.anim.exit_to_left);
         transaction.replace(R.id.fragment_placeholder, firstFragment);
         transaction.commit();
     }
@@ -309,7 +334,12 @@ public class FullscreenActivity extends AppCompatActivity
 
         HistoryFragment newFragment = new HistoryFragment();
 
-        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction()
+                                                                     .setCustomAnimations(
+                                                                             R.anim.enter_from_right,
+                                                                             R.anim.exit_to_left,
+                                                                             R.anim.enter_from_left,
+                                                                             R.anim.exit_to_right);
         // Replace whatever is in the fragment_container view with this fragment
         transaction.replace(R.id.fragment_placeholder, newFragment);
         // Commit the transaction
@@ -323,7 +353,12 @@ public class FullscreenActivity extends AppCompatActivity
         args.putSerializable("categories_array", (Serializable) categoriesList);
         newFragment.setArguments(args);
 
-        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction()
+                                                                     .setCustomAnimations(
+                                                                             R.anim.enter_from_right,
+                                                                             R.anim.exit_to_left,
+                                                                             R.anim.enter_from_left,
+                                                                             R.anim.exit_to_right);
         // Replace whatever is in the fragment_container view with this fragment
         transaction.replace(R.id.fragment_placeholder, newFragment);
         // Commit the transaction
@@ -343,7 +378,12 @@ public class FullscreenActivity extends AppCompatActivity
         CategoriesFragment newFragment = new CategoriesFragment();
         newFragment.setArguments(args);
 
-        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction()
+                                                                     .setCustomAnimations(
+                                                                             R.anim.enter_from_right,
+                                                                             R.anim.exit_to_left,
+                                                                             R.anim.enter_from_left,
+                                                                             R.anim.exit_to_right);;
         // Replace whatever is in the fragment_container view with this fragment
         transaction.replace(R.id.fragment_placeholder, newFragment);
         // Commit the transaction

@@ -3,7 +3,6 @@ package layout;
 
 import android.app.Activity;
 import android.content.Context;
-import android.graphics.Color;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
@@ -15,16 +14,13 @@ import android.os.CountDownTimer;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.GestureDetector;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.miss.temp.R;
 
@@ -290,8 +286,10 @@ public class GamePage extends Fragment implements View.OnClickListener, SensorEv
                     }
 
                     Address location = ((OnGameOver)getActivity()).getLocation();
-                    address = location.getAddressLine(0);
-                    city = location.getAddressLine(1);
+                    if(isLocationChecked){
+                        address = location.getAddressLine(0);
+                        city = location.getAddressLine(1);
+                    }
 
                     // Make async task that saves the game object to the database - here or in activity see how to do it.
                     new SaveGameObjectAndPlayersToBaseTask().execute(data);
