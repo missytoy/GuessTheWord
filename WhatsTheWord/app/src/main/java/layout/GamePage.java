@@ -329,15 +329,15 @@ public class GamePage extends Fragment implements View.OnClickListener, SensorEv
 
             long curTime = System.currentTimeMillis();
 
-            if ((curTime - lastUpdate) > 1000) {
+            if ((curTime - lastUpdate) > 900) {//1000
                 long diffTime = (curTime - lastUpdate);
                 lastUpdate = curTime;
-
-                float speed = Math.abs(x + y + z - last_x - last_y - last_z) / diffTime * 10000;
-
-                if (speed > SHAKE_THRESHOLD) {
-
-                }
+//
+//                float speed = Math.abs(x + y + z - last_x - last_y - last_z) / diffTime * 10000;//
+//
+//                if (speed > SHAKE_THRESHOLD) {
+//
+//                }
 
                 if (z > 3 && y < 5 && x < 0) {            //x>0
                     // Log.d("pingosvam","z > 3 && y<3 gore");

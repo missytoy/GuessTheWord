@@ -10,7 +10,7 @@
             android:id="@+id/start_game"
             style="@style/MyButtonStyle"
             android:text="Start new game"
-            android:layout_marginTop="169dp"
+            android:layout_marginTop="202dp"
             android:layout_alignParentTop="true"
             android:layout_alignLeft="@+id/see_history"
             android:layout_alignStart="@+id/see_history" />
